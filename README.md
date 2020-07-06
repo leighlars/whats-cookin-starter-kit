@@ -1,7 +1,7 @@
 # What's Cookin'?
 Mod 2 Pair Project
 
-### Developer
+### Developers
 - [Leigh Larson](https://github.com/leighlars)
 - [Horacio Borrego](https://github.com/H-Bo214)
 
@@ -26,5 +26,6 @@ In this project, we will design an interactive web page for multiple users to st
 3. Once you have cloned the repo, change into the directory and install the project dependencies. Run npm install to install project dependencies.
 4. Run open src/index.html in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page)
 
+## Gif Showcase
 
-##
+## Reflections / Project Progression
