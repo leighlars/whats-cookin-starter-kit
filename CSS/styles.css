@@ -1,0 +1,26 @@
+* {
+  border: none;
+  box-sizing: border-box;
+  font-family: "Lobster";
+  color: #CBC9CF;
+}
+
+html, body {
+  height: 100%
+}
+
+body {
+  display: flex;
+  background: #2B2733;
+}
+
+header {
+  color: #C94C4C;
+  font-family: 'Lobster', cursive;
+  text-align: center;
+  text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
+}
+
+h2 {
+  color: #C94C4C;
+}
