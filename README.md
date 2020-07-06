@@ -23,7 +23,7 @@ This project will demonstrate our understanding and implementation of ES6 classe
 
 ## Set Up 
 
-1. *fork* this repository - on the top right corner of the page, click the fork button, and clone down repo into your terminal. 
+1. *Fork* this repository - on the top right corner of the page, click the fork button, and clone down repo into your terminal. 
 2. Since you don't want your project to be named "whats-cookin-starter-kit", add an optional argument after the repo url when cloning. The command should look like this: `git clone [remote-address] [what you want to name the repo]`.
 3. Once you have cloned the repo, change into the directory and install the project dependencies by running npm install to install project dependencies.
 4. Run open src/index.html in the terminal to see the HTML page (you should see some boilerplate HTML displayed on the page)
