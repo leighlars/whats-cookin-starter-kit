@@ -10,36 +10,40 @@
   </head>
   <body>
     <header> 
-      <div class="logo">
+      <div class="logo-box">
         <img src="../assets/logo.svg" class="logo-icon" alt="Image of head with grain">
         <h2>Recipeace of Mind</h2>
       </div>
       <article class="search-box">
         <button>
           <img src="../assets/orange.svg" class="search-icon" alt="Image of magnifying glass">
-       </button>
+        </button>
         <input type="text" class="inputs" id="search-text" placeholder="Search ingredients and recipes!" maxlength="70" minlength="0">
         <button>
-          <img src="../assets/close.svg" class="search-icon" alt="Delete text">
+          <img src="../assets/close.svg" class="close-icon" alt="Delete text">
         </button>
       </article>
       <article class="user-lists">
-        <button>
-          <img src="../assets/heart.svg" class="user-icon" alt="Image of heart">Favorite Recipes
+        <button class="user-list-btn">
+          <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">Favorite Recipes
         </button>
-        <button>
-          <img src="../assets/calendar.svg" class="user-icon" alt="Image of calendar">Planned for the Week
+        <button class="user-list-btn">
+          <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">Planned for the Week
         </button>
       </article>
     </header>
-    <section class="sidebar">
-      <article class="filter-box">
-        <div class="search-options">
-            
-        </div>
-        <button class="filter-btn">Filter Recipes</button>
-      </article>
-    </section>
+    <main>
+      <aside>
+          <div class="search-options">  
+            <ul class="tag-list"> </ul>
+          </div>
+          <button class="filter-btn">Filter Recipes</button>
+      </aside>
+      <section class="recipe-display">
+        <h1>Howdy!</h1>
+      </section>
+    </main>
+    
 
     <script type="text/javascript" src="../data/users.js"></script>
     <script type="text/javascript" src="../data/recipes.js"></script>
