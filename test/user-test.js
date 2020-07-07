@@ -6,8 +6,11 @@ const Recipe = require('../src/Recipe');
 describe('User', function() {
   let user;
   let userInfo;
-  let recipeInfo;
-  let recipe;
+  let recipeInfo1;
+  let recipeInfo2
+  let recipe1;
+  let recipe2;
+  let ingredients; 
   beforeEach(function() {
     userInfo = {
       "name": "Saige O'Kon",
@@ -160,7 +163,7 @@ describe('User', function() {
       ]
     },
     user = new User(userInfo);
-    recipeInfo = {
+    recipeInfo1 = {
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
       "ingredients": [
@@ -222,7 +225,127 @@ describe('User', function() {
         "hor d'oeuvre"
       ]
     },
-    recipe = new Recipe(recipeInfo);
+    recipeInfo2 = {
+      "id": 678353,
+      "image": "https://spoonacular.com/recipeImages/678353-556x370.jpg",
+      "ingredients": [
+        {
+          "id": 1009016,
+          "quantity": {
+            "amount": 1.5,
+            "unit": "cups"
+          }
+        },
+        {
+          "id": 9003,
+          "quantity": {
+            "amount": 2,
+            "unit": ""
+          }
+        },
+        {
+          "id": 20027,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        },
+        {
+          "id": 1002046,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        },
+        {
+          "id": 11215,
+          "quantity": {
+            "amount": 1,
+            "unit": "clove"
+          }
+        },
+        {
+          "id": 1012046,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        },
+        {
+          "id": 19911,
+          "quantity": {
+            "amount": 0.25,
+            "unit": "cup"
+          }
+        },
+        {
+          "id": 16112,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        },
+        {
+          "id": 10010062,
+          "quantity": {
+            "amount": 24,
+            "unit": "ounce"
+          }
+        },
+        {
+          "id": 1102047,
+          "quantity": {
+            "amount": 4,
+            "unit": "servings"
+          }
+        },
+        {
+          "id": 16124,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        },
+        {
+          "id": 1016168,
+          "quantity": {
+            "amount": 1,
+            "unit": "tablespoon"
+          }
+        }
+      ],
+      "instructions": [
+        {
+          "instruction": "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
+          "number": 1
+        }
+      ],
+      "name": "Maple Dijon Apple Cider Grilled Pork Chops",
+      "tags": [
+        "lunch",
+        "main course",
+        "main dish",
+        "dinner"
+      ]
+    },
+    recipe1 = new Recipe(recipeInfo1);
+    recipe2 = new Recipe(recipeInfo2);
+    ingredients = [ {
+      "id": 9003,
+      "name": "apple",
+      "estimatedCostInCents": 207
+    },
+    {
+      "id": 10019903,
+      "name": "semi sweet chips",
+      "estimatedCostInCents": 253
+    }, 
+    {
+      "id": 9040,
+      "name": "ripe banana",
+      "estimatedCostInCents": 331
+    }
+    ];
   });
 
   it('should be a function', function() {
@@ -256,27 +379,49 @@ describe('User', function() {
     expect(user.plannedRecipes).to.deep.equal([]);
   });
 
-  it('should be able to favorite recipes', function () {
-    user.addFavoriteRecipe(recipe);
+  it('should be able add recipe to favorites', function () {
+    user.addFavoriteRecipe(recipe1);
 
     expect(user.favoriteRecipes.length).to.deep.equal(1);
   });
 
   it('should delete recipe from favorites', function() {
-    user.deleteFavoriteRecipe(recipe);
+    user.deleteFavoriteRecipe(recipe1);
+
     expect(user.favoriteRecipes.length).to.deep.equal(0);
   });
 
-  it('should add recipe to plannedRecipes', function () {
-    user.addPlannedRecipe(recipe);
+  it('should add recipe to planned recipes', function () {
+    user.addPlannedRecipe(recipe1);
+
     expect(user.plannedRecipes.length).to.deep.equal(1);
   });
 
-  
+  it('should filter favorite recipes by tag', function () {
+    user.addFavoriteRecipe(recipe1);
+    
+    expect(user.filterFavoriteByTag('antipasti')[0]).to.equal(recipe1);
+  });
 
+  it('should filter favorite recipes by tag', function () {
+    user.addPlannedRecipe(recipe1);
 
-  
+    expect(user.filterPlannedByTag('antipasti')[0]).to.equal(recipe1);
+  });
 
+  it('should search for all saved recipes by name', function() {
+    user.addFavoriteRecipe(recipe1);
+    user.addPlannedRecipe(recipe2);
 
+    expect(user.searchUserRecipesByName('cookie')[0]).to.equal(recipe1);
+    expect(user.searchUserRecipesByName('apple')[0]).to.equal(recipe2);
+  });
 
+  it.only('should search for all saved recipes by ingredient', function() {
+    user.addFavoriteRecipe(recipe1);
+    user.addPlannedRecipe(recipe2);
+
+    expect(user.searchUserRecipesByIngred('eggs')[0]).to.deep.equal(recipe1);
+    expect(user.searchUserRecipesbyIngred('apple cider')[0]).to.equal(recipe2);
+  });
 });
