@@ -41,28 +41,24 @@ class User {
 
   searchUserRecipesByIngred(query) {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
-    // loop thru ingredientsData to filter all ingredients with names that includes query
     let matchedIngreds = ingredientsData.filter(ingredient => ingredient.name.includes(query));
-    console.log(matchedIngreds); // says name is undefined???
 
-    // return an array of recipes of which the saved recipes' ingredients match any of the matchedIngred[i].id
-    
-
-    // return allSaved.filter()
+    return allSaved.filter(savedRecipe => {
+      let result = false;
+      savedRecipe.ingredients.forEach(recipeIngredient => {
+        if (matchedIngreds.find(ingred => ingred.id === recipeIngredient.id)) {
+          result = true;
+        }
+      })
+      return result;
+    })
   }
-  
+
+  searchByIngredAndName(query) {
+    return this.searchUserRecipesByIngred(query).concat(this.searchUserRecipesByName(query));
+  }
+
 }
-// if any of the user's saved recipes' ingredients' ids match any of the new array's elements,
-
-// let matchedIngredients = ingredientsData.filter(ingredient => ingredient.name.includes(query));
-// let matchedIDs = matchedIngredients.map(matched => {
-//   return matched.id;
-// });
-
-
-
-
-
 
 if (typeof module !== 'undefined') {
   module.exports = User;
