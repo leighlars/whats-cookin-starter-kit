@@ -15,7 +15,7 @@ body {
 }
 
 header {
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   align-items: center;
   height: 100px;
@@ -33,10 +33,12 @@ button {
   font-family: 'Lobster';
   justify-content: center;
   align-items: center;
+  margin: 2px;
 }
 
 button:hover {
-  border: 1px solid #C94C4C;
+  border-radius: 4px;
+  box-shadow: -1px 0 #C94C4C, 0 2px #C94C4C, 2px 0 #C94C4C, 0 -1px #C94C4C;
 }
 
 .logo {
