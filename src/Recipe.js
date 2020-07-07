@@ -23,16 +23,8 @@ class Recipe {
   }
 
   filterRecipeByTag(recipeType) {
-    return recipeData.filter(recipe => {
-      if (recipe.tags.includes(recipeType)) {
-        return recipe;
-      }
-    })
+    return recipeData.filter(recipe => recipe.tags.includes(recipeType))
   }
-
-  // iterate over recipeData
-  // access the tags key, which is an array
-  // possibly iterate over array
 }
 
 if (typeof module !== 'undefined') {
