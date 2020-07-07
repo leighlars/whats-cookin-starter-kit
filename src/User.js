@@ -18,6 +18,15 @@ class User {
     this.favoriteRecipes.splice(i, 1);
   }
 
+  addPlannedRecipe(recipe) {
+    this.plannedRecipes.push(recipe);
+  }
+
+
+// Decide to cook a recipe that week(add to my recipesToCook)
+// Filter my favoriteRecipes or recipesToCook by type
+// Search any of my saved recipes by name or ingredient
+
 }
 
 

@@ -267,6 +267,11 @@ describe('User', function() {
     expect(user.favoriteRecipes.length).to.deep.equal(0);
   });
 
+  it('should add recipe to plannedRecipes', function () {
+    user.addPlannedRecipe(recipe);
+    expect(user.plannedRecipes.length).to.deep.equal(1);
+  });
+
   
 
 
