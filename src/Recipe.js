@@ -1,5 +1,5 @@
 const ingredientsData = require('../data/ingredients');
-
+const recipeData = require ('../data/recipes')
 class Recipe {
   constructor(recipe) {
     this.id = recipe.id;
@@ -21,6 +21,23 @@ class Recipe {
       return sum;
     }, 0);
   }
+
+  filterRecipeByTag(recipeTag) {
+    return recipeData.filter(recipe => recipe.tags.includes(recipeTag))
+  }
+
+  filterRecipeByIngredient(recipeIngredient) {
+    let matchedIngredient = ingredientsData.find(ingredient => ingredient.name === recipeIngredient);
+    return recipeData.reduce((filteredRecipes, recipe) => {
+      recipe.ingredients.forEach(ingredient => {
+            if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
+              filteredRecipes.push(recipe)
+            }
+          })
+      return filteredRecipes
+    }, [])
+  }
+  
 }
 
 if (typeof module !== 'undefined') {
