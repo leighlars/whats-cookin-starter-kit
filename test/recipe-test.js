@@ -6,6 +6,7 @@ const Recipe = require('../src/Recipe')
 describe('Recipe', function() {
   let recipe;
   let recipeInfo;
+  let recipeInfo2;
   let ingredients;
   beforeEach(function() {
     recipeInfo =  {
@@ -70,8 +71,92 @@ describe('Recipe', function() {
         "hor d'oeuvre"
       ]
     },
-    recipe = new Recipe(recipeInfo);
 
+    recipeInfo2 = [
+      {
+      "id": 543687,
+      "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
+      "ingredients": [
+        {
+          "id": 93607,
+          "quantity": {
+            "amount": 1,
+            "unit": "cup"
+          }
+        },
+        {
+          "id": 9040,
+          "quantity": {
+            "amount": 1,
+            "unit": "small"
+          }
+        },
+        {
+          "id": 18942,
+          "quantity": {
+            "amount": 1,
+            "unit": "Tbsp"
+          }
+        },
+        {
+          "id": 1012010,
+          "quantity": {
+            "amount": 0.25,
+            "unit": "tsp"
+          }
+        },
+        {
+          "id": 2021,
+          "quantity": {
+            "amount": 1,
+            "unit": "pinch"
+          }
+        },
+        {
+          "id": 2025,
+          "quantity": {
+            "amount": 1,
+            "unit": "pinch"
+          }
+        },
+        {
+          "id": 43274,
+          "quantity": {
+            "amount": 1,
+            "unit": "oz"
+          }
+        },
+        {
+          "id": 8120,
+          "quantity": {
+            "amount": 0.25,
+            "unit": "cup"
+          }
+        },
+        {
+          "id": 11424,
+          "quantity": {
+            "amount": 0.5,
+            "unit": "cup"
+          }
+        }
+      ],
+      "instructions": [
+        {
+          "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
+          "number": 1
+        }
+      ],
+      "name": "Pumpkin Cheesecake Breakfast Smoothie",
+      "tags": [
+        "morning meal",
+        "brunch",
+        "breakfast"
+      ]
+    }
+  ],
+    recipe = new Recipe(recipeInfo);
+    recipe2 = new Recipe(recipeInfo2)
     ingredients = [
       {
         "id": 20081,
@@ -141,4 +226,9 @@ describe('Recipe', function() {
   it('should get total cost of ingredients in each recipe', function() {
     expect(recipe.getRecipeCost()).to.equal(976);
   });
+
+  it('should filter a recipes by tag', function() {
+    expect(recipe.filterRecipeByTag('breakfast')).to.deep.equal(recipeInfo2)
+  });
+  
 })

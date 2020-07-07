@@ -1,5 +1,5 @@
 const ingredientsData = require('../data/ingredients');
-
+const recipeData = require ('../data/recipes')
 class Recipe {
   constructor(recipe) {
     this.id = recipe.id;
@@ -21,6 +21,18 @@ class Recipe {
       return sum;
     }, 0);
   }
+
+  filterRecipeByTag(recipeType) {
+    return recipeData.filter(recipe => {
+      if (recipe.tags.includes(recipeType)) {
+        return recipe;
+      }
+    })
+  }
+
+  // iterate over recipeData
+  // access the tags key, which is an array
+  // possibly iterate over array
 }
 
 if (typeof module !== 'undefined') {
