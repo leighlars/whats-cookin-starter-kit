@@ -1,3 +1,5 @@
+// const recipesData = require('../data/recipe');
+
 class User {
   constructor(user) {
     this.id = user.id;
@@ -6,6 +8,16 @@ class User {
     this.favoriteRecipes = user.favoriteRecipes || [];
     this.plannedRecipes = user.plannedRecipes || [];
   }
+
+  addFavoriteRecipe(recipe) {
+    this.favoriteRecipes.push(recipe);
+  }
+
+  deleteFavoriteRecipe(recipe) {
+    let i = this.favoriteRecipes.indexOf(recipe);
+    this.favoriteRecipes.splice(i, 1);
+  }
+
 }
 
 
