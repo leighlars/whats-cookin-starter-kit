@@ -1,7 +1,7 @@
 * {
   border: none;
   box-sizing: border-box;
-  /* font-family: "Lobster"; */
+  font-family: 'Pacifico', cursive;
   color: #CBC9CF;
 }
 
@@ -22,21 +22,21 @@ header {
   width: 100%;
   border-bottom: 1px solid #C94C4C;
   color: #C94C4C;
-  /* font-family: 'Lobster'; */
+  font-family: 'Pacifico', cursive;
   text-align: center;
-  /* text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black; */
 }
 
 button {
-  background-color: #b1cbbb;
-  color: #C94C4C;
-  font-family: 'Lobster';
   justify-content: center;
   align-items: center;
+  background-color: #b1cbbb;
+  color: #C94C4C;
+  font-family: 'Pacifico', cursive;
+
 }
 
 button:hover {
-  border: 1px solid #C94C4C;
+  transform: skewX(-15deg);
 }
 
 .logo {
