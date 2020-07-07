@@ -1,3 +1,5 @@
+const ingredientsData = require('../data/ingredients');
+
 class Recipe {
   constructor(recipe) {
     this.id = recipe.id;
@@ -12,11 +14,12 @@ class Recipe {
     return this.instructions;
   }
 
-  getIngredientCost() {
-    // iterate thru this.ingredients
-    // param sum & ingredient
-    // forEach ingredient , get id, get quantity which is an obj.
-    // ingredient.id, ingredient.quantity.amount
+  getRecipeCost() {
+    return this.ingredients.reduce((sum, recipeIngredient) => {
+      let matchIngredient = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
+      sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount);
+      return sum;
+    }, 0);
   }
 }
 
