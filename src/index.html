@@ -2,33 +2,48 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link href=“https://fonts.googleapis.com/css2?family=Lobster&display=swap” rel=“stylesheet”>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssnormalize/cssnormalize-min.css">
     <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
     <title>Recipeace of Mind</title>
   </head>
   <body>
     <header> 
-      <div class="logo">
+      <div class="logo-box">
         <img src="../assets/logo.svg" class="logo-icon" alt="Image of head with grain">
         <h2>Recipeace of Mind</h2>
       </div>
       <article class="search-box">
         <button>
-          <img src="../assets/orange.svg" class="icon" alt="Image of magnifying glass">
-       </button>
-        <input type="text" class="inputs" id="search-text" maxlength="50" minlength="0">
-        <button>X</button>
+          <img src="../assets/orange.svg" class="search-icon" alt="Image of magnifying glass">
+        </button>
+        <input type="text" class="inputs" id="search-text" placeholder="Search ingredients and recipes!" maxlength="70" minlength="0">
+        <button>
+          <img src="../assets/close.svg" class="close-icon" alt="Delete text">
+        </button>
       </article>
       <article class="user-lists">
-        <button>
-          <img src="../assets/heart.svg" class="icon" alt="Image of heart">Favorite Recipes
+        <button class="user-list-btn">
+          <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">Favorite Recipes
         </button>
-        <button>
-          <img src="../assets/calendar.svg" class="icon" alt="Image of calendar">Planned for the Week
+        <button class="user-list-btn">
+          <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">Planned for the Week
         </button>
       </article>
     </header>
+    <main>
+      <aside>
+          <div class="search-options">  
+            <ul class="tag-list"> </ul>
+          </div>
+          <button class="filter-btn">Filter Recipes</button>
+      </aside>
+      <section class="recipe-display">
+        <h1>Howdy!</h1>
+      </section>
+    </main>
+    
 
     <script type="text/javascript" src="../data/users.js"></script>
     <script type="text/javascript" src="../data/recipes.js"></script>

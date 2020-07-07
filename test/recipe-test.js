@@ -8,7 +8,6 @@ describe('Recipe', function() {
   let recipeInfo;
   let ingredients;
   beforeEach(function() {
-
     recipeInfo =  {
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -32,62 +31,6 @@ describe('Recipe', function() {
           "quantity": {
             "amount": 1,
             "unit": "large"
-          }
-        },
-        {
-          "id": 19335,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "c"
-          }
-        },
-        {
-          "id": 19206,
-          "quantity": {
-            "amount": 3,
-            "unit": "Tbsp"
-          }
-        },
-        {
-          "id": 19334,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "c"
-          }
-        },
-        {
-          "id": 2047,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "tsp"
-          }
-        },
-        {
-          "id": 1012047,
-          "quantity": {
-            "amount": 24,
-            "unit": "servings"
-          }
-        },
-        {
-          "id": 10019903,
-          "quantity": {
-            "amount": 2,
-            "unit": "c"
-          }
-        },
-        {
-          "id": 1145,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "c"
-          }
-        },
-        {
-          "id": 2050,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "tsp"
           }
         }
       ],
@@ -131,9 +74,9 @@ describe('Recipe', function() {
 
     ingredients = [
       {
-      "id": 20081,
-      "name": "wheat flour",
-      "estimatedCostInCents": 142
+        "id": 20081,
+        "name": "wheat flour",
+        "estimatedCostInCents": 142
       },
       {
         "id": 18372,
@@ -145,8 +88,7 @@ describe('Recipe', function() {
         "name": "eggs",
         "estimatedCostInCents": 472
       }
-
-  ]
+    ]
   });
 
   it('should be a function', function() {
@@ -172,20 +114,20 @@ describe('Recipe', function() {
   it('should have ingredients', function() {
     expect(recipe.ingredients[0]).to.deep.equal(
       {
-      "id": 20081,
-      "quantity": {
-        "amount": 1.5,
-        "unit": "c"
-      }
-    })
+        "id": 20081,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      })
   });
 
   it('should have instructions', function() {
     expect(recipe.instructions[0]).to.deep.equal(
       {
-      "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
-      "number": 1
-    })
+        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
+        "number": 1
+      })
   });
 
   it('should have tags', function() {
@@ -194,9 +136,9 @@ describe('Recipe', function() {
 
   it('should get recipe instructions', function() {
     expect(recipe.getInstructions()).to.equal(recipe.instructions)
-  })
+  });
 
-
-
-
+  it('should get total cost of ingredients in each recipe', function() {
+    expect(recipe.getRecipeCost()).to.equal(976);
+  });
 })
