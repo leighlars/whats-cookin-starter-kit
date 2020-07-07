@@ -60,9 +60,15 @@ h2 {
   font-size: 34px;
 }
 
-.icon {
+.search-icon {
   margin-right: 5px;
   width: 40px;
+  height: 30px;
+}
+
+.user-icon {
+  margin-right: 5px;
+  width: 35px;
   height: 40px;
 }
 
@@ -90,9 +96,7 @@ h2 {
   height: 100%;
   width: 30%;
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-size: large;
   border-left: 1px solid #FFFACD;
 }
