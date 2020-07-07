@@ -18,9 +18,9 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 100px;
+  height: 120px;
   width: 100%;
-  border-bottom: 1px solid #C94C4C;
+  border-bottom: 1px solid #FFFACD;
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
   text-align: center;
@@ -32,7 +32,8 @@ button {
   background-color: #b1cbbb;
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
-
+  font-size: 24px;
+  outline: none;
 }
 
 button:hover {
@@ -45,22 +46,23 @@ button:hover {
   align-items: center;
   height: 100%;
   width: 25%;
-  border-right: 1px solid #C94C4C;
+  border-right: 1px solid #FFFACD;
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 }
 
 h2 {
   color: #C94C4C;
+  font-size: 26px;;
 }
 
 .icon {
   margin-right: 5px;
-  width: 30px;
-  height: 30px;
+  width: 10%;
+  height: 10%;
 }
 
 .search-box {
@@ -71,6 +73,18 @@ h2 {
   width: 70%;
 }
 
+#search-text {
+  background-color: #FFFACD;
+  color: #C94C4C;
+  font-family: 'Raleway', cursive;
+  border-radius: 6px;
+  margin: 5px;
+  padding: 6px;
+  outline: none;
+  height: 40px;
+  width: 400px;
+}
+
 .user-lists {
   height: 100%;
   width: 25%;
@@ -79,5 +93,5 @@ h2 {
   justify-content: center;
   flex-direction: column;
   font-size: large;
-  border-left: 1px solid #C94C4C;
+  border-left: 1px solid #FFFACD;
 }
