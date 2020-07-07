@@ -22,9 +22,22 @@ class Recipe {
     }, 0);
   }
 
-  filterRecipeByTag(recipeType) {
-    return recipeData.filter(recipe => recipe.tags.includes(recipeType))
+  filterRecipeByTag(recipeTag) {
+    return recipeData.filter(recipe => recipe.tags.includes(recipeTag))
   }
+
+  filterRecipeByIngredient(recipeIngredient) {
+    let matchedIngredient = ingredientsData.find(ingredient => ingredient.name === recipeIngredient);
+    return recipeData.reduce((filteredRecipes, recipe) => {
+      recipe.ingredients.forEach(ingredient => {
+            if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
+              filteredRecipes.push(recipe)
+            }
+          })
+      return filteredRecipes
+    }, [])
+  }
+  
 }
 
 if (typeof module !== 'undefined') {

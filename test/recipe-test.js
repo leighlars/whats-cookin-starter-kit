@@ -2,7 +2,8 @@ const chai = require('chai');
 const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
-
+const RecipeData = require('../data/recipes');
+const recipeData = require('../data/recipes');
 describe('Recipe', function() {
   let recipe;
   let recipeInfo;
@@ -230,5 +231,11 @@ describe('Recipe', function() {
   it('should filter a recipes by tag', function() {
     expect(recipe.filterRecipeByTag('breakfast')).to.deep.equal(recipeInfo2)
   });
-  
+
+  it('should filter a recipes by ingredient', function() {
+    expect(recipe.filterRecipeByIngredient('maple')).
+    to.deep.equal([recipeData[1], recipeData[6]])
+  });
+
+
 })
