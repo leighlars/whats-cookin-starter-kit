@@ -4,6 +4,7 @@ Mod 2 Pair Project
 ### Developers
 - [Leigh Larson](https://github.com/leighlars)
 - [Horacio Borrego](https://github.com/H-Bo214)
+- [DTR](https://gist.github.com/leighlars/d64f32a60448999d263e3d16af8b7e8d)
 
 ### Project Links
 - [Repo](https://github.com/leighlars/whats-cookin-starter-kit)
