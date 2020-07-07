@@ -13,5 +13,5 @@ class User {
 
 
 if (typeof module !== 'undefined') {
-  module.exports = Class;
+  module.exports = User;
 }
