@@ -92,11 +92,14 @@ describe('Pantry', function() {
     expect(pantryFull.ingredients).to.deep.equal(ingredients);
   });
 
-  it.only('has a helper method to determine if the pantry has sufficient ingredients', function() {
+  it.only('should check if recipe and pantry ingredients match and if pantry has enough for recipe', function() {
+    expect(pantryFull.matchAndCompareIngredients(recipe1)).to.equal(true);
+    expect(pantryFull.matchAndCompareIngredients(recipe2)).to.equal(false);
+    expect(pantryEmpty.matchAndCompareIngredients(recipe1)).to.equal(false);
 
   });
 
-  it('should determine if pantry has enough ingredients for meal', function() {
+  it.only('should determine if pantry has enough ingredients for meal', function() {
     expect(pantryFull.checkPantry(recipe1)).to.equal(true);
     expect(pantryFull.checkPantry(recipe2)).to.equal(false);
     expect(pantryEmpty.checkPantry(recipe1)).to.equal(false);

@@ -7,20 +7,21 @@ class Pantry {
 
   // Determine whether my pantry has enough ingredients to cook a given meal
   
-  helperMethod = (recipeIngredient) => {
+  matchAndCompareIngredients = (recipeIngredient) => {
     return this.ingredients.find(pantryIngredient => {
       return pantryIngredient.ingredient === recipeIngredient.id &&
         recipeIngredient.quantity.amount <= pantryIngredient.amount;
     });
   }
-
+  
   checkPantry = (recipe) => {
     return recipe.ingredients.every(recipeIngredient => {
-      return this.helperMethod(recipeIngredient);
+      return this.matchAndCompareIngredients(recipeIngredient);
     });
   }
-
  };
+ 
+
   
   // Determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry
 
