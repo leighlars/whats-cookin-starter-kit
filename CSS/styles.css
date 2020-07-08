@@ -51,10 +51,13 @@ button:hover {
   border-right: 1px solid #FFFACD;
   height: 100%;
   width: 25%;
+  color: #C94C4C;
   text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
 }
 
 .logo-img-text {
+  display: flex;
+  align-items: center;
   flex-direction: row;
 }
 
@@ -64,10 +67,17 @@ button:hover {
   margin-right: 5px;
 }
 
-
 h2 {
   color: #C94C4C;
   font-size: 34px;
+  margin-bottom: 15px;
+}
+
+.user-greeting {
+  margin-top: 0px;
+  color: #C94C4C;
+  font-size: 20px;
+  text-shadow: initial;
 }
 
 .search-box {
@@ -111,10 +121,6 @@ h2 {
   width: 25%;
 }
 
-.user-greeting {
-  color: #C94C4C;
-  margin: 1px;
-}
 
 .user-list-btn {
   height: 30px;
