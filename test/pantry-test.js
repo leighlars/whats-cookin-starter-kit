@@ -278,7 +278,7 @@ describe('Pantry', function() {
 
   it.only('should determine if I have enough ingredients for a meal', function() {
     expect(pantry.determineSufficientIngredients(recipe1)).to.equal(true);
-    expect(pantry.determineSufficientIngredients(recipe2)).to.equal(false);
+    expect(pantry.determineSufficientIngredients(recipe2).length).to.deep.equal(1);
 
   })
 
