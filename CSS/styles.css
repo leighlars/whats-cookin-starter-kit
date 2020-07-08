@@ -165,7 +165,9 @@ aside {
 .recipe-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #FFFACD;
+  align-items: center;
+  border: 1px solid #C94C4C;
+  box-shadow: 5px 7px #C94C4C;
   border-radius: 6px;
   background-color: #FFFACD;
   margin: 20px;
@@ -179,7 +181,34 @@ aside {
   transform: scale(1.1); 
   }
 
-  .user-recipe-buttons {
-    display: inline-flex;
+  .card-top {
+    position: relative;
+    width: 100%;
+    height: 130px;
+  }
+  
+  .buttons-overlay {
+    display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    position: absolute;
+  }
+
+  .favorite-recipe-btn,
+  .planned-recipe-btn {
+    background-color: transparent;
+    /* transform: skewX(-1deg); */
+  }
+
+  .favorite-recipe-btn:hover,
+  .planned-recipe-btn:hover {
+    border-radius: 4px;
+    border: 1px solid #FFFACD;
+  }
+  
+
+  .recipe-img {
+    border-radius: 4px 0px 0px;
+    height: 125px;
+    width: 100%;
   }
