@@ -124,12 +124,12 @@ h2 {
 
 .user-list-btn {
   text-align: right;
-  margin-bottom: 5px;
   width: 315px;
 }
 
 .user-icons {
   padding: 1%;
+  margin-top: 2px;
   margin-right: 5px;
   width: 25px;
   height: 100%;
