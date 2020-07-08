@@ -2,7 +2,6 @@ const chai = require('chai');
 const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
-const RecipeData = require('../data/recipes');
 const recipeData = require('../data/recipes');
 describe('Recipe', function() {
   let recipe;
@@ -72,90 +71,89 @@ describe('Recipe', function() {
         "hor d'oeuvre"
       ]
     },
-
     recipeInfo2 = [
       {
-      "id": 543687,
-      "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
-      "ingredients": [
-        {
-          "id": 93607,
-          "quantity": {
-            "amount": 1,
-            "unit": "cup"
+        "id": 543687,
+        "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
+        "ingredients": [
+          {
+            "id": 93607,
+            "quantity": {
+              "amount": 1,
+              "unit": "cup"
+            }
+          },
+          {
+            "id": 9040,
+            "quantity": {
+              "amount": 1,
+              "unit": "small"
+            }
+          },
+          {
+            "id": 18942,
+            "quantity": {
+              "amount": 1,
+              "unit": "Tbsp"
+            }
+          },
+          {
+            "id": 1012010,
+            "quantity": {
+              "amount": 0.25,
+              "unit": "tsp"
+            }
+          },
+          {
+            "id": 2021,
+            "quantity": {
+              "amount": 1,
+              "unit": "pinch"
+            }
+          },
+          {
+            "id": 2025,
+            "quantity": {
+              "amount": 1,
+              "unit": "pinch"
+            }
+          },
+          {
+            "id": 43274,
+            "quantity": {
+              "amount": 1,
+              "unit": "oz"
+            }
+          },
+          {
+            "id": 8120,
+            "quantity": {
+              "amount": 0.25,
+              "unit": "cup"
+            }
+          },
+          {
+            "id": 11424,
+            "quantity": {
+              "amount": 0.5,
+              "unit": "cup"
+            }
           }
-        },
-        {
-          "id": 9040,
-          "quantity": {
-            "amount": 1,
-            "unit": "small"
+        ],
+        "instructions": [
+          {
+            "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
+            "number": 1
           }
-        },
-        {
-          "id": 18942,
-          "quantity": {
-            "amount": 1,
-            "unit": "Tbsp"
-          }
-        },
-        {
-          "id": 1012010,
-          "quantity": {
-            "amount": 0.25,
-            "unit": "tsp"
-          }
-        },
-        {
-          "id": 2021,
-          "quantity": {
-            "amount": 1,
-            "unit": "pinch"
-          }
-        },
-        {
-          "id": 2025,
-          "quantity": {
-            "amount": 1,
-            "unit": "pinch"
-          }
-        },
-        {
-          "id": 43274,
-          "quantity": {
-            "amount": 1,
-            "unit": "oz"
-          }
-        },
-        {
-          "id": 8120,
-          "quantity": {
-            "amount": 0.25,
-            "unit": "cup"
-          }
-        },
-        {
-          "id": 11424,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "cup"
-          }
-        }
-      ],
-      "instructions": [
-        {
-          "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
-          "number": 1
-        }
-      ],
-      "name": "Pumpkin Cheesecake Breakfast Smoothie",
-      "tags": [
-        "morning meal",
-        "brunch",
-        "breakfast"
-      ]
-    }
-  ],
+        ],
+        "name": "Pumpkin Cheesecake Breakfast Smoothie",
+        "tags": [
+          "morning meal",
+          "brunch",
+          "breakfast"
+        ]
+      }
+    ],
     recipe = new Recipe(recipeInfo);
     recipe2 = new Recipe(recipeInfo2)
     ingredients = [
@@ -232,9 +230,20 @@ describe('Recipe', function() {
     expect(recipe.filterRecipeByTag('breakfast')).to.deep.equal(recipeInfo2)
   });
 
-  it('should filter a recipes by ingredient', function() {
-    expect(recipe.filterRecipeByIngredient('maple')).
-    to.deep.equal([recipeData[1], recipeData[6]])
+  it('should filter recipes by ingredient', function() {
+    expect(recipe.filterRecipeByIngredient('maple')).to.deep.equal([recipeData[1], recipeData[6]])
+  });
+
+  it('should filter recipes by name', function () {
+    expect(recipe.filterRecipeByName('maple')).to.deep.equal([recipeData[1]]);
+    expect(recipe.filterRecipeByName('apple').length).to.deep.equal(3);
+
+  });
+
+  it('should return all recipes that match searched recipe name or ingredient', function() {
+    expect(recipe.filterAllRecipesByQuery('maple').length).to.deep.equal(2);
+    expect(recipe.filterAllRecipesByQuery('apple').length).to.deep.equal(3);
+
   });
 
 

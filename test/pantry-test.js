@@ -103,7 +103,7 @@ describe('Pantry', function () {
   
   });
 
-  it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
+  it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
     const recipe = {
       ingredients: [
         {ingredient: 1, quantity: 3},

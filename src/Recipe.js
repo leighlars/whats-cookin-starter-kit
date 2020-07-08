@@ -28,15 +28,31 @@ class Recipe {
 
   filterRecipeByIngredient(recipeIngredient) {
     let matchedIngredient = ingredientsData.find(ingredient => ingredient.name === recipeIngredient);
-    return recipeData.reduce((filteredRecipes, recipe) => {
+    let filteredRecipes = recipeData.reduce((filteredRecipes, recipe) => {
       recipe.ingredients.forEach(ingredient => {
-            if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
-              filteredRecipes.push(recipe)
-            }
-          })
+        if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
+          filteredRecipes.push(recipe)
+        }
+      })
       return filteredRecipes
-    }, [])
+    }, []);
+    let filterDuplicates = new Set(filteredRecipes);
+    return [...filterDuplicates];
   }
+
+  filterRecipeByName(recipeIngredient) {
+    let filteredRecipes = recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
+    let filterDuplicates = new Set(filteredRecipes);
+    return [...filterDuplicates]
+  }
+
+  filterAllRecipesByQuery(recipeIngredient) {
+    recipeIngredient = recipeIngredient.toLowerCase();
+    let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient).concat(this.filterRecipeByName(recipeIngredient));
+    let filterAllSearched = new Set(allSearchedRecipes);
+    return [...filterAllSearched];
+  }
+
   
 }
 
