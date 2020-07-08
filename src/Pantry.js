@@ -20,9 +20,6 @@ class Pantry {
   }
 
   ingredientsMatchAndEnoughInPantry = (recipeIngredient, pantryIngredient) => {
-    // console.log(pantryIngredient.ingredient === recipeIngredient.id &&
-    //   recipeIngredient.quantity.amount <= pantryIngredient.amount);
-    
     return pantryIngredient.ingredient === recipeIngredient.id &&
       recipeIngredient.quantity.amount <= pantryIngredient.amount;
   }
@@ -30,16 +27,12 @@ class Pantry {
   findMissingIngredients(recipe) {
     let missingIngredients = []
     recipe.ingredients.forEach(recipeIngredient => {
-      console.log('recipeIngredient', recipeIngredient);
-      
       let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length
       if(quantity > 0) { 
-        
         let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name, unit: recipeIngredient.unit}
         missingIngredients.push(missingIngredient)
       }
     })
-
     return missingIngredients;
   }
   
