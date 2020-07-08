@@ -15,6 +15,11 @@ body {
   background:#b1cbbb;
 }
 
+h1, h4, p {
+  padding: 0;
+  margin: 0;
+}
+
 /* header */
 
 header {
@@ -32,7 +37,7 @@ header {
 button {
   justify-content: center;
   align-items: center;
-  background-color: #b1cbbb;
+  background-color: transparent;
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
   font-size: 18px;
@@ -124,13 +129,13 @@ h2 {
   margin-right: 18px;
 }
 
-.user-list-btn {
+.user-list-btns {
   text-align: right;
   width: 315px;
+  padding: 1%;
 }
 
 .user-icons {
-  padding: 1%;
   margin-top: 2px;
   margin-right: 5px;
   width: 25px;
@@ -165,15 +170,40 @@ aside {
   align-items: center;
   border: 2px solid #C94C4C;
   border-radius: 6px;
-  height: 65vh;
+  height: 75vh;
   width: 300px;
   overflow: auto;
+  padding: 1%;
 }
 
 .filter-btn {
   background-color: #FFFACD;
-  font-size: 20px;
+  font-size: 18px;
   width: 250px;
+  margin-top: 5px;
+}
+
+.tag-list {
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 90%;
+  height: 70%;
+}
+
+.tag-buttons {
+  border: 1px solid #b1cbbb;
+  border-radius: 6px;
+  font: bold 14px 'Raleway';
+  margin: 1px 2px;
+}
+
+/* .tag-button:hover {
+
+} */
+
+.tag-button.active {
+  background-color: #C94C4C;
+  color: #FFFACD;
 }
 
 /* card section */
@@ -295,7 +325,6 @@ aside {
 .recipe-instructions h4 {
   color: #C94C4C;
   font-size: 1em;
-  margin: 0;
   margin-left: 3%;
 }
 
