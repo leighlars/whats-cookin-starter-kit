@@ -6,11 +6,10 @@ class Pantry {
   }
 
   // Determine whether my pantry has enough ingredients to cook a given meal
-
+  // matchAndCompareIngredients returns a boolean.
   matchAndCompareIngredients = (recipeIngredient) => {
-    return this.ingredients.find(pantryIngredient => {
-      return pantryIngredient.ingredient === recipeIngredient.id &&
-        recipeIngredient.quantity.amount <= pantryIngredient.amount;
+    return this.ingredients.some(pantryIngredient => {
+      return this.ingredientsMatchAndEnoughInPantry(recipeIngredient, pantryIngredient)
     });
   }
 
@@ -19,15 +18,40 @@ class Pantry {
       return this.matchAndCompareIngredients(recipeIngredient);
     });
   }
+
+  ingredientsMatchAndEnoughInPantry = (recipeIngredient, pantryIngredient) => {
+    return pantryIngredient.ingredient === recipeIngredient.id &&
+      recipeIngredient.quantity.amount <= pantryIngredient.amount;
+  }
+
+  findMissingIngredients(recipe) {
+    let missingIngredients = []
+    recipe.ingredients.forEach(recipeIngredient => {
+      let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length
+      if(quantity > 0) { 
+        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name }
+        missingIngredients.push(missingIngredient)
+      }
+    })
+
+    return missingIngredients;
+  }
+  
+  // Determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry
+
+  // using the check pantry method see if we can cook given a certain recipe
+  // If we can its all good
+  // else
+    // call the findMissingIngredientsRecipe
+    // Go look up the ingredients name based off the result of this
+    // Return to the user which ingredients they still need to make the recipe
+
 };
 
 
 
-// Determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry
 
-// findMissingIngredients() {
 
-// }
 
 
 // determineSufficientIngredients(recipe) {
