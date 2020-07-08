@@ -35,7 +35,7 @@ button {
   background-color: #b1cbbb;
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
-  font-size: 20px;
+  font-size: 18px;
   outline: none;
 }
 
@@ -44,7 +44,8 @@ button:hover {
 }
 
 .logo-box {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-right: 1px solid #FFFACD;
@@ -53,11 +54,16 @@ button:hover {
   text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
 }
 
+.logo-img-text {
+  flex-direction: row;
+}
+
 .logo-icon {
   width: 55px;
   height: 55px;
   margin-right: 5px;
 }
+
 
 h2 {
   color: #C94C4C;
@@ -100,9 +106,9 @@ h2 {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  border-left: 1px solid #FFFACD;
   height: 100%;
   width: 25%;
-  border-left: 1px solid #FFFACD;
 }
 
 .user-greeting {
@@ -118,8 +124,8 @@ h2 {
 .user-icons {
   padding: 1%;
   margin-right: 5px;
-  width: 25px;
-  height: 30px;
+  width: 20px;
+  height: 25px;
 }
 
 main {
