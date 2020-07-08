@@ -102,9 +102,8 @@ h2 {
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
-  width: 30%;
+  width: 25%;
   border-left: 1px solid #FFFACD;
-  /* margin: auto; */
 }
 
 .user-list-btn {
@@ -113,7 +112,8 @@ h2 {
 }
 
 .user-icons {
-  /* margin-right: 5px; */
+  padding: 1%;
+  margin-right: 5px;
   width: 25px;
   height: 30px;
 }
@@ -158,14 +158,28 @@ aside {
 }
 
 .recipe-cards-parent {
-display: flex;
-flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .recipe-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #FFFACD;
+  border-radius: 6px;
+  background-color: #FFFACD;
   margin: 20px;
   color: black;
   width: 260px;
   height: 260px;
-  border: 1px solid #FFFACD;
-  border-radius: 6px;
+  transition: all .2s ease-in-out;
+}
+
+.recipe-card:hover {
+  transform: scale(1.1); 
+  }
+
+  .user-recipe-buttons {
+    display: inline-flex;
+    flex-direction: row;
+  }
