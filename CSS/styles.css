@@ -266,7 +266,7 @@ aside {
   font-size: 20px;
   font-weight: 700;
   right: 230px;
-  /* margin: -4% -3% 2% -1%; */
+  top: 120px;
   position: fixed;
   transition: .3s ease;
 }
@@ -284,9 +284,9 @@ aside {
 }
 
 #recipe-modal-img {
+  margin-left: 30%;
   width: 40%;
   height: 40%;
-  margin-left: 30%;
 }
 
 .recipe-instructions h4 {
@@ -297,6 +297,7 @@ aside {
 }
 
 .recipe-instructions p {
+  color: #C94C4C;
   font-family: 'Raleway';
   margin-left: 3%;
 }
