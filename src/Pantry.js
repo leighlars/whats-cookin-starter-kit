@@ -20,6 +20,9 @@ class Pantry {
   }
 
   ingredientsMatchAndEnoughInPantry = (recipeIngredient, pantryIngredient) => {
+    // console.log(pantryIngredient.ingredient === recipeIngredient.id &&
+    //   recipeIngredient.quantity.amount <= pantryIngredient.amount);
+    
     return pantryIngredient.ingredient === recipeIngredient.id &&
       recipeIngredient.quantity.amount <= pantryIngredient.amount;
   }
@@ -27,9 +30,12 @@ class Pantry {
   findMissingIngredients(recipe) {
     let missingIngredients = []
     recipe.ingredients.forEach(recipeIngredient => {
+      console.log('recipeIngredient', recipeIngredient);
+      
       let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length
       if(quantity > 0) { 
-        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name }
+        
+        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name, unit: recipeIngredient.unit}
         missingIngredients.push(missingIngredient)
       }
     })
@@ -37,42 +43,20 @@ class Pantry {
     return missingIngredients;
   }
   
-  // Determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry
-
-  // using the check pantry method see if we can cook given a certain recipe
-  // If we can its all good
-  // else
-    // call the findMissingIngredientsRecipe
-    // Go look up the ingredients name based off the result of this
-    // Return to the user which ingredients they still need to make the recipe
+  ingredientsMissingForRecipe(recipe) {
+    if (this.checkPantry(recipe)) {
+      return `You have all the necessary ingredients for this recipe.`
+    } else {
+     let allMissingIngredients = this.findMissingIngredients(recipe)
+      return allMissingIngredients.reduce((phrase, missingIngredient) => {
+        phrase = `You need ${missingIngredient.quantity} ${missingIngredient.unit} of ${missingIngredient.name} to make this recipe.`
+        return phrase
+      }, '')
+  }
 
 };
 
-
-
-
-
-
-
-// determineSufficientIngredients(recipe) {
-//   const notEnoughIngredients = this.pantry.reduce((acc, pantryIngredient) => {
-//     const recipeIngredientToCompare = recipe.ingredients.find(recipeIngredient => {
-//       return pantryIngredient.ingredient === recipeIngredient.id
-//     });
-//     console.log(recipeIngredientToCompare.quantity);
-//     if (recipeIngredientToCompare) {
-//       if (recipeIngredientToCompare.quantity.amount > pantryIngredient.amount) {
-//         recipeIngredientToCompare.quantity.amount = recipeIngredientToCompare.quantity.amount - pantryIngredient.amount
-//         acc.push(recipeIngredientToCompare);
-//       }
-//     }
-//     return acc;
-//   }, []);
-//   return notEnoughIngredients.length === 0 ? true : notEnoughIngredients;
-// }
-
-
-
+}
 
 // Remove the ingredients used for a given meal from my pantry, once that meal has been cooked(only applicable if users have a list of mealsToCook; can be considered a stretch goal)
 
