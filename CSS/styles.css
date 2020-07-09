@@ -114,10 +114,10 @@ h2 {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: right;
-  border-left: 1px solid #FFFACD;
+  /* border-left: 1px solid #FFFACD; */
   padding: 1%;
   height: 100%;
-  width: 25%;
+  width: 20%;
 }
 
 .user-greeting {
@@ -131,7 +131,7 @@ h2 {
 
 .user-list-btns {
   text-align: right;
-  width: 315px;
+  width: 240px;
   padding: 1%;
 }
 
@@ -180,14 +180,15 @@ aside {
   background-color: #FFFACD;
   font-size: 18px;
   width: 250px;
-  margin-top: 5px;
+  /* margin-top: 5px; */
 }
 
 .tag-list {
   flex-wrap: wrap;
-  margin-top: 10px;
+  /* margin-top: 5px; */
   width: 90%;
   height: 60%;
+  overflow: scroll;
 }
 
 .tag-buttons {
