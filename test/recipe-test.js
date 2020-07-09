@@ -2,178 +2,59 @@ const chai = require('chai');
 const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
-const recipeData = require('../data/recipes');
 describe('Recipe', function() {
   let recipe;
-  let recipeInfo;
-  let recipeInfo2;
-  let ingredients;
-  beforeEach(function() {
-    recipeInfo =  {
-      "id": 595736,
-      "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-      "ingredients": [
+  let mockIngredientsList;
+  let mockRecipeList;
+  beforeEach( () => {
+    let mockRecipe = {
+      id: 1,
+      name: "cookies",
+      image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      ingredients: [
         {
           "id": 20081,
           "quantity": {
             "amount": 1.5,
             "unit": "c"
           }
-        },
-        {
-          "id": 18372,
-          "quantity": {
-            "amount": 0.5,
-            "unit": "tsp"
-          }
-        },
-        {
-          "id": 1123,
-          "quantity": {
-            "amount": 1,
-            "unit": "large"
-          }
         }
       ],
-      "instructions": [
-        {
-          "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
-          "number": 1
-        },
-        {
-          "instruction": "Add egg and vanilla and mix until combined.",
-          "number": 2
-        },
-        {
-          "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees.",
-          "number": 3
-        },
-        {
-          "instruction": "Place the cookie dough balls into ungreased muffin pan. Sprinkle with sea salt.",
-          "number": 4
-        },
-        {
-          "instruction": "Bake for 9 to 10 minutes, or until you see the edges start to brown.",
-          "number": 5
-        },
-        {
-          "instruction": "Remove the pan from the oven and let sit for 10 minutes before removing onto a cooling rack.Top with ice cream and a drizzle of chocolate sauce.",
-          "number": 6
-        }
-      ],
-      "name": "Loaded Chocolate Chip Pudding Cookie Cups",
-      "tags": [
-        "antipasti",
-        "starter",
-        "snack",
-        "appetizer",
-        "antipasto",
-        "hor d'oeuvre"
-      ]
-    },
-    recipeInfo2 = [
+      instructions: [{instruction: "Boil water", number: 1}],
+      tags: ["breakfast", "lunch"],
+    };
+    mockIngredientsList = [
       {
-        "id": 543687,
-        "image": "https://spoonacular.com/recipeImages/543687-556x370.jpg",
-        "ingredients": [
-          {
-            "id": 93607,
-            "quantity": {
-              "amount": 1,
-              "unit": "cup"
-            }
-          },
-          {
-            "id": 9040,
-            "quantity": {
-              "amount": 1,
-              "unit": "small"
-            }
-          },
-          {
-            "id": 18942,
-            "quantity": {
-              "amount": 1,
-              "unit": "Tbsp"
-            }
-          },
-          {
-            "id": 1012010,
-            "quantity": {
-              "amount": 0.25,
-              "unit": "tsp"
-            }
-          },
-          {
-            "id": 2021,
-            "quantity": {
-              "amount": 1,
-              "unit": "pinch"
-            }
-          },
-          {
-            "id": 2025,
-            "quantity": {
-              "amount": 1,
-              "unit": "pinch"
-            }
-          },
-          {
-            "id": 43274,
-            "quantity": {
-              "amount": 1,
-              "unit": "oz"
-            }
-          },
-          {
-            "id": 8120,
-            "quantity": {
-              "amount": 0.25,
-              "unit": "cup"
-            }
-          },
-          {
-            "id": 11424,
-            "quantity": {
-              "amount": 0.5,
-              "unit": "cup"
-            }
-          }
-        ],
-        "instructions": [
-          {
-            "instruction": "Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it's sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy",
-            "number": 1
-          }
-        ],
-        "name": "Pumpkin Cheesecake Breakfast Smoothie",
-        "tags": [
-          "morning meal",
-          "brunch",
-          "breakfast"
-        ]
-      }
-    ],
-    recipe = new Recipe(recipeInfo);
-    recipe2 = new Recipe(recipeInfo2)
-    ingredients = [
-      {
-        "id": 20081,
-        "name": "wheat flour",
-        "estimatedCostInCents": 142
+        id: 20081,
+        name: "wheat flour",
+        estimatedCostInCents: 142,
       },
       {
-        "id": 18372,
-        "name": "bicarbonate of soda",
-        "estimatedCostInCents": 582
-      },
-      {
-        "id": 1123,
-        "name": "eggs",
-        "estimatedCostInCents": 472
+        id: 18372,
+        name: "bicarbonate of soda",
+        estimatedCostInCents: 582,
       }
-    ]
-  });
+    ];
+    mockRecipeList = [
+      {
+        id: 1,
+        name: "cookies",
+        image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        ingredients: [
+          {
+            id: 20081,
+            quantity: {
+              amount: 1.5,
+              unit: "c",
+            },
+          },
+        ],
+        instructions: [{ instruction: "Boil water", number: 1 }],
+        tags: ["breakfast", "lunch"],
+      },
+    ];
+    recipe = new Recipe(mockRecipe);
+  })
 
   it('should be a function', function() {
     expect(Recipe).to.be.a('function')
@@ -184,21 +65,21 @@ describe('Recipe', function() {
   });
 
   it('should have an id', function() {
-    expect(recipe.id).to.equal(595736)
+    expect(recipe.id).to.equal(1);
   });
 
   it('should have a name', function() {
-    expect(recipe.name).to.equal("Loaded Chocolate Chip Pudding Cookie Cups")
+    expect(recipe.name).to.equal("cookies")
   });
 
   it('the name should be a string', function() {
-    const recipe2 = new Recipe({id: 1, name: 123});
-    expect(recipe2.name).to.equal('123');
+    let recipeSad = new Recipe({id: 1, name: 123});
+    expect(recipeSad.name).to.equal('123');
   });
 
   it('should have a recipe image', function() {
     expect(recipe.image).to.be.a('string');
-    expect(recipe.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg")
+    expect(recipe.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg");
   });
 
   it('should have ingredients', function() {
@@ -217,14 +98,14 @@ describe('Recipe', function() {
     expect(recipe.instructions).to.be.an('array');
     expect(recipe.instructions[0]).to.deep.equal(
       {
-        "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
+        "instruction": "Boil water",
         "number": 1
       })
   });
 
   it('should have tags', function() {
     expect(recipe.tags).to.be.an('array');
-    expect(recipe.tags.length).to.equal(6)
+    expect(recipe.tags.length).to.equal(2)
   });
 
   it('should get recipe instructions', function() {
@@ -232,26 +113,26 @@ describe('Recipe', function() {
   });
 
   it('should get total cost in dollars of ingredients in each recipe', function() {
-    expect(recipe.getRecipeCost()).to.equal(9.76);
+    expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
   });
 
   it('should filter a recipes by tag', function() {
-    expect(recipe.filterRecipeByTag('breakfast')).to.deep.equal(recipeInfo2)
+    expect(recipe.filterRecipeByTag('breakfast', mockRecipeList).length).to.deep.equal(1);
   });
 
   it('should filter recipes by ingredient', function() {
-    expect(recipe.filterRecipeByIngredient('maple')).to.deep.equal([recipeData[1], recipeData[6]])
+    expect(recipe.filterRecipeByIngredient('wheat flour', mockIngredientsList, mockRecipeList)).to.deep.equal([mockRecipeList[0]])
   });
 
   it('should filter recipes by name', function () {
-    expect(recipe.filterRecipeByName('maple')).to.deep.equal([recipeData[1]]);
-    expect(recipe.filterRecipeByName('apple').length).to.deep.equal(3);
+    expect(recipe.filterRecipeByName('cookie', mockRecipeList)).to.deep.equal([mockRecipeList[0]]);
+    expect(recipe.filterRecipeByName('cookie', mockRecipeList).length).to.deep.equal(1);
 
   });
 
   it('should return all recipes that match searched recipe name or ingredient', function() {
-    expect(recipe.filterAllRecipesByQuery('maple').length).to.deep.equal(2);
-    expect(recipe.filterAllRecipesByQuery('apple').length).to.deep.equal(3);
+    expect(recipe.filterAllRecipesByQuery('cookie', mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
+    expect(recipe.filterAllRecipesByQuery( "wheat flour", mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
 
   });
 

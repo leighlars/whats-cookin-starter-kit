@@ -1,8 +1,4 @@
 
-const ingredientsData = require("../data/ingredients");
-const Recipe = require('./Recipe.js');
-const { indexOf } = require("../data/recipes");
-
 class Pantry {
   constructor(ingredients) {
     this.ingredients =  ingredients || [];

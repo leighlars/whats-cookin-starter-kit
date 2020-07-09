@@ -1,5 +1,8 @@
 console.log('Hello world');
-// import Pantry from './Pantry'
+import User from './User';
+
 // console.log(Pantry);
 // const pantry = new Pantry()
 // console.log(pantry);
+console.log(User);
+

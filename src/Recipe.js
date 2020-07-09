@@ -1,5 +1,3 @@
-const ingredientsData = require('../data/ingredients');
-const recipeData = require ('../data/recipes')
 class Recipe {
   constructor(recipe) {
     this.id = this.checkNumber(recipe.id);
@@ -22,28 +20,29 @@ class Recipe {
     return this.instructions;
   }
 
-  getRecipeCost() {
+  getRecipeCost = (ingredientsList) => {
     return this.ingredients.reduce((sum, recipeIngredient) => {
-      let matchIngredient = this.findIngredient(recipeIngredient);
+      let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
       sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
       return sum;
     }, 0);
   }
 
-  findIngredient = (recipeIngredient) => {
-    let foundIngredient = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
+  findIngredient = (recipeIngredient, ingredientsList) => {
+    let foundIngredient = ingredientsList.find(ingredient => ingredient.id === recipeIngredient.id);
     if (foundIngredient !== undefined) {
       return foundIngredient;
     }
   }
 
-  filterRecipeByTag(recipeTag) {
-    return recipeData.filter(recipe => recipe.tags.includes(recipeTag))
+  filterRecipeByTag = (recipeTag, recipeList) => {
+    return recipeList.filter(recipe => recipe.tags.includes(recipeTag))
   }
 
-  filterRecipeByIngredient(recipeIngredient) {
-    let matchedIngredient = ingredientsData.find(ingredient => ingredient.name === recipeIngredient);
-    return recipeData.reduce((filteredRecipes, recipe) => {
+  filterRecipeByIngredient = (recipeIngredient, ingredientsList, recipeList) => {
+    let matchedIngredient = ingredientsList.find(ingredient => ingredient.name === recipeIngredient);
+    if (matchedIngredient !== undefined) {
+    return recipeList.reduce((filteredRecipes, recipe) => {
       recipe.ingredients.forEach(ingredient => {
         if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
           filteredRecipes.push(recipe)
@@ -51,15 +50,19 @@ class Recipe {
       })
       return filteredRecipes
     }, []);
+    } else {
+      return [];
+    }
   }
 
-  filterRecipeByName(recipeIngredient) {
-    return recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
+  filterRecipeByName(recipeIngredient, recipeList) {
+    return recipeList.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
   }
 
-  filterAllRecipesByQuery(recipeIngredient) {
-    let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient).concat(this.filterRecipeByName(recipeIngredient));
+  filterAllRecipesByQuery(recipeIngredient, ingredientsList, recipeList) {
+    let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient, ingredientsList, recipeList).concat(this.filterRecipeByName(recipeIngredient, recipeList));
     let filterAllSearched = new Set(allSearchedRecipes);
+    console.log([...filterAllSearched]);
     return [...filterAllSearched];
   }
 
