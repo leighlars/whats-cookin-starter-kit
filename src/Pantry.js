@@ -1,8 +1,9 @@
 const ingredientsData = require("../data/ingredients");
 const Recipe = require('./Recipe.js');
 class Pantry {
-  constructor(user) {
-    this.ingredients = user.pantry || [];
+  constructor(ingredients) {
+    this.ingredients =  ingredients || [];
+    this.groceryList = [];
   }
 
   // Determine whether my pantry has enough ingredients to cook a given meal
