@@ -1,6 +1,9 @@
+
 const ingredientsData = require("../data/ingredients");
 const Recipe = require('./Recipe.js');
 const { indexOf } = require("../data/recipes");
+
+
 class Pantry {
   constructor(ingredients) {
     this.ingredients =  ingredients || [];
@@ -30,6 +33,7 @@ class Pantry {
     recipe.ingredients.forEach(recipeIngredient => {
       let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length;
       if(quantity > 0) { 
+
         let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name }
         this.groceryList.push(missingIngredient)
       }
@@ -62,6 +66,25 @@ class Pantry {
   // }
 
 };
+
+  
+  ingredientsMissingForRecipe(recipe) {
+    if (this.checkPantry(recipe)) {
+      return `You have all the necessary ingredients for this recipe.`
+    } else {
+     let allMissingIngredients = this.findMissingIngredients(recipe)
+      return allMissingIngredients.reduce((phrase, missingIngredient) => {
+        phrase = `You need ${missingIngredient.quantity} ${missingIngredient.unit} of ${missingIngredient.name} to make this recipe.`
+        return phrase
+      }, '')
+  }
+
+};
+
+}
+
+// Remove the ingredients used for a given meal from my pantry, once that meal has been cooked(only applicable if users have a list of mealsToCook; can be considered a stretch goal)
+
 
 
 if (typeof module !== 'undefined') {

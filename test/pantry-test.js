@@ -101,17 +101,32 @@ describe('Pantry', function () {
     expect(pantryFull.checkPantry(recipe1)).to.equal(true);
     expect(pantryFull.checkPantry(recipe2)).to.equal(false);
   });
-
+  
   it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
-    const recipe = {
+    let recipe = {
+      
       ingredients: [
-        {ingredient: 1, quantity: 3},
-        {ingredient: 2, quantity: 1}
+        {ingredient: 1, quantity: 3, unit: 'cup'},
+        {ingredient: 2, quantity: 1, unit: 'tsp'}
       ]
     }
     const sugar = { id: 1, name: 'sugar', estimatedCostOfCents: 100 };
     const butter = { id: 2, name: 'butter', estimatedCostOfCents: 299 };
     const pantry = new Pantry([sugar, sugar, butter])
+    expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, name: 'sugar', quantity: 1, unit: 'cup'}])
+  })
+
+  it('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
+    let recipe = {
+      ingredients: [
+        {ingredient: 1, quantity: 3, unit: 'cup'},
+        {ingredient: 2, quantity: 1, unit: 'tsp'}
+      ]
+    }
+    const sugar = { id: 1, name: 'sugar', estimatedCostOfCents: 100 };
+    const butter = { id: 2, name: 'butter', estimatedCostOfCents: 299 };
+    const pantry = new Pantry([sugar, sugar, butter])
+
     expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, name: 'sugar', quantity: 1}])
   });
 
@@ -119,6 +134,8 @@ describe('Pantry', function () {
     
     expect(pantryFull.removeIngredient()).to.equal()
     // can't figure out test logic
+
+    expect(pantry.ingredientsMissingForRecipe(recipe)).to.equal(`You need 1 cup of sugar to make this recipe.`)
 
   })
 
