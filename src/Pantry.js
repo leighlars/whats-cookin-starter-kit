@@ -1,5 +1,6 @@
-const ingredientsData = require("../data/ingredients");
-
+// const ingredientsData = require("../data/ingredients");
+  console.log('pantry');
+  
 class Pantry {
   constructor(ingredients = []) {
     this.ingredients = ingredients;
