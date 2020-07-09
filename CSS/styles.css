@@ -15,6 +15,11 @@ body {
   background:#b1cbbb;
 }
 
+h1, h4, p {
+  padding: 0;
+  margin: 0;
+}
+
 /* header */
 
 header {
@@ -32,7 +37,7 @@ header {
 button {
   justify-content: center;
   align-items: center;
-  background-color: #b1cbbb;
+  background-color: transparent;
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
   font-size: 18px;
@@ -73,13 +78,6 @@ h2 {
   margin-bottom: 15px;
 }
 
-.user-greeting {
-  margin-top: 0px;
-  color: #C94C4C;
-  font-size: 20px;
-  text-shadow: initial;
-}
-
 .search-box {
   display: flex;
   justify-content: center;
@@ -115,23 +113,32 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
-  border-left: 1px solid #FFFACD;
+  align-items: right;
+  /* border-left: 1px solid #FFFACD; */
   padding: 1%;
   height: 100%;
-  width: 25%;
+  width: 20%;
 }
 
-.user-list-btn {
+.user-greeting {
+  color: #C94C4C;
+  font-size: 20px;
   text-align: right;
-  width: 315px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 18px;
+}
+
+.user-list-btns {
+  text-align: right;
+  width: 240px;
+  padding: 1%;
 }
 
 .user-icons {
-  padding: 1%;
   margin-top: 2px;
   margin-right: 5px;
-  width: 25px;
+  width: 20px;
   height: 100%;
 }
 
@@ -158,19 +165,42 @@ aside {
 
 .search-options {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   border: 2px solid #C94C4C;
   border-radius: 6px;
-  height: 65vh;
+  height: 75vh;
   width: 300px;
   overflow: auto;
+  padding: 1%;
 }
 
 .filter-btn {
   background-color: #FFFACD;
-  font-size: 24px;
-  width: 200px;
+  font-size: 18px;
+  width: 250px;
+  /* margin-top: 5px; */
+}
+
+.tag-list {
+  flex-wrap: wrap;
+  /* margin-top: 5px; */
+  width: 90%;
+  height: 60%;
+  overflow: scroll;
+}
+
+.tag-buttons {
+  border: 1px solid #b1cbbb;
+  border-radius: 6px;
+  font: bold 14px 'Raleway';
+  margin: 1px 2px;
+}
+
+.tag-button.active {
+  background-color: #C94C4C;
+  color: #FFFACD;
 }
 
 /* card section */
@@ -207,7 +237,7 @@ aside {
 .card-overlay {
   display: flex;
   flex-direction: column;
-  background-color:rgba(255, 255, 255, 0.7);
+  background-color:rgba(99, 98, 94, 0.7);
   position: absolute;
   border-radius: 0px 0px 4px 4px;
   bottom: 0px;
@@ -232,10 +262,88 @@ aside {
 }
 
 .recipe-title {
-  color: #C94C4C;
-  font-size: 18px;
-  /* text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black; */
+  color: #FFFACD;
+  font-size: 20px;
+  text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
   margin: 0px;    
   }
 
+
+ /* recipe modal */
+.recipe-instructions {
+  background: #FFFACD;
+  border: 3px solid #C94C4C;
+  border-radius: 10px;
+  box-shadow: 1px 1px 115px black;
+  display: none;
+  height: 70%;
+  margin: 0;
+  overflow-x: scroll;
+  padding: 1%;
+  position: fixed;
+  right: 15%;
+  top: 15%;
+  width: 70%;
+  z-index: 1000;
+  transition: .3s ease;
+}
+
+#exit-recipe-btn {
+  background: transparent;
+  border: 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+  right: 230px;
+  top: 120px;
+  position: fixed;
+  transition: .3s ease;
+}
+
+#recipe-title {
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 7px 7px 0px 0px;
+  color: #b1cbbb;
+  font-size: 30px;
+  margin: 0;
+  padding: 1%;
+  text-align: center;
+  text-shadow: 0px 0px 4px black;
+}
+
+#recipe-modal-img {
+  margin-left: 30%;
+  width: 40%;
+  height: 40%;
+}
+
+.recipe-instructions h4 {
+  color: #C94C4C;
+  font-size: 1em;
+  margin-left: 3%;
+}
+
+.recipe-instructions p {
+  color: #C94C4C;
+  font-family: 'Raleway';
+  margin-left: 3%;
+}
+
+.recipe-instructions ol {
+  margin-right: 3%;
+}
+
+#overlay {
+  filter:alpha(opacity=50);
+  background-color: #5B7894;
+  height:100%;
+  left:0;
+  opacity:0.5;
+  position:fixed;
+  top:0;
+  width:100%;
+  z-index:100;
+}
 

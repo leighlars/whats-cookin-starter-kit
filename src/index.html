@@ -15,7 +15,6 @@
           <img src="../assets/logo.svg" class="logo-icon" alt="Image of head with grain">
           <h2>Recipeace of Mind</h2>
         </span>
-        <span><p class="user-greeting">Welcome, Horacio!</p></span>
       </div>
       <article class="search-box">
         <button class="search-box-btns">
@@ -27,28 +26,74 @@
         </button>
       </article>
       <article class="user-lists">
-        <button class="user-list-btn">
-          <img src="../assets/heart.svg" class="user-icons" id="user-favorites"" alt="Image of heart">My Favorite Recipes
-        </button>
-        <button class="user-list-btn">
-          <img src="../assets/calendar.svg" class="user-icons" id="user-planned" alt="Image of calendar">My Planned Meals
-        </button>
-        <button class="user-list-btn">
+        <span>
+          <p class="user-greeting">Welcome, Horacio!</p>
+        </span>
+        <button class="user-list-btns">
           <img src="../assets/basket.svg" class="user-icons" id="user-grocery" alt="Image of grocery list">My Grocery List
         </button>
-        <button class="user-list-btn">
+        <button class="user-list-btns">
           <img src="../assets/closet.svg" class="user-icons" id="user-pantry" alt="Image of pantry">My Pantry
         </button>
       </article>
     </header>
     <aside>
       <div class="search-options">  
-        <ul class="tag-list"> </ul>
+      <button class="filter-btns">
+        <img src="../assets/heart.svg" class="user-icons" id="user-favorites"" alt=" Image of heart">My Favorite Recipes
+      </button>
+      <button class="filter-btns">
+        <img src="../assets/calendar.svg" class="user-icons" id="user-planned" alt="Image of calendar">My Planned Meals
+      </button>
+        <div class="tag-list">
+          <button class="tag-buttons" id="antipasti">Antipasti</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Antipasti</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Antipasti</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Breakfast</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+          <button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button><button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button><button class="tag-buttons" id="antipasti">Hors d'ouerves</button>
+          <button class="tag-buttons" id="antipasti">Snack</button>
+          <button class="tag-buttons" id="antipasti">Dinner</button>
+        </div>
+        <button class="filter-btns">Filter Recipes</button>
       </div>
-      <button class="filter-btn">Filter Recipes</button>
     </aside>
     <main>
      <section class="recipe-cards-parent">
+      <div class="recipe-instructions">
+        <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+        <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" id="recipe-modal-img"
+          alt="Image of recipe">
+        <h3 id="recipe-title">Loaded Chocolate Chip Cookies</h3>
+        <h4>Ingredients</h4>
+        <p>${ingredients}</p>`
+      </div>
        <div class="recipe-card">
         <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" alt="Image of recipe">
           <div class="card-overlay">
@@ -58,81 +103,13 @@
               </button>   
               <button class="card-btn">
                 <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/to-do-list.svg" class="user-icons" alt="Image of checklist">
-              </button>
-              <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
-            </div>
-        </div>
-       </div>
-        <div class="recipe-card">
-          <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" alt="Image of recipe">
-          <div class="card-overlay">
-            <div class="card-overlay-top">
-              <button class="card-btn">
-                <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/to-do-list.svg" class="user-icons" alt="Image of checklist">
-              </button>
-              <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
+            </button>
+            <button class="card-btn" id="show-recipes-btn">
+              <img src="../assets/list.svg" class="user-icons" alt="Image of checklist">
+            </button>
+            <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
             </div>
           </div>
-        </div><div class="recipe-card">
-          <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" alt="Image of recipe">
-          <div class="card-overlay">
-            <div class="card-overlay-top">
-              <button class="card-btn">
-                <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/to-do-list.svg" class="user-icons" alt="Image of checklist">
-              </button>
-              <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
-            </div>
-          </div>
-        </div><div class="recipe-card">
-          <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" alt="Image of recipe">
-          <div class="card-overlay">
-            <div class="card-overlay-top">
-              <button class="card-btn">
-                <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/to-do-list.svg" class="user-icons" alt="Image of checklist">
-              </button>
-              <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
-            </div>
-          </div>
-        </div><div class="recipe-card">
-          <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" alt="Image of recipe">
-          <div class="card-overlay">
-            <div class="card-overlay-top">
-              <button class="card-btn">
-                <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
-              </button>
-              <button class="card-btn">
-                <img src="../assets/to-do-list.svg" class="user-icons" alt="Image of checklist">
-              </button>
-              <h5 class="recipe-title">Loaded Chocolate Chip Cookies</h5>
-            </div>
-          </div>
-        </div>
-
-
      </section>
     </main>
     
