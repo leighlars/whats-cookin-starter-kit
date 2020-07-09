@@ -2,15 +2,12 @@ const chai = require('chai');
 const expect = chai.expect;
 const User = require('../src/User');
 const Recipe = require('../src/Recipe');
+const Pantry = require('../src/Pantry');
+const ingredientsData = require('../data/ingredients');
 
 describe('User', function() {
-  let user;
-  let userInfo;
-  let recipeInfo1;
-  let recipeInfo2
-  let recipe1;
-  let recipe2;
-  let ingredients; 
+  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, ingredients, pantry; 
+  
   beforeEach(function() {
     userInfo = {
       "name": "Saige O'Kon",
@@ -346,6 +343,7 @@ describe('User', function() {
       "estimatedCostInCents": 331
     }
     ];
+    pantry = new Pantry(ingredients);
   });
 
   it('should be a function', function() {
@@ -357,18 +355,32 @@ describe('User', function() {
   });
 
   it('should have an id', function () {
+    expect(user.id).to.be.a('number');
     expect(user.id).to.equal(1);
   });
 
+  it('if id is not a number, assign it to Date.now()', function() {
+    expect(user.id).to.equal(1);
+    const user2 = new User({name: "Sally", id: "five", pantry: []}); 
+    expect(user2.id).to.equal(Date.now());
+  })
+
   it('should have a name', function () {
+    expect(user.name).to.be.a('string');
     expect(user.name).to.equal("Saige O'Kon");
   });
+  
+  it('user name should be a string', function() {
+    const user2 = new User({name: 123, id: 2, pantry: []});
+    expect(user2.name).to.equal('123');
+  });
+
+  it('should have a pantry that is instance of Pantry', function () {
+    expect(user.pantry).to.be.an.instanceOf(Pantry);
+  })
 
   it('should have a pantry of ingredients', function () {
-    expect(user.pantry[0]).to.deep.equal({
-      "ingredient": 11477,
-      "amount": 4
-    });
+    expect(user.pantry.ingredients.length).to.deep.equal(36);
   });
 
   it('should have a list of favorite recipes', function () {
@@ -381,7 +393,9 @@ describe('User', function() {
 
   it('should be able add recipe to favorites', function () {
     user.addFavoriteRecipe(recipe1);
+    expect(user.favoriteRecipes.length).to.deep.equal(1);
 
+    user.addFavoriteRecipe("blah");
     expect(user.favoriteRecipes.length).to.deep.equal(1);
   });
 
@@ -413,16 +427,16 @@ describe('User', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
-    expect(user.searchUserRecipesByName('cookie')[0]).to.equal(recipe1);
-    expect(user.searchUserRecipesByName('apple')[0]).to.equal(recipe2);
+    expect(user.searchSavedRecipesByName('cookie')[0]).to.equal(recipe1);
+    expect(user.searchSavedRecipesByName('apple')[0]).to.equal(recipe2);
   });
 
   it('should search for all saved recipes by ingredient', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
-    expect(user.searchUserRecipesByIngred('eggs')[0]).to.deep.equal(recipe1);
-    expect(user.searchUserRecipesByIngred('apple cider')[0]).to.equal(recipe2);
+    expect(user.searchSavedRecipesByIngred('eggs')[0]).to.deep.equal(recipe1);
+    expect(user.searchSavedRecipesByIngred('apple cider')[0]).to.equal(recipe2);
   });
 
   it('should search for all saved recipes by ingredient or name', function() {

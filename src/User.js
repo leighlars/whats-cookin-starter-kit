@@ -1,61 +1,84 @@
 const ingredientsData = require('../data/ingredients');
+const Recipe = require('./Recipe.js');
+const Pantry = require('./Pantry.js');
+
 
 class User {
   constructor(user) {
-    this.id = user.id;
-    this.name = user.name;
-    this.pantry = user.pantry;
-    this.favoriteRecipes = user.favoriteRecipes || [];
-    this.plannedRecipes = user.plannedRecipes || [];
+    this.id = this.checkNumber(user.id);
+    this.name = this.checkName(user.name);
+    this.pantry = new Pantry(user.pantry);
+    this.favoriteRecipes = [];
+    this.plannedRecipes = [];
   }
 
-  addFavoriteRecipe(recipe) {
-    this.favoriteRecipes.push(recipe);
+  checkName = (user) => {
+    return typeof user === 'string' ? user : JSON.stringify(user);
   }
 
-  deleteFavoriteRecipe(recipe) {
+  checkNumber = (user) => {
+    return typeof user === 'number' ? user : Date.now();
+  }
+
+  addFavoriteRecipe = (recipe) => {
+    if (recipe instanceof Recipe) {
+      this.favoriteRecipes.push(recipe);
+    }
+  }
+
+  deleteFavoriteRecipe = (recipe) => {
     let i = this.favoriteRecipes.indexOf(recipe);
     this.favoriteRecipes.splice(i, 1);
   }
 
-  addPlannedRecipe(recipe) {
-    this.plannedRecipes.push(recipe);
+  addPlannedRecipe = (recipe) => {
+    if (recipe instanceof Recipe) {
+      this.plannedRecipes.push(recipe);
+    }
   }
 
-  filterFavoriteByTag(tag) {
+  filterFavoriteByTag = (tag) => {
     return this.favoriteRecipes.filter(faveRecipe => faveRecipe.tags.includes(tag));
   }
 
-  filterPlannedByTag(tag) {
+  filterPlannedByTag = (tag) => {
     return this.plannedRecipes.filter(plannedRecipe => plannedRecipe.tags.includes(tag));
-  }
+  } 
 
   // Search any of my saved recipes by name or ingredient
 
-  searchUserRecipesByName(query) {
+  searchSavedRecipesByName = (query) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
     return allSaved.filter(recipe => {
       return recipe.name.toLowerCase().includes(query);
     });    
   }  
 
-  searchUserRecipesByIngred(query) {
+  searchSavedRecipesByIngred = (query) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
-    let matchedIngreds = ingredientsData.filter(ingredient => ingredient.name.includes(query));
-
-    return allSaved.filter(savedRecipe => {
-      let result = false;
-      savedRecipe.ingredients.forEach(recipeIngredient => {
-        if (matchedIngreds.find(ingred => ingred.id === recipeIngredient.id)) {
-          result = true;
-        }
-      })
-      return result;
+    let ingredientID = this.changeIngredientNameToID(query);
+    return allSaved.filter(recipe => {
+      return this.makeIngredientList(recipe).includes(ingredientID);
     })
   }
+  
+  changeIngredientNameToID = (ingredientName) => {
+    let ingredient = ingredientsData.find(ingredient => {
+      return ingredient.name ? ingredient.name.includes(ingredientName) : undefined;
+    }); 
+    return ingredient ? ingredient.id : [];
+  }
 
-  searchByIngredAndName(query) {
-    let allRecipes = this.searchUserRecipesByIngred(query).concat(this.searchUserRecipesByName(query));
+  makeIngredientList = (recipe) => {
+    if (recipe instanceof Recipe) {
+      return recipe.ingredients.map(ingredient => ingredient.id);
+    } else {
+      return [];
+    }
+  }
+
+  searchByIngredAndName = (query) => {
+    let allRecipes = this.searchSavedRecipesByIngred(query).concat(this.searchSavedRecipesByName(query));
     let filterDuplicates = new Set(allRecipes);
     return [...filterDuplicates];
   }
