@@ -12,49 +12,49 @@ class User {
     this.plannedRecipes = [];
   }
 
-  checkName(user) {
+  checkName = (user) => {
     return typeof user === 'string' ? user : JSON.stringify(user);
   }
 
-  checkNumber(user) {
+  checkNumber = (user) => {
     return typeof user === 'number' ? user : Date.now();
   }
 
-  addFavoriteRecipe(recipe) {
+  addFavoriteRecipe = (recipe) => {
     if (recipe instanceof Recipe) {
       this.favoriteRecipes.push(recipe);
     }
   }
 
-  deleteFavoriteRecipe(recipe) {
+  deleteFavoriteRecipe = (recipe) => {
     let i = this.favoriteRecipes.indexOf(recipe);
     this.favoriteRecipes.splice(i, 1);
   }
 
-  addPlannedRecipe(recipe) {
+  addPlannedRecipe = (recipe) => {
     if (recipe instanceof Recipe) {
       this.plannedRecipes.push(recipe);
     }
   }
 
-  filterFavoriteByTag(tag) {
+  filterFavoriteByTag = (tag) => {
     return this.favoriteRecipes.filter(faveRecipe => faveRecipe.tags.includes(tag));
   }
 
-  filterPlannedByTag(tag) {
+  filterPlannedByTag = (tag) => {
     return this.plannedRecipes.filter(plannedRecipe => plannedRecipe.tags.includes(tag));
   } 
 
   // Search any of my saved recipes by name or ingredient
 
-  searchSavedRecipesByName(query) {
+  searchSavedRecipesByName = (query) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
     return allSaved.filter(recipe => {
       return recipe.name.toLowerCase().includes(query);
     });    
   }  
 
-  searchSavedRecipesByIngred(query) {
+  searchSavedRecipesByIngred = (query) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
     let ingredientID = this.changeIngredientNameToID(query);
     return allSaved.filter(recipe => {
@@ -62,14 +62,14 @@ class User {
     })
   }
   
-  changeIngredientNameToID(ingredientName) {
+  changeIngredientNameToID = (ingredientName) => {
     let ingredient = ingredientsData.find(ingredient => {
       return ingredient.name ? ingredient.name.includes(ingredientName) : undefined;
     }); 
     return ingredient ? ingredient.id : [];
   }
 
-  makeIngredientList(recipe) {
+  makeIngredientList = (recipe) => {
     if (recipe instanceof Recipe) {
       return recipe.ingredients.map(ingredient => ingredient.id);
     } else {
@@ -77,7 +77,7 @@ class User {
     }
   }
 
-  searchByIngredAndName(query) {
+  searchByIngredAndName = (query) => {
     let allRecipes = this.searchSavedRecipesByIngred(query).concat(this.searchSavedRecipesByName(query));
     let filterDuplicates = new Set(allRecipes);
     return [...filterDuplicates];
