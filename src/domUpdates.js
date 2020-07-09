@@ -2,13 +2,13 @@ console.log('domUpdates');
 
 const domUpdates = {
 
-  exitRecipe= () => {
+  exitRecipe() {
     let allRecipeInfo = document.querySelector(".recipe-instructions");
     allRecipeInfo.style.display = "none";
     document.getElementById("overlay").remove();
   },
 
-  openRecipeInfo = (event) => {
+  openRecipeInfo (event) {
     let allRecipeInfo = document.querySelector(".recipe-instructions");
     allRecipeInfo.style.display = "inline";
     let recipeId = event.path.find(e => e.id).id;
@@ -20,7 +20,7 @@ const domUpdates = {
     allRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
 },
 
-generateRecipeTitle = (recipe, ingredients) => {
+generateRecipeTitle (recipe, ingredients) {
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
         <button id="exit-recipe-btn">X</button>
@@ -30,11 +30,11 @@ generateRecipeTitle = (recipe, ingredients) => {
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 },
 
-  addRecipeImage = (recipe) => {
+  addRecipeImage (recipe) {
     document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
   },
 
-  generateInstructions = (recipe) => {
+  generateInstructions (recipe) {
     let allRecipeInfo = document.querySelector(".recipe-instructions");
     let instructionsList = "";
     let instructions = recipe.instructions.map(i => {
@@ -47,7 +47,7 @@ generateRecipeTitle = (recipe, ingredients) => {
     allRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
   },
 
-  generateRecipeBtns = (recipe) => {
+  generateRecipeBtns (recipe) {
     let allRecipeInfo = document.querySelector(".recipe-instructions");
     let recipeButtons = `
         <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
