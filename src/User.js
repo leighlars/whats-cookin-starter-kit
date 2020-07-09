@@ -55,7 +55,9 @@ class User {
   }
 
   searchByIngredAndName(query) {
-    return this.searchUserRecipesByIngred(query).concat(this.searchUserRecipesByName(query));
+    let allRecipes = this.searchUserRecipesByIngred(query).concat(this.searchUserRecipesByName(query));
+    let filterDuplicates = new Set(allRecipes);
+    return [...filterDuplicates];
   }
 
 }

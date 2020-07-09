@@ -102,9 +102,10 @@ describe('Pantry', function () {
     expect(pantryFull.checkPantry(recipe2)).to.equal(false);
   
   });
-
+  
   it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
     let recipe = {
+      
       ingredients: [
         {ingredient: 1, quantity: 3, unit: 'cup'},
         {ingredient: 2, quantity: 1, unit: 'tsp'}

@@ -425,7 +425,7 @@ describe('User', function() {
     expect(user.searchUserRecipesByIngred('apple cider')[0]).to.equal(recipe2);
   });
 
-  it('should search for all saved recipes by ingredient or name', function() {
+  it.only('should search for all saved recipes by ingredient or name', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
