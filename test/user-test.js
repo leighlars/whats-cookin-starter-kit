@@ -375,13 +375,8 @@ describe('User', function() {
     expect(user2.name).to.equal('123');
   });
 
-  it.only('should have a pantry that is an instance of Pantry', () => {
-    expect(user.pantry).to.be.an.instanceOf(Pantry);
-  });
-
   it.only('should have a pantry of ingredients', function () {
-    expect(user.pantry).to.deep.equal(pantry.ingredients)
-    
+    expect(user.pantry.length).to.deep.equal(36);
   });
 
   it.only('should have a list of favorite recipes', function () {

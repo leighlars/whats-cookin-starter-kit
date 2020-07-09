@@ -1,14 +1,11 @@
 const ingredientsData = require('../data/ingredients');
-const usersData = require('../data/users.js');
 const Recipe = require('./Recipe.js');
-const Pantry = require('./Pantry.js');
-const recipeData = require('../data/recipes.js');
 
 class User {
-  constructor(usersData) {
-    this.id = this.checkNumber(usersData.id);
-    this.name = this.checkName(usersData.name);
-    this.pantry = new Pantry(usersData.pantry.ingredients);
+  constructor({name, id, pantry}) {
+    this.id = this.checkNumber(id);
+    this.name = this.checkName(name);
+    this.pantry = pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
   }
@@ -62,19 +59,6 @@ class User {
       return this.makeIngredientList(recipe).includes(ingredientID);
     })
   }
-  
-  
-  // let matchedIngreds = ingredientsData.filter(ingredient => ingredient.name.includes(query));
-
-  // return allSaved.filter(savedRecipe => {
-  //   let result = false;
-  //   savedRecipe.ingredients.forEach(recipeIngredient => {
-  //     if (matchedIngreds.find(ingred => ingred.id === recipeIngredient.id)) {
-  //       result = true;
-  //     }
-  //   })
-  //   return result;
-  // })
   
   changeIngredientNameToID(ingredientName) {
     let ingredient = ingredientsData.find(ingredient => {

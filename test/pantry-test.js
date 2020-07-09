@@ -1,7 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 const Pantry = require('../src/Pantry');
-// const User = require('../src/User');
+const usersData = require('../data/users.js');
 const Recipe = require('../src/Recipe');
 // const ingredientsData = require("../data/ingredients");
 
