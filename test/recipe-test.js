@@ -191,11 +191,18 @@ describe('Recipe', function() {
     expect(recipe.name).to.equal("Loaded Chocolate Chip Pudding Cookie Cups")
   });
 
+  it('the name should be a string', function() {
+    const recipe2 = new Recipe({id: 1, name: 123});
+    expect(recipe2.name).to.equal('123');
+  });
+
   it('should have a recipe image', function() {
+    expect(recipe.image).to.be.a('string');
     expect(recipe.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg")
   });
 
   it('should have ingredients', function() {
+    expect(recipe.ingredients).to.be.an('array');
     expect(recipe.ingredients[0]).to.deep.equal(
       {
         "id": 20081,
@@ -207,6 +214,7 @@ describe('Recipe', function() {
   });
 
   it('should have instructions', function() {
+    expect(recipe.instructions).to.be.an('array');
     expect(recipe.instructions[0]).to.deep.equal(
       {
         "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
@@ -215,6 +223,7 @@ describe('Recipe', function() {
   });
 
   it('should have tags', function() {
+    expect(recipe.tags).to.be.an('array');
     expect(recipe.tags.length).to.equal(6)
   });
 
@@ -222,8 +231,8 @@ describe('Recipe', function() {
     expect(recipe.getInstructions()).to.equal(recipe.instructions)
   });
 
-  it('should get total cost of ingredients in each recipe', function() {
-    expect(recipe.getRecipeCost()).to.equal(976);
+  it('should get total cost in dollars of ingredients in each recipe', function() {
+    expect(recipe.getRecipeCost()).to.equal(9.76);
   });
 
   it('should filter a recipes by tag', function() {

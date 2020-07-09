@@ -2,25 +2,41 @@ const ingredientsData = require('../data/ingredients');
 const recipeData = require ('../data/recipes')
 class Recipe {
   constructor(recipe) {
-    this.id = recipe.id;
-    this.name = recipe.name;
+    this.id = this.checkNumber(recipe.id);
+    this.name = this.checkName(recipe.name);
     this.image = recipe.image;
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
     this.tags = recipe.tags;
   }
 
-  getInstructions() {
+  checkName = (recipe) => {
+    return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
+  }
+
+  checkNumber = (recipe) => {
+    return typeof recipe === 'number' ? recipe : Date.now();
+  }
+
+  getInstructions = () => {
     return this.instructions;
   }
 
   getRecipeCost() {
     return this.ingredients.reduce((sum, recipeIngredient) => {
-      let matchIngredient = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
-      sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount);
+      let matchIngredient = this.findIngredient(recipeIngredient);
+      sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
       return sum;
     }, 0);
   }
+
+  findIngredient = (recipeIngredient) => {
+    let foundIngredient = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id);
+    if (foundIngredient !== undefined) {
+      return foundIngredient;
+    }
+  }
+
 
   filterRecipeByTag(recipeTag) {
     return recipeData.filter(recipe => recipe.tags.includes(recipeTag))
@@ -28,7 +44,7 @@ class Recipe {
 
   filterRecipeByIngredient(recipeIngredient) {
     let matchedIngredient = ingredientsData.find(ingredient => ingredient.name === recipeIngredient);
-    let filteredRecipes = recipeData.reduce((filteredRecipes, recipe) => {
+    return recipeData.reduce((filteredRecipes, recipe) => {
       recipe.ingredients.forEach(ingredient => {
         if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
           filteredRecipes.push(recipe)
@@ -36,18 +52,13 @@ class Recipe {
       })
       return filteredRecipes
     }, []);
-    let filterDuplicates = new Set(filteredRecipes);
-    return [...filterDuplicates];
   }
 
   filterRecipeByName(recipeIngredient) {
-    let filteredRecipes = recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
-    let filterDuplicates = new Set(filteredRecipes);
-    return [...filterDuplicates]
+    return recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
   }
 
   filterAllRecipesByQuery(recipeIngredient) {
-    recipeIngredient = recipeIngredient.toLowerCase();
     let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient).concat(this.filterRecipeByName(recipeIngredient));
     let filterAllSearched = new Set(allSearchedRecipes);
     return [...filterAllSearched];

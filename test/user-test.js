@@ -346,52 +346,52 @@ describe('User', function() {
     pantry = new Pantry(ingredients);
   });
 
-  it.only('should be a function', function() {
+  it('should be a function', function() {
     expect(User).to.be.a('function');
   });
 
-  it.only('should instantiate a user', function () {
+  it('should instantiate a user', function () {
     expect(user).to.be.an.instanceOf(User);
   });
 
-  it.only('should have an id', function () {
+  it('should have an id', function () {
     expect(user.id).to.be.a('number');
     expect(user.id).to.equal(1);
   });
 
-  it.only('if id is not a number, assign it to Date.now()', function() {
+  it('if id is not a number, assign it to Date.now()', function() {
     expect(user.id).to.equal(1);
     const user2 = new User({name: "Sally", id: "five", pantry: []}); 
     expect(user2.id).to.equal(Date.now());
   })
 
-  it.only('should have a name', function () {
+  it('should have a name', function () {
     expect(user.name).to.be.a('string');
     expect(user.name).to.equal("Saige O'Kon");
   });
   
-  it.only('user name should be a string', function() {
+  it('user name should be a string', function() {
     const user2 = new User({name: 123, id: 2, pantry: []});
     expect(user2.name).to.equal('123');
   });
 
-  it.only('should have a pantry that is instance of Pantry', function () {
+  it('should have a pantry that is instance of Pantry', function () {
     expect(user.pantry).to.be.an.instanceOf(Pantry);
   })
 
-  it.only('should have a pantry of ingredients', function () {
+  it('should have a pantry of ingredients', function () {
     expect(user.pantry.ingredients.length).to.deep.equal(36);
   });
 
-  it.only('should have a list of favorite recipes', function () {
+  it('should have a list of favorite recipes', function () {
     expect(user.favoriteRecipes).to.deep.equal([]);
   });
 
-  it.only('should have a list of planned recipes', function () {
+  it('should have a list of planned recipes', function () {
     expect(user.plannedRecipes).to.deep.equal([]);
   });
 
-  it.only('should be able add recipe to favorites', function () {
+  it('should be able add recipe to favorites', function () {
     user.addFavoriteRecipe(recipe1);
     expect(user.favoriteRecipes.length).to.deep.equal(1);
 
@@ -399,31 +399,31 @@ describe('User', function() {
     expect(user.favoriteRecipes.length).to.deep.equal(1);
   });
 
-  it.only('should delete recipe from favorites', function() {
+  it('should delete recipe from favorites', function() {
     user.deleteFavoriteRecipe(recipe1);
 
     expect(user.favoriteRecipes.length).to.deep.equal(0);
   });
 
-  it.only('should add recipe to planned recipes', function () {
+  it('should add recipe to planned recipes', function () {
     user.addPlannedRecipe(recipe1);
 
     expect(user.plannedRecipes.length).to.deep.equal(1);
   });
 
-  it.only('should filter favorite recipes by tag', function () {
+  it('should filter favorite recipes by tag', function () {
     user.addFavoriteRecipe(recipe1);
     
     expect(user.filterFavoriteByTag('antipasti')[0]).to.equal(recipe1);
   });
 
-  it.only('should filter favorite recipes by tag', function () {
+  it('should filter favorite recipes by tag', function () {
     user.addPlannedRecipe(recipe1);
 
     expect(user.filterPlannedByTag('antipasti')[0]).to.equal(recipe1);
   });
 
-  it.only('should search for all saved recipes by name', function() {
+  it('should search for all saved recipes by name', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
@@ -431,7 +431,7 @@ describe('User', function() {
     expect(user.searchSavedRecipesByName('apple')[0]).to.equal(recipe2);
   });
 
-  it.only('should search for all saved recipes by ingredient', function() {
+  it('should search for all saved recipes by ingredient', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
@@ -439,7 +439,7 @@ describe('User', function() {
     expect(user.searchSavedRecipesByIngred('apple cider')[0]).to.equal(recipe2);
   });
 
-  it.only('should search for all saved recipes by ingredient or name', function() {
+  it('should search for all saved recipes by ingredient or name', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 

@@ -92,18 +92,18 @@ describe('Pantry', function () {
     expect(pantryFull.ingredients).to.deep.equal(ingredients);
   });
 
-  it('should check if recipe and pantry ingredients match and if pantry has enough for recipe', function () {
+  it.only('should check if recipe and pantry ingredients match and if pantry has enough for recipe', function () {
     expect(pantryFull.matchAndCompareIngredients(recipe1.ingredients[0])).to.equal(true);
     expect(pantryFull.matchAndCompareIngredients(recipe2.ingredients[0])).to.equal(false);
   });
 
-  it('should determine if pantry has enough ingredients for meal', function () {
+  it.only('should determine if pantry has enough ingredients for meal', function () {
     expect(pantryFull.checkPantry(recipe1)).to.equal(true);
     expect(pantryFull.checkPantry(recipe2)).to.equal(false);
   
   });
 
-  it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
+  it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
     const recipe = {
       ingredients: [
         {ingredient: 1, quantity: 3},
