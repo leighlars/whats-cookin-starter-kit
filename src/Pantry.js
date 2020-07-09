@@ -1,8 +1,8 @@
 const ingredientsData = require("../data/ingredients");
 
 class Pantry {
-  constructor(ingredients = []) {
-    this.ingredients = ingredients;
+  constructor(ingredients) {
+    this.ingredients = ingredients || [];
   }
 
   // Determine whether my pantry has enough ingredients to cook a given meal
