@@ -37,7 +37,6 @@ class Recipe {
     }
   }
 
-
   filterRecipeByTag(recipeTag) {
     return recipeData.filter(recipe => recipe.tags.includes(recipeTag))
   }
