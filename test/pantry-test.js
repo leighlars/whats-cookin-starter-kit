@@ -116,7 +116,7 @@ describe('Pantry', function () {
     expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, quantity: 1, name: 'sugar', unit: 'cup'}])
   })
 
-  it.only('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
+  it('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
     let recipe = {
       ingredients: [
         {ingredient: 1, quantity: 3, unit: 'cup'},
@@ -134,7 +134,6 @@ describe('Pantry', function () {
     expect(pantryFull.removeIngredient()).to.equal()
     // can't figure out test logic
 
-    expect(pantry.ingredientsMissingForRecipe(recipe)).to.equal(`You need 1 cup of sugar to make this recipe.`)
 
   })
 
