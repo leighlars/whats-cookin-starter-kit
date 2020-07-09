@@ -103,7 +103,7 @@ describe('Pantry', function () {
   
   });
   
-  it.only('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
+  it('should determine the amount of ingredients still needed to cook a given meal, based on what’s in my pantry', function() {
     let recipe = {
       
       ingredients: [
@@ -117,7 +117,7 @@ describe('Pantry', function () {
     expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, name: 'sugar', quantity: 1, unit: 'cup'}])
   })
 
-  it.only('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
+  it('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
     let recipe = {
       ingredients: [
         {ingredient: 1, quantity: 3, unit: 'cup'},

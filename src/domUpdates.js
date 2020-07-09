@@ -1,4 +1,6 @@
-const domUpdates {
+console.log('domUpdates');
+
+const domUpdates = {
 
   exitRecipe() {
     let allRecipeInfo = document.querySelector(".recipe-instructions");
@@ -67,5 +69,5 @@ generateRecipeTitle(recipe, ingredients) {
 
 
 if (typeof module !== 'undefined') {
-  module.exports = domUpdates\;
+  module.exports = domUpdates;
 }
