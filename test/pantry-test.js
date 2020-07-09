@@ -113,10 +113,10 @@ describe('Pantry', function () {
     const sugar = { id: 1, name: 'sugar', estimatedCostOfCents: 100 };
     const butter = { id: 2, name: 'butter', estimatedCostOfCents: 299 };
     const pantry = new Pantry([sugar, sugar, butter])
-    expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, name: 'sugar', quantity: 1, unit: 'cup'}])
+    expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, quantity: 1, name: 'sugar', unit: 'cup'}])
   })
 
-  it('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
+  it.only('should return to the user what specific ingredients and amount they are missing to cook a recipe', function() {
     let recipe = {
       ingredients: [
         {ingredient: 1, quantity: 3, unit: 'cup'},
@@ -126,8 +126,7 @@ describe('Pantry', function () {
     const sugar = { id: 1, name: 'sugar', estimatedCostOfCents: 100 };
     const butter = { id: 2, name: 'butter', estimatedCostOfCents: 299 };
     const pantry = new Pantry([sugar, sugar, butter])
-
-    expect(pantry.findMissingIngredients(recipe)).to.deep.equals([{ingredientId: 1, name: 'sugar', quantity: 1}])
+    expect(pantry.ingredientsMissingForRecipe(recipe)).to.equal(`You need 1 cup of sugar to make this recipe.`)
   });
 
   it.skip('should remove ingredient amount from pantry after cooking', function() {

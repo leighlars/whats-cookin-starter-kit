@@ -34,7 +34,7 @@ class Pantry {
       let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length;
       if(quantity > 0) { 
 
-        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name }
+        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name, unit: recipeIngredient.unit }
         this.groceryList.push(missingIngredient)
       }
     })
@@ -65,8 +65,6 @@ class Pantry {
   //    return this.ingredients;
   // }
 
-};
-
   
   ingredientsMissingForRecipe(recipe) {
     if (this.checkPantry(recipe)) {
@@ -78,10 +76,12 @@ class Pantry {
         return phrase
       }, '')
   }
-
+  
+  };
 };
 
-}
+
+
 
 // Remove the ingredients used for a given meal from my pantry, once that meal has been cooked(only applicable if users have a list of mealsToCook; can be considered a stretch goal)
 
