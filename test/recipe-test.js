@@ -3,9 +3,7 @@ const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
 describe('Recipe', function() {
-  let recipe;
-  let mockIngredientsList;
-  let mockRecipeList;
+  let recipe, mockIngredientsList, mockRecipeList;
   beforeEach( () => {
     let mockRecipe = {
       id: 1,
