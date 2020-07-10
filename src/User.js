@@ -1,9 +1,8 @@
-
 class User {
   constructor(user, allIngredients) {
     this.id = this.checkNumber(user.id);
     this.name = this.checkName(user.name);
-    this.pantry = user.pantry;
+    this.pantry = new Pantry(user.pantry);
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
     this.allIngredients = allIngredients;
