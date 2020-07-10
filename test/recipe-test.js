@@ -3,9 +3,7 @@ const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
 describe('Recipe', function() {
-  let recipe;
-  let mockIngredientsList;
-  let mockRecipeList;
+  let recipe, mockIngredientsList, mockRecipeList;
   beforeEach( () => {
     let mockRecipe = {
       id: 1,
@@ -53,7 +51,7 @@ describe('Recipe', function() {
         tags: ["breakfast", "lunch"],
       },
     ];
-    recipe = new Recipe(mockRecipe);
+    recipe = new Recipe(mockRecipe, mockIngredientsList, mockRecipeList);
   })
 
   it('should be a function', function() {
@@ -108,31 +106,31 @@ describe('Recipe', function() {
     expect(recipe.tags.length).to.equal(2)
   });
 
-  it('should get recipe instructions', function() {
-    expect(recipe.getInstructions()).to.equal(recipe.instructions)
+  it('should return recipe instructions', function() {
+    expect(recipe.getInstructions()).to.equal('1. Boil water<br>')
   });
 
   it('should get total cost in dollars of ingredients in each recipe', function() {
-    expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
+    expect(recipe.getRecipeCost()).to.equal(2.13);
   });
 
   it('should filter a recipes by tag', function() {
-    expect(recipe.filterRecipeByTag('breakfast', mockRecipeList).length).to.deep.equal(1);
+    expect(recipe.filterRecipeByTag('breakfast').length).to.deep.equal(1);
   });
 
   it('should filter recipes by ingredient', function() {
-    expect(recipe.filterRecipeByIngredient('wheat flour', mockIngredientsList, mockRecipeList)).to.deep.equal([mockRecipeList[0]])
+    expect(recipe.filterRecipeByIngredient('wheat flour')).to.deep.equal([mockRecipeList[0]])
   });
 
   it('should filter recipes by name', function () {
-    expect(recipe.filterRecipeByName('cookie', mockRecipeList)).to.deep.equal([mockRecipeList[0]]);
-    expect(recipe.filterRecipeByName('cookie', mockRecipeList).length).to.deep.equal(1);
+    expect(recipe.filterRecipeByName('cookie')).to.deep.equal([mockRecipeList[0]]);
+    expect(recipe.filterRecipeByName('cookie').length).to.deep.equal(1);
 
   });
 
   it('should return all recipes that match searched recipe name or ingredient', function() {
-    expect(recipe.filterAllRecipesByQuery('cookie', mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
-    expect(recipe.filterAllRecipesByQuery( "wheat flour", mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
+    expect(recipe.filterAllRecipesByQuery('cookie').length).to.deep.equal(1);
+    expect(recipe.filterAllRecipesByQuery( "wheat flour").length).to.deep.equal(1);
 
   });
 

@@ -1,15 +1,12 @@
-// const ingredientsData = require('../data/ingredients');
-// const Recipe = require('./Recipe.js');
-// const Pantry = require('./Pantry.js');
-
 
 class User {
-  constructor(user) {
+  constructor(user, allIngredients) {
     this.id = this.checkNumber(user.id);
     this.name = this.checkName(user.name);
-    this.pantry = new Pantry(user.pantry);
+    this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
+    this.allIngredients = allIngredients;
   }
 
   checkName = (user) => {
@@ -21,9 +18,7 @@ class User {
   }
 
   addFavoriteRecipe = (recipe) => {
-    if (recipe instanceof Recipe) {
       this.favoriteRecipes.push(recipe);
-    }
   }
 
   deleteFavoriteRecipe = (recipe) => {
@@ -32,9 +27,7 @@ class User {
   }
 
   addPlannedRecipe = (recipe) => {
-    if (recipe instanceof Recipe) {
-      this.plannedRecipes.push(recipe);
-    }
+    this.plannedRecipes.push(recipe);
   }
 
   filterFavoriteByTag = (tag) => {
@@ -44,8 +37,6 @@ class User {
   filterPlannedByTag = (tag) => {
     return this.plannedRecipes.filter(plannedRecipe => plannedRecipe.tags.includes(tag));
   } 
-
-  // Search any of my saved recipes by name or ingredient
 
   searchSavedRecipesByName = (query) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
@@ -63,24 +54,18 @@ class User {
   }
   
   changeIngredientNameToID = (ingredientName) => {
-    let ingredient = ingredientsData.find(ingredient => {
-      return ingredient.name ? ingredient.name.includes(ingredientName) : undefined;
-    }); 
-    return ingredient ? ingredient.id : [];
+    let ingredient = this.allIngredients.find(ingredient => ingredient.name.includes(ingredientName)); 
+    return ingredient ? ingredient.id : 0;
   }
 
   makeIngredientList = (recipe) => {
-    if (recipe instanceof Recipe) {
-      return recipe.ingredients.map(ingredient => ingredient.id);
-    } else {
-      return [];
-    }
+    return recipe.ingredients.map(ingredient => ingredient.id);
   }
 
   searchByIngredAndName = (query) => {
     let allRecipes = this.searchSavedRecipesByIngred(query).concat(this.searchSavedRecipesByName(query));
-    let filterDuplicates = new Set(allRecipes);
-    return [...filterDuplicates];
+    let filterDuplicates = [...new Set(allRecipes)];
+    return filterDuplicates;
   }
 
 }
