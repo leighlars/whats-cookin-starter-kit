@@ -5,7 +5,6 @@ class User {
     this.pantry = new Pantry(user.pantry);
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
-    this.allIngredients = allIngredients;
   }
 
   checkName = (user) => {
@@ -53,7 +52,7 @@ class User {
   }
   
   changeIngredientNameToID = (ingredientName) => {
-    let ingredient = this.allIngredients.find(ingredient => ingredient.name.includes(ingredientName)); 
+    let ingredient = allIngredients.find(ingredient => ingredient.name.includes(ingredientName)); 
     return ingredient ? ingredient.id : 0;
   }
 
