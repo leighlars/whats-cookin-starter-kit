@@ -117,46 +117,6 @@ describe('User', function() {
           "ingredient": 10011693,
           "amount": 4
         },
-        {
-          "ingredient": 1102047,
-          "amount": 2
-        },
-        {
-          "ingredient": 19206,
-          "amount": 2
-        },
-        {
-          "ingredient": 1145,
-          "amount": 4
-        },
-        {
-          "ingredient": 1002030,
-          "amount": 4
-        },
-        {
-          "ingredient": 12061,
-          "amount": 2
-        },
-        {
-          "ingredient": 19335,
-          "amount": 4
-        },
-        {
-          "ingredient": 15152,
-          "amount": 3
-        },
-        {
-          "ingredient": 9003,
-          "amount": 2
-        },
-        {
-          "ingredient": 18372,
-          "amount": 3
-        },
-        {
-          "ingredient": 2027,
-          "amount": 2
-        }
       ]
     },
     user = new User(userInfo);
@@ -195,22 +155,6 @@ describe('User', function() {
           "instruction": "Add egg and vanilla and mix until combined.",
           "number": 2
         },
-        {
-          "instruction": "Add dry ingredients and mix on low just until incorporated. Stir in chocolate chips.Scoop the dough into 1,5 tablespoon size balls and place on a plate or sheet. Cover with saran wrap and chill at least 2 hours or overnight.When ready to bake, preheat oven to 350 degrees.",
-          "number": 3
-        },
-        {
-          "instruction": "Place the cookie dough balls into ungreased muffin pan. Sprinkle with sea salt.",
-          "number": 4
-        },
-        {
-          "instruction": "Bake for 9 to 10 minutes, or until you see the edges start to brown.",
-          "number": 5
-        },
-        {
-          "instruction": "Remove the pan from the oven and let sit for 10 minutes before removing onto a cooling rack.Top with ice cream and a drizzle of chocolate sauce.",
-          "number": 6
-        }
       ],
       "name": "Loaded Chocolate Chip Pudding Cookie Cups",
       "tags": [
@@ -238,76 +182,6 @@ describe('User', function() {
           "quantity": {
             "amount": 2,
             "unit": ""
-          }
-        },
-        {
-          "id": 20027,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
-          }
-        },
-        {
-          "id": 1002046,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
-          }
-        },
-        {
-          "id": 11215,
-          "quantity": {
-            "amount": 1,
-            "unit": "clove"
-          }
-        },
-        {
-          "id": 1012046,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
-          }
-        },
-        {
-          "id": 19911,
-          "quantity": {
-            "amount": 0.25,
-            "unit": "cup"
-          }
-        },
-        {
-          "id": 16112,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
-          }
-        },
-        {
-          "id": 10010062,
-          "quantity": {
-            "amount": 24,
-            "unit": "ounce"
-          }
-        },
-        {
-          "id": 1102047,
-          "quantity": {
-            "amount": 4,
-            "unit": "servings"
-          }
-        },
-        {
-          "id": 16124,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
-          }
-        },
-        {
-          "id": 1016168,
-          "quantity": {
-            "amount": 1,
-            "unit": "tablespoon"
           }
         }
       ],

@@ -1,13 +1,9 @@
-// const ingredientsData = require('../data/ingredients');
-// const Recipe = require('./Recipe.js');
-// const Pantry = require('./Pantry.js');
-
 
 class User {
   constructor(user) {
     this.id = this.checkNumber(user.id);
     this.name = this.checkName(user.name);
-    this.pantry = new Pantry(user.pantry);
+    this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
   }
@@ -32,9 +28,7 @@ class User {
   }
 
   addPlannedRecipe = (recipe) => {
-    if (recipe instanceof Recipe) {
-      this.plannedRecipes.push(recipe);
-    }
+    this.plannedRecipes.push(recipe);
   }
 
   filterFavoriteByTag = (tag) => {

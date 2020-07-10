@@ -2,7 +2,6 @@ class Pantry {
   constructor(ingredients, allIngredients) {
     this.allIngredients = allIngredients;
     this.ingredients =  ingredients || [];
-    this.groceryList = [];
   }
 
   findIngredientByID = (id) => {
