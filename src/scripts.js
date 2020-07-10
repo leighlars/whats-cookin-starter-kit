@@ -73,59 +73,59 @@ const loadHandler = () => {
 
 // recipe modals
 
-const generateRecipeTitle = (recipe, ingredients) => {
-  let fullRecipeInfo = document.querySelector(".recipe-instructions");
-  let recipeTitle = `
-      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p>${ingredients}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-},
+// const generateRecipeTitle = (recipe, ingredients) => {
+//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
+//   let recipeTitle = `
+//       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+//       <h3 id="recipe-title">${recipe.name}</h3>
+//       <h4>Ingredients</h4>
+//       <p>${ingredients}</p>`
+//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+// },
 
-const addRecipeImage = (recipe) => {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
-},
+// const addRecipeImage = (recipe) => {
+//   document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
+// },
 
-const generateInstructions = (recipe) => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
-  let instructionsList = "";
-  let instructions = recipe.instructions.map(i => {
-    return i.instruction
-  });
-  instructions.forEach(i => {
-    instructionsList += `<li>${i}</li>`
-  });
-  allRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  allRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
-},
+// const generateInstructions = (recipe) => {
+//   let allRecipeInfo = document.querySelector(".recipe-instructions");
+//   let instructionsList = "";
+//   let instructions = recipe.instructions.map(i => {
+//     return i.instruction
+//   });
+//   instructions.forEach(i => {
+//     instructionsList += `<li>${i}</li>`
+//   });
+//   allRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
+//   allRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
+// },
 
-const generateRecipeBtns = (recipe) => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
-  let recipeButtons = `
-      <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
-      <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
-      <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
-      `;
-  allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
-}, 
+// const generateRecipeBtns = (recipe) => {
+//   let allRecipeInfo = document.querySelector(".recipe-instructions");
+//   let recipeButtons = `
+//       <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
+//       <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
+//       <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
+//       `;
+//   allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
+// }, 
 
-const openAllRecipeInfo = () => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
-  allRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
-  generateRecipeBtns(recipe);
-  allRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
-};
+// const openAllRecipeInfo = () => {
+//   let allRecipeInfo = document.querySelector(".recipe-instructions");
+//   allRecipeInfo.style.display = "inline";
+//   let recipeId = event.path.find(e => e.id).id;
+//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+//   generateRecipeTitle(recipe, generateIngredients(recipe));
+//   addRecipeImage(recipe);
+//   generateInstructions(recipe);
+//   generateRecipeBtns(recipe);
+//   allRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
+// };
 
-const closeRecipe = () => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
-  allRecipeInfo.style.display = "block";
-},
+// const closeRecipe = () => {
+//   let allRecipeInfo = document.querySelector(".recipe-instructions");
+//   allRecipeInfo.style.display = "block";
+// },
 
 
 window.onload = loadHandler();
