@@ -1,10 +1,10 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let greeting = document.querySelector(".user-greeting");
-let userPantryBtn = document.getElementById("user-pantry-btn");
-let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
-let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
-let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
-let filterBtn = document.getElementById("filter-recipe-btn");
+// let userPantryBtn = document.getElementById("user-pantry-btn");
+// let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
+// let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
+// let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
+// let filterBtn = document.getElementById("filter-recipe-btn");
 
 
 const generateRandomUser = () => {
@@ -14,11 +14,9 @@ const generateRandomUser = () => {
 const currentUser = new User(usersData[generateRandomUser()]);
 
 
-userGroceryBtn.addEventListener("click", showGroceryList);
-userPantryBtn.addEventListener("click", showPantryContents);
-recipeCardSection.addEventListener("click", openAllRecipeInfo);
-
-
+// userGroceryBtn.addEventListener("click", showGroceryList);
+// userPantryBtn.addEventListener("click", showPantryContents);
+// recipeCardSection.addEventListener("click", openAllRecipeInfo);
 
 const welcomeGreeting = () => {
   let firstName = currentUser.name.split(" ")[0];
@@ -77,28 +75,14 @@ const loadHandler = () => {
 //   let fullRecipeInfo = document.querySelector(".recipe-instructions");
 //   let recipeTitle = `
 //       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-//       <h3 id="recipe-title">${recipe.name}</h3>
+//        <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" id="recipe-modal-img"
+//        alt = "Image of recipe" >
+//       <h3 id="recipe-title">${recipe.name}</h3> */}
 //       <h4>Ingredients</h4>
 //       <p>${ingredients}</p>`
 //   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 // },
 
-// const addRecipeImage = (recipe) => {
-//   document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
-// },
-
-// const generateInstructions = (recipe) => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   let instructionsList = "";
-//   let instructions = recipe.instructions.map(i => {
-//     return i.instruction
-//   });
-//   instructions.forEach(i => {
-//     instructionsList += `<li>${i}</li>`
-//   });
-//   allRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-//   allRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
-// },
 
 // const generateRecipeBtns = (recipe) => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
@@ -110,17 +94,13 @@ const loadHandler = () => {
 //   allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
 // }, 
 
-// const openAllRecipeInfo = () => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   allRecipeInfo.style.display = "inline";
-//   let recipeId = event.path.find(e => e.id).id;
-//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-//   generateRecipeTitle(recipe, generateIngredients(recipe));
-//   addRecipeImage(recipe);
-//   generateInstructions(recipe);
-//   generateRecipeBtns(recipe);
-//   allRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></section>");
-// };
+const openAllRecipeInfo = () => {
+  let allRecipeInfo = document.querySelector(".recipe-instructions");
+  allRecipeInfo.style.display = "inline";
+  let recipeId = event.path.find(e => e.id).id;
+  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  generateRecipeTitle(recipe, generateIngredients(recipe));
+};
 
 // const closeRecipe = () => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
@@ -131,8 +111,4 @@ const loadHandler = () => {
 window.onload = loadHandler();
 
 
-
-if (typeof module !== 'undefined') {
-  module.exports = domUpdates;
-}
 
