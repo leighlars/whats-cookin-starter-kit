@@ -5,8 +5,6 @@ class Pantry {
     this.groceryList = [];
   }
 
-  // Determine whether my pantry has enough ingredients to cook a given meal
-
   findIngredientByID = (id) => {
     return this.ingredients.find(pantryIngredient => id === pantryIngredient.ingredient);
   }
@@ -41,15 +39,18 @@ class Pantry {
   }
 
   calculateCost = (cost, quantity) => {
-    return (quantity * cost) / 100; 
+    return (quantity * cost); 
   }
 
   createGroceryList = (recipe) => {
-    console.log(this.getIngredientsForRecipe(recipe));
-
+   return this.getIngredientsForRecipe(recipe).map(ingredient => {
+     let name = this.allIngredients.find(dataIngredient => dataIngredient.id === ingredient.id).name;
+     let dollarAmount = this.getIngredientCostByID(ingredient.id);
+     let totalCost = this.calculateCost(ingredient.amount, dollarAmount);
+      return {name: name, cost: totalCost};
+    });
   }
-// calculate the cost of each missing ingredient 
-// mapping over the groceryList
+
 
 }
 

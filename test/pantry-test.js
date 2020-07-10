@@ -137,8 +137,8 @@ describe('Pantry', function () {
     expect(pantryFull.getIngredientsForRecipe(recipe1)).to.deep.equal([]);
   });
 
-  it.only('should return a list of ingredients and cost to buy for meal', function() {
-
+  it('should return a list of ingredients and cost to buy for a meal', function() {
+    expect(pantryFull.createGroceryList(recipe2)).to.be.an('array');
   });
   
 
