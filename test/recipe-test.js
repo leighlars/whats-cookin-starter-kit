@@ -130,7 +130,7 @@ describe('Recipe', function() {
 
   });
 
-  it('should return all recipes that match searched recipe name or ingredient', function() {
+  it.only('should return all recipes that match searched recipe name or ingredient', function() {
     expect(recipe.filterAllRecipesByQuery('cookie', mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
     expect(recipe.filterAllRecipesByQuery( "wheat flour", mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
 

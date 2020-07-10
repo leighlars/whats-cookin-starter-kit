@@ -61,9 +61,8 @@ class Recipe {
 
   filterAllRecipesByQuery(recipeIngredient, ingredientsList, recipeList) {
     let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient, ingredientsList, recipeList).concat(this.filterRecipeByName(recipeIngredient, recipeList));
-    let filterAllSearched = new Set(allSearchedRecipes);
-    console.log([...filterAllSearched]);
-    return [...filterAllSearched];
+    let filterDuplicates = [...new Set(allSearchedRecipes)];
+    return filterDuplicates;
   }
 
   
