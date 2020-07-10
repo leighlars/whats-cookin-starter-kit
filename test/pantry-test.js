@@ -138,7 +138,9 @@ describe('Pantry', function () {
   });
 
   it('should return a list of ingredients and cost to buy for a meal', function() {
-    expect(pantryFull.createGroceryList(recipe2)).to.be.an('array');
+    expect(pantryFull.createGroceryList(recipe2)[0]).to.deep.equal({name: 'apple cider', cost: 49.14})
+    expect(pantryFull.createGroceryList(recipe2)[1]).to.deep.equal({ name: "apple", cost: 20.7});
+
   });
   
 
