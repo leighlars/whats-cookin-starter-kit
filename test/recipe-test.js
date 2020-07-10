@@ -106,8 +106,8 @@ describe('Recipe', function() {
     expect(recipe.tags.length).to.equal(2)
   });
 
-  it('should get recipe instructions', function() {
-    expect(recipe.getInstructions()).to.equal(recipe.instructions)
+  it('should return recipe instructions', function() {
+    expect(recipe.getInstructions()).to.equal('1. Boil water<br>')
   });
 
   it('should get total cost in dollars of ingredients in each recipe', function() {

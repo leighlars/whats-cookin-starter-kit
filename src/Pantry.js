@@ -1,7 +1,7 @@
 class Pantry {
   constructor(ingredients, allIngredients) {
-    this.allIngredients = allIngredients;
     this.ingredients =  ingredients || [];
+    this.allIngredients = allIngredients;
   }
 
   findIngredientByID = (id) => {
@@ -49,8 +49,6 @@ class Pantry {
       return {name: name, cost: totalCost};
     });
   }
-
-
 }
 
 if (typeof module !== 'undefined') {

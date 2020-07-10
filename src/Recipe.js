@@ -19,7 +19,9 @@ class Recipe {
   }
 
   getInstructions = () => {
-    return this.instructions;
+    return this.instructions.reduce((directions, instruction) => {
+      return directions += `${instruction.number}. ${instruction.instruction}<br>`;
+    }, "");
   }
 
   getRecipeCost = () => {
@@ -38,7 +40,7 @@ class Recipe {
   }
 
   filterRecipeByTag = (recipeTag) => {
-    return this.allRecipes.filter(recipe => recipe.tags.includes(recipeTag))
+    return this.allRecipes.filter(recipe => recipe.tags.includes(recipeTag));
   }
 
   filterRecipeByIngredient = (recipeIngredient) => {
@@ -47,10 +49,10 @@ class Recipe {
     return this.allRecipes.reduce((filteredRecipes, recipe) => {
       recipe.ingredients.forEach(ingredient => {
         if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
-          filteredRecipes.push(recipe)
+          filteredRecipes.push(recipe);
         }
       })
-      return filteredRecipes
+      return filteredRecipes;
     }, []);
     } else {
       return [];
@@ -66,8 +68,6 @@ class Recipe {
     let filterDuplicates = [...new Set(allSearchedRecipes)];
     return filterDuplicates;
   }
-
-  
 }
 
 if (typeof module !== 'undefined') {
