@@ -1,71 +1,57 @@
-
 class Pantry {
-  constructor(ingredients) {
+  constructor(ingredients, allIngredients) {
+    this.allIngredients = allIngredients;
     this.ingredients =  ingredients || [];
     this.groceryList = [];
   }
 
   // Determine whether my pantry has enough ingredients to cook a given meal
-  // matchAndCompareIngredients returns a boolean.
-  matchAndCompareIngredients = (recipeIngredient) => {
-    return this.ingredients.some(pantryIngredient => {
-      return this.ingredientsMatchAndEnoughInPantry(recipeIngredient, pantryIngredient)
-    });
+
+  findIngredientByID = (id) => {
+    return this.ingredients.find(pantryIngredient => id === pantryIngredient.ingredient);
   }
 
-  checkPantry = (recipe) => {
+  isInPantry = (recipe) => {
     return recipe.ingredients.every(recipeIngredient => {
-      return this.matchAndCompareIngredients(recipeIngredient);
+      let foundPantryIngredient = this.findIngredientByID(recipeIngredient.id);
+      if (!foundPantryIngredient) {
+        return false;
+      }
+      return recipeIngredient.quantity.amount < foundPantryIngredient.amount;
     });
   }
 
-  ingredientsMatchAndEnoughInPantry = (recipeIngredient, pantryIngredient) => {
-    return pantryIngredient.ingredient === recipeIngredient.id &&
-      recipeIngredient.quantity.amount <= pantryIngredient.amount;
-  }
-
-  findMissingIngredients = (recipe) => {
-    recipe.ingredients.forEach(recipeIngredient => {
-      let quantity = recipeIngredient.quantity - this.ingredients.filter(ingredient => ingredient.id === recipeIngredient.ingredient).length;
-      if(quantity > 0) { 
-        let missingIngredient = { ingredientId: recipeIngredient.ingredient, quantity: quantity, name: this.ingredients.find(ingredient => ingredient.id === recipeIngredient.ingredient).name, unit: recipeIngredient.unit }
-        this.groceryList.push(missingIngredient)
+  getIngredientsForRecipe = (recipe) => {
+    return recipe.ingredients.reduce((neededIngredients, ingredient) => {
+      let foundPantryIngredient = this.findIngredientByID(ingredient.id);
+      if (!foundPantryIngredient) {
+       neededIngredients.push({id: ingredient.id, amount: ingredient.quantity.amount});
+      } else {
+        let amountNeeded = ingredient.quantity.amount - foundPantryIngredient.amount;
+        if (amountNeeded > 0) {
+          neededIngredients.push({id: ingredient.id, amount: amountNeeded});
+        }
       }
-    })
-    return this.groceryList;
+      return neededIngredients;
+    }, []);
   }
-    
-  ingredientsMissingForRecipe(recipe) {
-    if (this.checkPantry(recipe)) {
-      return `You have all the necessary ingredients for this recipe.`
-    } else {
-      let allMissingIngredients = this.findMissingIngredients(recipe)
-      return allMissingIngredients.reduce((phrase, missingIngredient) => {
-        phrase = `You need ${missingIngredient.quantity} ${missingIngredient.unit} of ${missingIngredient.name} to make this recipe.`
-        return phrase
-      }, '')
-    }
-  };
 
-  // Remove the ingredients used for a given meal from my pantry, once that meal has been cooked(only applicable if users have a list of mealsToCook; can be considered a stretch goal)
-  // can't figure out test logic-- skipped test
-  // removeIngredient = (ingredientToRemove) => {
-  //    const foundIngredient = this.ingredients.find((ingredient) => {
-  //     return ingredient.ingredient === ingredientToRemove.id;
-  //    });
-  //    console.log(foundIngredient);
-  //    const i = this.ingredients.indexOf(foundIngredient);
-  //    this.ingredients[i].amount -= ingredientToRemove.quantity.amount;
-  //    return this.ingredients;
-  // }
-};
+  getIngredientCostByID = (ingredientID) => {
+    return (this.allIngredients.find(ingredient => ingredient.id === ingredientID).estimatedCostInCents) / 100;
+  }
 
+  calculateCost = (cost, quantity) => {
+    return (quantity * cost) / 100; 
+  }
 
+  createGroceryList = (recipe) => {
+    console.log(this.getIngredientsForRecipe(recipe));
 
+  }
+// calculate the cost of each missing ingredient 
+// mapping over the groceryList
 
-// Remove the ingredients used for a given meal from my pantry, once that meal has been cooked(only applicable if users have a list of mealsToCook; can be considered a stretch goal)
-
-
+}
 
 if (typeof module !== 'undefined') {
   module.exports = Pantry;
