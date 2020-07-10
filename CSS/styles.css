@@ -170,7 +170,7 @@ aside {
   align-items: center;
   border: 2px solid #C94C4C;
   border-radius: 6px;
-  height: 75vh;
+  height: 70vh;
   width: 300px;
   overflow: auto;
   padding: 1%;
@@ -180,14 +180,12 @@ aside {
   background-color: #FFFACD;
   font-size: 18px;
   width: 250px;
-  /* margin-top: 5px; */
 }
 
 .tag-list {
   flex-wrap: wrap;
-  /* margin-top: 5px; */
-  width: 90%;
-  height: 60%;
+  width: 85%;
+  height: 40%;
   overflow: scroll;
 }
 
