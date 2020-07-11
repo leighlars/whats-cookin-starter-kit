@@ -20,17 +20,26 @@ class Recipe {
   }
 
   getInstructions = () => {
-    return this.instructions.reduce((directions, instruction) => {
-      return directions += `${instruction.number}. ${instruction.instruction}<br>`;
-    }, "");
+    if (Array.isArray(this.instructions)) {
+      return this.instructions.reduce((directions, instruction) => {
+        return directions += `${instruction.number}. ${instruction.instruction}<br>`;
+      }, "");
+    } else {
+      return this.instructions;
+    }
   }
 
   getRecipeCost = (ingredientsList) => {
-    return this.ingredients.reduce((sum, recipeIngredient) => {
-      let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
-      sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
-      return sum;
-    }, 0);
+    if (Array.isArray(this.ingredients)) {
+      return this.ingredients.reduce((sum, recipeIngredient) => {
+        let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
+        sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
+        return sum;
+      }, 0);
+    } 
+    else {
+      return this.ingredients;
+    };
   }
 
   findIngredient = (recipeIngredient, ingredientsList) => {

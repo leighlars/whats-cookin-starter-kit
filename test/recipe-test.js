@@ -106,7 +106,6 @@ describe('Recipe', function() {
   });
 
   it('should have default ingredients if none are provided', function() {
-    // const recipe1 = new Recipe(1, "Jerry", "pic", [], [], []);
     expect(recipe1.ingredients).to.deep.equal("No ingredients provided. Please Google other similar recipes for ingredients.");
 
   });
@@ -138,7 +137,8 @@ describe('Recipe', function() {
   })
 
   it('should return recipe instructions', function() {
-    expect(recipe.getInstructions()).to.equal('1. Boil water<br>')
+    expect(recipe.getInstructions()).to.equal('1. Boil water<br>');
+    expect(recipe1.getInstructions()).to.equal("No instructions provided. Please Google other similar recipes for instructions.")
   });
 
   it('should get total cost in dollars of ingredients in each recipe', function() {
