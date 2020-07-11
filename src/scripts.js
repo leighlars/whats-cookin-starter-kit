@@ -1,10 +1,10 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let userSection = document.querySelector(".user-list");
 let userPantryBtn = document.getElementById("user-pantry-btn");
-let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
-let showPlannedBtn = document.getElementById("show-planned-btn");
 let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
 let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
+let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
+let showPlannedBtn = document.getElementById("show-planned-btn");
 let filterBtn = document.getElementById("filter-recipe-btn");
 let showAllRecipesBtn = document.getElementById("show-all-btn");
 let closeBtn = document.getElementById("#exit-btn");
@@ -114,6 +114,14 @@ const addRecipeToPlanned = () => {
 // addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
 // Sidebar Buttons
+
+// showPlannedBtn.addEventListener("click", showPlannedRecipes);
+
+// showFavesBtn.addEventListener("click", showFavoriteRecipe);
+
+// filterBtn.addEventListener("click", filterRecipes);
+
+showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);
 
 // Recipe Modals
 
