@@ -2,9 +2,10 @@ const chai = require('chai');
 const expect = chai.expect;
 const User = require('../src/User');
 const Recipe = require('../src/Recipe');
+const Pantry = require('../src/Pantry');
 
 describe('User', function() {
-  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList; 
+  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList, pantry; 
   
   beforeEach(function() {
     userInfo = {
@@ -47,6 +48,7 @@ describe('User', function() {
       }
     ];
     user = new User(userInfo, mockIngredientsList);
+    pantry = new Pantry(user.pantry);
     recipeInfo1 = {
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -163,7 +165,7 @@ describe('User', function() {
   });
 
   it('should have a pantry of ingredients', function () {
-    expect(user.pantry.length).to.deep.equal(3);
+    expect(user.pantry.ingredients.length).to.deep.equal(3);
   });
 
   it('should have a list of favorite recipes', function () {
@@ -220,9 +222,9 @@ describe('User', function() {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
 
-    expect(user.searchSavedRecipesByIngred('wheat flour')[0]).to.deep.equal(recipe1);
-    expect(user.searchSavedRecipesByIngred('apple')[0]).to.deep.equal(recipe2);
-    expect(user.searchSavedRecipesByIngred("brick")).to.deep.equal([]);
+    expect(user.searchSavedRecipesByIngred('wheat flour', mockIngredientsList)[0]).to.deep.equal(recipe1);
+    expect(user.searchSavedRecipesByIngred('apple', mockIngredientsList)[0]).to.deep.equal(recipe2);
+    expect(user.searchSavedRecipesByIngred("brick", mockIngredientsList)).to.deep.equal([]);
   });
 
   it('should search for all saved recipes by ingredient or name', function() {
@@ -230,10 +232,10 @@ describe('User', function() {
     user.addPlannedRecipe(recipe2);
     user.addPlannedRecipe(recipe1);
 
-    user.searchByIngredAndName('wheat flour');
+    user.searchByIngredAndName('wheat flour', mockIngredientsList);
 
-    expect(user.searchByIngredAndName('wheat flour')[0]).to.deep.equal(recipe1);
-    expect(user.searchByIngredAndName("wheat flour").length).to.deep.equal(2);
+    expect(user.searchByIngredAndName('wheat flour', mockIngredientsList)[0]).to.deep.equal(recipe1);
+    expect(user.searchByIngredAndName("wheat flour", mockIngredientsList).length).to.deep.equal(2);
 
 
   })
