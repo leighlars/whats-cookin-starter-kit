@@ -1,3 +1,5 @@
+// const Recipe = require("./Recipe");
+
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let userPantryBtn = document.getElementById("user-pantry-btn");
 let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
@@ -73,6 +75,7 @@ const loadHandler = () => {
 }
 
 // Pantry Modal //
+
 const viewPantryList = () => {
   openPantryInfo();
 }
@@ -95,8 +98,8 @@ userPantryBtn.addEventListener("click", viewPantryList);
 // Buttons on Recipe Cards //
 
 // const addRecipeToFaves = (event) => {
-  // let recipeId = event.path.find(e => e.id).id;
-  // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+// let recipeId = event.path.find(e => e.id).id;
+// let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
 //   currentUser.addFavoriteRecipe(recipe); 
 // } /// not functional 
 
@@ -136,9 +139,10 @@ const openAllRecipeInfo = () => {
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  let recipeObj = recipeData.find(recipe => recipe.id === Number(recipeId));
+  let recipe =  new Recipe(recipeObj); 
   let recipeIngredients = recipe.ingredients;
-  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients));
+  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients), getRecipeInstructions(recipe), getNeededIngredientsList(recipe, ingredientsData));
 };
 
 const getIngredientName = (recipeIngredient) => {
@@ -152,7 +156,17 @@ const makeIngredientsReadable = (recipeIngredients) => {
   }).join(", ");
 }
 
-const generateRecipeDetails = (recipe, ingredients) => {
+const getRecipeInstructions = (recipe) => {
+  return recipe.getInstructions();
+}
+
+const getNeededIngredientsList = (recipe, ingredientsList) => {
+  return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
+    return `${capitalize(ingredient.name)} $${Math.round(ingredient.cost)}`;
+  }).join(", ");
+}
+
+const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredients) => {
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -162,11 +176,12 @@ const generateRecipeDetails = (recipe, ingredients) => {
       <h4>Ingredients</h4>
       <article class="card-ingredients-list">${ingredients}</article>
       <h4>Instructions</h4>
-      <article>Boil water</article>
+      <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>Total Recipe Cost:   - What's In Your Pantry :  =  $10!</article>`
+      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</article>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
+
 
 // const closeRecipe = () => {
 //   console.log(test);
