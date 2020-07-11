@@ -7,6 +7,7 @@ let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
 let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
 let filterBtn = document.getElementById("filter-recipe-btn");
 let showAllRecipesBtn = document.getElementById("show-all-btn");
+let closeBtn = document.getElementById("#exit-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 
@@ -71,7 +72,7 @@ const loadHandler = () => {
   welcomeGreeting();
 }
 
-// pantry and grocery list modals
+//Pantry Modal
 const viewPantryList = () => {
   event.target.id === '#user-pantry-btn';
   openPantryInfo();
@@ -82,17 +83,17 @@ const openPantryInfo = () => {
   pantryList.style.display = "inline";
 }
 
-// const closePantryList = () => {
-//   if (event.target.id === "#exit-btn") {;
-//     let allRecipeInfo = document.querySelector(".recipe-instructions");
-//     allRecipeInfo.style.display = none;
-//   }
-// }
+const closePantryList = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "none";
+}
 
 userPantryBtn.addEventListener("click", viewPantryList);
+// closeBtn.addEventListener(closePantryList);
 // userSection.addEventListener("click", closePantryList); can't get modals to close
 
-// recipe card buttons
+
+// Buttons on Recipe Cards
 
 const addRecipeToFaves = (event) => {
   event.target.id === "#add-favorite-recipe-btn";
@@ -112,7 +113,9 @@ const addRecipeToPlanned = () => {
 
 // addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
-// recipe modals
+// Sidebar Buttons
+
+// Recipe Modals
 
 const viewRecipe = () => {
   openAllRecipeInfo()
@@ -152,12 +155,14 @@ const generateRecipeDetails = (recipe, ingredients) => {
       <h4>Cost</h4>
       <article>Total Recipe Cost:   - Your Pantry:  =  $100!</article>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+  // document.getElementById("overlay").add();
 }
 
 const closeRecipe = () => {
   console.log(test);
   let recipeInfo = document.querySelector(".recipe-instructions");
-  recipeInfo.style.display = "initial";
+  recipeInfo.style.display = "none";
+  // document.getElementById("overlay").remove();
 }
 
 const recipeCardHandler = (event) => {
