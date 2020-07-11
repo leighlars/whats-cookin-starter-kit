@@ -44,7 +44,7 @@ describe('Pantry', function () {
         amount: 10,
       },
     ];
-    pantryFull = new Pantry(userPantryIngredients, mockIngredientList);
+    pantryFull = new Pantry(userPantryIngredients);
     pantryEmpty = new Pantry();
     recipeInfo1 = {
       "id": 595736,
@@ -104,10 +104,6 @@ describe('Pantry', function () {
     expect(pantryEmpty).to.be.an.instanceOf(Pantry);
   });
 
-  it('should have access to all ingredients data', function() {
-    expect(pantryFull.allIngredients).to.deep.equal(mockIngredientList);
-  })
-
   it('can have no ingredients by default', function () {
     expect(pantryEmpty.ingredients).to.deep.equal([]);
   });
@@ -116,8 +112,8 @@ describe('Pantry', function () {
     expect(pantryFull.ingredients).to.deep.equal(userPantryIngredients);
   });
 
-  it('should find pantry ingredient that matches recipe ingredient by ID', function() {
-    expect(pantryFull.findIngredientByID(20081)).to.deep.equal({
+  it('should find ingredient in pantry that matches recipe ingredient by ID', function() {
+    expect(pantryFull.findIngredientByID(20081, pantryFull.ingredients)).to.deep.equal({
       ingredient: 20081,
       amount: 2,
     });
@@ -138,8 +134,8 @@ describe('Pantry', function () {
   });
 
   it('should return a list of ingredients and cost to buy for a meal', function() {
-    expect(pantryFull.createGroceryList(recipe2)[0]).to.deep.equal({name: 'apple cider', cost: 49.14})
-    expect(pantryFull.createGroceryList(recipe2)[1]).to.deep.equal({ name: "apple", cost: 20.7});
+    expect(pantryFull.createGroceryList(recipe2, mockIngredientList)[0]).to.deep.equal({name: 'apple cider', cost: 49.14})
+    expect(pantryFull.createGroceryList(recipe2, mockIngredientList)[1]).to.deep.equal({ name: "apple", cost: 20.7});
   });
   
 
