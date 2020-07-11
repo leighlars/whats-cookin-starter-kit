@@ -6,17 +6,14 @@ let greeting = document.querySelector(".user-greeting");
 // let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
 // let filterBtn = document.getElementById("filter-recipe-btn");
 
-
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
   
 const currentUser = new User(usersData[generateRandomUser()]);
 
-
 // userGroceryBtn.addEventListener("click", showGroceryList);
 // userPantryBtn.addEventListener("click", showPantryContents);
-// recipeCardSection.addEventListener("click", openAllRecipeInfo);
 
 const welcomeGreeting = () => {
   let firstName = currentUser.name.split(" ")[0];
@@ -71,18 +68,18 @@ const loadHandler = () => {
 
 // recipe modals
 
-// const generateRecipeTitle = (recipe, ingredients) => {
-//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
-//   let recipeTitle = `
-//       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-//        <img src="https://spoonacular.com/recipeImages/595736-556x370.jpg" class="recipe-img" id="recipe-modal-img"
-//        alt = "Image of recipe" >
-//       <h3 id="recipe-title">${recipe.name}</h3> */}
-//       <h4>Ingredients</h4>
-//       <p>${ingredients}</p>`
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-// },
-
+const generateRecipeTitle = (recipe, ingredients) => {
+  // console.log('generateRec', ingredients);
+  let fullRecipeInfo = document.querySelector(".recipe-instructions");
+  let recipeTitle = `
+      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+       <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
+       alt = "Image of recipe" >
+      <h3 id="recipe-title">${recipe.name}</h3>
+      <h4>Ingredients</h4>
+      <p>${ingredients}</p>`
+  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+}
 
 // const generateRecipeBtns = (recipe) => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
@@ -94,13 +91,30 @@ const loadHandler = () => {
 //   allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
 // }, 
 
+const clickedRecipe = (event) => {
+  event.target.closest('.recipe-card')
+  openAllRecipeInfo()
+}
+
 const openAllRecipeInfo = () => {
   let allRecipeInfo = document.querySelector(".recipe-instructions");
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
+  let recipeIngredients = recipe.ingredients;
+  generateRecipeTitle(recipe, generateIngredientNames(recipeIngredients));
 };
+
+const generateIngredientNames = (recipeIngredients) => {
+let matchedIngredients = []
+  recipeIngredients.find(recipeIngredient => {
+    let match = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
+    matchedIngredients.push(match)
+  })
+ return matchedIngredients.map(ingredient => capitalize(ingredient.name));
+}
+
+recipeCardSection.addEventListener("click", clickedRecipe);
 
 // const closeRecipe = () => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
