@@ -1,10 +1,13 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
-let greeting = document.querySelector(".user-greeting");
+// let userSection = document.querySelector(".user-list-btns");
 let userPantryBtn = document.getElementById("user-pantry-btn");
 // let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
-// let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
-// let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
-// let filterBtn = document.getElementById("filter-recipe-btn");
+let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
+let showPlannedBtn = document.getElementById("show-planned-btn");
+let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
+let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
+let filterBtn = document.getElementById("filter-recipe-btn");
+let showAllRecipesBtn = document.getElementById("show-all-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 
@@ -19,6 +22,7 @@ const currentPantry = new Pantry(currentUser.pantry);
 // userPantryBtn.addEventListener("click", showPantryContents);
 
 const welcomeGreeting = () => {
+  let greeting = document.querySelector(".user-greeting");
   let firstName = currentUser.name.split(" ")[0];
   greeting.innerText = `Welcome, ${firstName}!`;
 }
@@ -64,6 +68,7 @@ const capitalize = (words) => {
 };
 
 const loadHandler = () => {
+  let greeting = document.querySelector(".user-greeting");
   populateAllTags(recipeData);
   populateAllRecipeCards(recipeData);
   welcomeGreeting();
@@ -80,16 +85,35 @@ const openPantryInfo = () => {
   pantryList.style.display = "inline";
 }
 
+// const closePantryList = () => {
+//   if (event.target.id === "#exit-btn") {;
+//     let allRecipeInfo = document.querySelector(".recipe-instructions");
+//     allRecipeInfo.style.display = none;
+//   }
+// }
+
 userPantryBtn.addEventListener("click", viewPantryList);
+// userSection.addEventListener("click", closePantryList); can't get modals to close
 
 // recipe card buttons
 
-// const addRecipeToFaves = (event) => {
-//   event.target.id === ("add-favorite-recipe-btn");
-//   let recipeId = event.path.find(e => e.id).id;
-//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-//   currentUser.addFavoriteRecipe(recipe);
-// }
+const addRecipeToFaves = (event) => {
+  event.target.id === "#add-favorite-recipe-btn";
+  let recipeId = event.path.find(e => e.id).id;
+  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  currentUser.addFavoriteRecipe(recipe);
+}
+
+// addToFavesBtn.addEventListener("click", addRecipeToFaves); says method is null
+
+const addRecipeToPlanned = () => {
+  event.target.id === "#add-planned-btn";
+  let recipeId = event.path.find(e => e.id).id;
+  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  currentUser.addPlannedRecipe(recipe);
+}
+
+// addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
 // recipe modals
 
@@ -120,7 +144,7 @@ const makeIngredientsReadable = (recipeIngredients) => {
 const generateRecipeDetails = (recipe, ingredients) => {
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
-      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+      <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
@@ -134,15 +158,16 @@ const generateRecipeDetails = (recipe, ingredients) => {
 }
 
 const closeRecipe = () => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
-  allRecipeInfo.style.display = "none";
+  console.log(test);
+  let recipeInfo = document.querySelector(".recipe-instructions");
+  recipeInfo.style.display = "initial";
 }
 
 const recipeCardHandler = (event) => {
   if (event.target.className === 'recipe-img') {
     viewRecipe();
   } 
-  if (event.target.id === 'exit-recipe-btn') {
+  if (event.target.id === '#exit-btn') {
     closeRecipe();  
   }
 }

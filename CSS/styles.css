@@ -287,7 +287,7 @@ aside {
   transition: .3s ease;
 }
 
-#exit-recipe-btn {
+#exit-btn {
   background: transparent;
   border: 2px;
   border-radius: 5px;
