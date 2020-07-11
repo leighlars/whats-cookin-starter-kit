@@ -1,21 +1,26 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
-let greeting = document.querySelector(".user-greeting");
-// let userPantryBtn = document.getElementById("user-pantry-btn");
-// let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
-// let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
-// let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
-// let filterBtn = document.getElementById("filter-recipe-btn");
+let userPantryBtn = document.getElementById("user-pantry-btn");
+let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
+let addToPlannedBtn = document.querySelector(".add-planned-recipe-btn");
+let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
+let showPlannedBtn = document.getElementById("show-planned-btn");
+let filterBtn = document.getElementById("filter-recipe-btn");
+let showAllRecipesBtn = document.getElementById("show-all-btn");
+let closeBtn = document.getElementById("#exit-btn");
+// let searchBtn = document.getElementById("search-btn");
+// let clearSearchBtn = document.getElementById("clear-text-btn");
 
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
   
 const currentUser = new User(usersData[generateRandomUser()]);
+const currentPantry = new Pantry(currentUser.pantry);
 
-// userGroceryBtn.addEventListener("click", showGroceryList);
-// userPantryBtn.addEventListener("click", showPantryContents);
+// DOM display onload
 
 const welcomeGreeting = () => {
+  let greeting = document.querySelector(".user-greeting");
   let firstName = currentUser.name.split(" ")[0];
   greeting.innerText = `Welcome, ${firstName}!`;
 }
@@ -27,10 +32,10 @@ const populateAllRecipeCards = (recipeList) => {
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
             <div class="card-overlay">
               <div class="card-overlay-top">
-                <button class="card-btn">
-                  <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
+                <button class="card-btn" class ='add-favorite-recipe-btn'>
+                  <img src="../assets/heart.svg" class="user-icons" id="${recipe.id}" alt="Image of heart">
                 </button>   
-                <button class="card-btn">
+                <button class="card-btn" class="add-planned-recipe-btn">
                   <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
@@ -61,80 +66,125 @@ const capitalize = (words) => {
 };
 
 const loadHandler = () => {
+  let greeting = document.querySelector(".user-greeting");
   populateAllTags(recipeData);
   populateAllRecipeCards(recipeData);
   welcomeGreeting();
 }
 
-// recipe modals
-
-const generateRecipeDetails = (recipe, ingredients, unitAmount) => {
-  console.log('ingredients', ingredients);
-  console.log('recipe', recipe);
-  let fullRecipeInfo = document.querySelector(".recipe-instructions");
-  let recipeTitle = `
-      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-       <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
-       alt = "Image of recipe" >
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p> ${ingredients} </p> ${unitAmount}</p>` 
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+// Pantry Modal //
+const viewPantryList = () => {
+  openPantryInfo();
 }
 
-// const generateRecipeBtns = (recipe) => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   let recipeButtons = `
-//       <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
-//       <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
-//       <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
-//       `;
-//   allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
-// }, 
+const openPantryInfo = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "inline";
+}
 
-const clickedRecipe = (event) => {
-  event.target.closest('.recipe-card')
+// const generatePantryDetails = () => {}
+
+const closePantryList = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "none";
+}
+
+userPantryBtn.addEventListener("click", viewPantryList);
+
+
+// Buttons on Recipe Cards //
+
+// const addRecipeToFaves = (event) => {
+  // let recipeId = event.path.find(e => e.id).id;
+  // let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+//   currentUser.addFavoriteRecipe(recipe); 
+// } /// not functional 
+
+// addToFavesBtn.addEventListener("click", addRecipeToFaves); says method is null
+
+// const addRecipeToPlanned = () => {
+//   let recipeId = event.path.find(e => e.id).id;
+//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+//   currentUser.addPlannedRecipe(recipe);
+// } // not functional
+
+// addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
+
+
+
+// Sidebar Buttons //
+
+// showPlannedBtn.addEventListener("click", showPlannedRecipes);
+
+// showFavesBtn.addEventListener("click", showFavoriteRecipe);
+
+// const hideRecipes = () => {}
+
+// filterBtn.addEventListener("click", filterRecipes);
+
+
+showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);
+
+// Recipe Modals //
+
+const viewRecipe = () => {
   openAllRecipeInfo()
 }
 
 const openAllRecipeInfo = () => {
   let allRecipeInfo = document.querySelector(".recipe-instructions");
+  allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   let recipeIngredients = recipe.ingredients;
-  generateRecipeDetails(recipe, generateIngredientNames(recipeIngredients), generateIngredientUnitQuantity(recipeIngredients));
+  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients));
 };
 
-const generateIngredientNames = (recipeIngredients) => {
-let matchedIngredients = []
-  recipeIngredients.find(recipeIngredient => {
-    let match = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
-    matchedIngredients.push(match)
-  })
-  let singleIngredient = matchedIngredients.map(ingredient => capitalize(ingredient.name));
-  console.log('singleIngredient', singleIngredient);
- return singleIngredient
+const getIngredientName = (recipeIngredient) => {
+  return ingredientsData.find(ingredient => recipeIngredient.id === ingredient.id);
 }
 
-const generateIngredientUnitQuantity = (recipeIngredients) => {
-  console.log('recipeIngredients', recipeIngredients);
-  let unitAmounts = [];
-  recipeIngredients.forEach(recipeIngredient => {
-   let amount  = recipeIngredient.quantity.amount
-   let unit = recipeIngredient.quantity.unit
-   unitAmount = `${amount + ' ' + unit}`
-  unitAmounts.push(unitAmount)
-})
-  return unitAmounts
+const makeIngredientsReadable = (recipeIngredients) => {
+  return recipeIngredients.map(ingredient => {
+    let ingredientName = getIngredientName(ingredient);
+    return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}`;
+  }).join(", ");
 }
 
-recipeCardSection.addEventListener("click", clickedRecipe);
+const generateRecipeDetails = (recipe, ingredients) => {
+  let fullRecipeInfo = document.querySelector(".recipe-instructions");
+  let recipeTitle = `
+      <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+       <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
+       alt = "Image of recipe" >
+      <h3 id="recipe-title">${recipe.name}</h3>
+      <h4>Ingredients</h4>
+      <article class="card-ingredients-list">${ingredients}</article>
+      <h4>Instructions</h4>
+      <article>Boil water</article>
+      <h4>Cost</h4>
+      <article>Total Recipe Cost:   - What's In Your Pantry :  =  $10!</article>`
+  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+}
 
 // const closeRecipe = () => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   allRecipeInfo.style.display = "block";
-// },
+//   console.log(test);
+//   let recipeInfo = document.querySelector(".recipe-instructions");
+//   recipeInfo.style.display = "none";
+//   // document.getElementById("overlay").remove();
+// } // close recipe isn't working
+
+const recipeCardHandler = (event) => {
+  if (event.target.className === 'recipe-img') {
+    viewRecipe();
+  } 
+  // if (event.target.id === '#exit-btn') {
+  //   closeRecipe();  
+  // } // close recipe isn't working
+}
+
+recipeCardSection.addEventListener("click", recipeCardHandler);
 
 
 window.onload = loadHandler();

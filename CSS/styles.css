@@ -109,12 +109,11 @@ h2 {
   height: 30px;
 }
 
-.user-lists {
+.user-list {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: right;
-  /* border-left: 1px solid #FFFACD; */
   padding: 1%;
   height: 100%;
   width: 20%;
@@ -138,6 +137,7 @@ h2 {
 .user-icons {
   margin-top: 2px;
   margin-right: 5px;
+  text-align: center;
   width: 20px;
   height: 100%;
 }
@@ -176,9 +176,9 @@ aside {
   padding: 1%;
 }
 
-.filter-btn {
+.filter-btns {
   background-color: #FFFACD;
-  font-size: 18px;
+  font-size: 22px;
   width: 250px;
 }
 
@@ -267,7 +267,8 @@ aside {
   }
 
 
- /* recipe modal */
+ /* modal */
+ .pantry-list,
 .recipe-instructions {
   background: #FFFACD;
   border: 3px solid #C94C4C;
@@ -286,7 +287,7 @@ aside {
   transition: .3s ease;
 }
 
-#exit-recipe-btn {
+#exit-btn {
   background: transparent;
   border: 2px;
   border-radius: 5px;
@@ -299,6 +300,7 @@ aside {
   transition: .3s ease;
 }
 
+#pantry-title,
 #recipe-title {
   background-repeat: no-repeat;
   background-size: cover;
@@ -323,9 +325,10 @@ aside {
   margin-left: 3%;
 }
 
-.recipe-instructions p {
+.recipe-instructions article {
   color: #C94C4C;
   font-family: 'Raleway';
+  width: 90%;
   margin-left: 3%;
 }
 
