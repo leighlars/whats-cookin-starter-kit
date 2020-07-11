@@ -176,9 +176,9 @@ aside {
   padding: 1%;
 }
 
-.filter-btn {
+.filter-btns {
   background-color: #FFFACD;
-  font-size: 18px;
+  font-size: 22px;
   width: 250px;
 }
 
@@ -267,7 +267,8 @@ aside {
   }
 
 
- /* recipe modal */
+ /* modal */
+ .pantry-list,
 .recipe-instructions {
   background: #FFFACD;
   border: 3px solid #C94C4C;
@@ -299,6 +300,7 @@ aside {
   transition: .3s ease;
 }
 
+#pantry-title,
 #recipe-title {
   background-repeat: no-repeat;
   background-size: cover;
@@ -323,9 +325,10 @@ aside {
   margin-left: 3%;
 }
 
-.recipe-instructions p {
+.recipe-instructions article {
   color: #C94C4C;
   font-family: 'Raleway';
+  width: 90%;
   margin-left: 3%;
 }
 

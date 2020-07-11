@@ -1,16 +1,19 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let greeting = document.querySelector(".user-greeting");
-// let userPantryBtn = document.getElementById("user-pantry-btn");
+let userPantryBtn = document.getElementById("user-pantry-btn");
 // let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
 // let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
 // let addToPlannedBtn = document.getElementById("add-planned-recipe-btn");
 // let filterBtn = document.getElementById("filter-recipe-btn");
+// let searchBtn = document.getElementById("search-btn");
+// let clearSearchBtn = document.getElementById("clear-text-btn");
 
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
   
 const currentUser = new User(usersData[generateRandomUser()]);
+const currentPantry = new Pantry(currentUser.pantry);
 
 // userGroceryBtn.addEventListener("click", showGroceryList);
 // userPantryBtn.addEventListener("click", showPantryContents);
@@ -28,10 +31,10 @@ const populateAllRecipeCards = (recipeList) => {
             <div class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn">
-                  <img src="../assets/heart.svg" class="user-icons" alt="Image of heart">
+                  <img src="../assets/heart.svg" class="user-icons" id="add-favorite-recipe-btn" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn">
-                  <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
+                  <img src="../assets/calendar.svg" class="user-icons" id="add-planned-recipe-btn" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
               </div>
@@ -66,24 +69,31 @@ const loadHandler = () => {
   welcomeGreeting();
 }
 
-// recipe modals
+// pantry and grocery list modals
+const viewPantryList = () => {
+  event.target.id === '#user-pantry-btn';
+  openPantryInfo();
+}
 
-// const generateRecipeDetails = (recipe, ingredients) => {
-//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
-//   let recipeTitle = `
-//       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-//        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
-//        alt = "Image of recipe" >
-//       <h3 id="recipe-title">${recipe.name}</h3>
-//       <h4>Ingredients</h4>
-//       <ul class="ingredients-list">${ingredients}</ul>
-//       <h4>Instructions</h4>
-//       <h4>Cost</h4>` 
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+const openPantryInfo = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "inline";
+}
+
+userPantryBtn.addEventListener("click", viewPantryList);
+
+// recipe card buttons
+
+// const addRecipeToFaves = (event) => {
+//   event.target.id === ("add-favorite-recipe-btn");
+//   let recipeId = event.path.find(e => e.id).id;
+//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+//   currentUser.addFavoriteRecipe(recipe);
 // }
 
-const viewRecipe = (event) => {
-  event.target.closest('.recipe-card');
+// recipe modals
+
+const viewRecipe = () => {
   openAllRecipeInfo()
 }
 
@@ -107,7 +117,7 @@ const makeIngredientsReadable = (recipeIngredients) => {
   }).join(", ");
 }
 
-const generateRecipeDetails = (recipe, ingredients, instructions, cost) => {
+const generateRecipeDetails = (recipe, ingredients) => {
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -115,41 +125,27 @@ const generateRecipeDetails = (recipe, ingredients, instructions, cost) => {
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
       <h4>Ingredients</h4>
-      <article class="card-ingredients-list>${ingredients}</article>
+      <article class="card-ingredients-list">${ingredients}</article>
       <h4>Instructions</h4>
-      <article class="card-ingredients>${ingredients}</article>
-      <h4>Cost</h4>`
+      <article>Boil water</article>
+      <h4>Cost</h4>
+      <article>Total Recipe Cost:   - Your Pantry:  =  $100!</article>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
-
-// const generateInstructions = (recipe) => {
-//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
-//   let instructionsList = "";
-//   let instructions = recipe.instructions.map(i => {
-//     return i.instruction
-//   });
-//   instructions.forEach(i => {
-//     instructionsList += `<li>${i}</li>`
-//   });
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-//   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
-// },
-
 const closeRecipe = () => {
   let allRecipeInfo = document.querySelector(".recipe-instructions");
-  allRecipeInfo.style.display = "block";
-},
-
+  allRecipeInfo.style.display = "none";
+}
 
 const recipeCardHandler = (event) => {
-  if (event.target.classList.contains('.recipe-img')) {
-    viewRecipe(event);
-  }; 
+  if (event.target.className === 'recipe-img') {
+    viewRecipe();
+  } 
   if (event.target.id === 'exit-recipe-btn') {
-    closeRecipe(event);  
-  };
-},
+    closeRecipe();  
+  }
+}
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
