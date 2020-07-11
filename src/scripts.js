@@ -68,8 +68,9 @@ const loadHandler = () => {
 
 // recipe modals
 
-const generateRecipeTitle = (recipe, ingredients) => {
-  // console.log('generateRec', ingredients);
+const generateRecipeDetails = (recipe, ingredients, unitAmount) => {
+  console.log('ingredients', ingredients);
+  console.log('recipe', recipe);
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -77,7 +78,7 @@ const generateRecipeTitle = (recipe, ingredients) => {
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
       <h4>Ingredients</h4>
-      <p>${ingredients}</p>`
+      <p> ${ingredients} </p> ${unitAmount}</p>` 
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
@@ -102,7 +103,7 @@ const openAllRecipeInfo = () => {
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   let recipeIngredients = recipe.ingredients;
-  generateRecipeTitle(recipe, generateIngredientNames(recipeIngredients));
+  generateRecipeDetails(recipe, generateIngredientNames(recipeIngredients), generateIngredientUnitQuantity(recipeIngredients));
 };
 
 const generateIngredientNames = (recipeIngredients) => {
@@ -111,7 +112,21 @@ let matchedIngredients = []
     let match = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
     matchedIngredients.push(match)
   })
- return matchedIngredients.map(ingredient => capitalize(ingredient.name));
+  let singleIngredient = matchedIngredients.map(ingredient => capitalize(ingredient.name));
+  console.log('singleIngredient', singleIngredient);
+ return singleIngredient
+}
+
+const generateIngredientUnitQuantity = (recipeIngredients) => {
+  console.log('recipeIngredients', recipeIngredients);
+  let unitAmounts = [];
+  recipeIngredients.forEach(recipeIngredient => {
+   let amount  = recipeIngredient.quantity.amount
+   let unit = recipeIngredient.quantity.unit
+   unitAmount = `${amount + ' ' + unit}`
+  unitAmounts.push(unitAmount)
+})
+  return unitAmounts
 }
 
 recipeCardSection.addEventListener("click", clickedRecipe);
