@@ -1,9 +1,8 @@
-const Pantry = require('../src/Pantry');
 class User {
   constructor(user) {
     this.id = this.checkNumber(user.id);
     this.name = this.checkName(user.name);
-    this.pantry = new Pantry(user.pantry);
+    this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
   }

@@ -165,7 +165,7 @@ describe('User', function() {
   });
 
   it('should have a pantry of ingredients', function () {
-    expect(user.pantry.ingredients.length).to.deep.equal(3);
+    expect(user.pantry.length).to.deep.equal(3);
   });
 
   it('should have a list of favorite recipes', function () {
