@@ -109,7 +109,7 @@ h2 {
   height: 30px;
 }
 
-.user-lists {
+.user-list {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

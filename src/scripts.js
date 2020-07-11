@@ -1,7 +1,6 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
-// let userSection = document.querySelector(".user-list-btns");
+let userSection = document.querySelector(".user-list");
 let userPantryBtn = document.getElementById("user-pantry-btn");
-// let userGroceryBtn =  document.getElementById("user-grocery-list-btn");
 let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
 let showPlannedBtn = document.getElementById("show-planned-btn");
 let addToFavesBtn = document.getElementById("add-favorite-recipe-btn");
@@ -18,8 +17,6 @@ const generateRandomUser = () => {
 const currentUser = new User(usersData[generateRandomUser()]);
 const currentPantry = new Pantry(currentUser.pantry);
 
-// userGroceryBtn.addEventListener("click", showGroceryList);
-// userPantryBtn.addEventListener("click", showPantryContents);
 
 const welcomeGreeting = () => {
   let greeting = document.querySelector(".user-greeting");
