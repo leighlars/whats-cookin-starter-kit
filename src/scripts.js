@@ -9,6 +9,7 @@ let showAllRecipesBtn = document.getElementById("show-all-btn");
 let closeBtn = document.getElementById("#exit-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
+// let myPantrySection = document.querySelector(".pantry-list")
 
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
@@ -84,10 +85,6 @@ const openPantryInfo = () => {
 
 // const generatePantryDetails = () => {}
 
-const closePantryList = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "none";
-}
 
 userPantryBtn.addEventListener("click", viewPantryList);
 
@@ -168,24 +165,41 @@ const generateRecipeDetails = (recipe, ingredients) => {
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
-// const closeRecipe = () => {
-//   console.log(test);
-//   let recipeInfo = document.querySelector(".recipe-instructions");
-//   recipeInfo.style.display = "none";
-//   // document.getElementById("overlay").remove();
-// } // close recipe isn't working
+const closeRecipe = () => {
+  let recipeInfo = document.querySelector(".recipe-instructions");
+  recipeInfo.style.display = "none";
+  // document.getElementById("overlay").remove();
+} 
 
 const recipeCardHandler = (event) => {
   if (event.target.className === 'recipe-img') {
     viewRecipe();
   } 
-  // if (event.target.id === '#exit-btn') {
-  //   closeRecipe();  
-  // } // close recipe isn't working
+  if (event.target.className === 'close-icon') {
+    closeRecipe();  
+  } 
+  
 }
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
+// const closePantryList = (event) => {
 
-recipeCardSection.addEventListener("click", recipeCardHandler);
+//   let pantryList = document.querySelector(".pantry-list");
+//   console.log('pantryList', pantryList);
+//   pantryList.style.display = "none";
+// }
 
+// const myPantryHandler = (event) => {
+//   console.log('1', event.target);
+//   if (event.target.className === "close-icon-pantry") {
+//       console.log('2', event.target);
+//     closePantryList(event)
+//   }
+// }
+
+// myPantrySection.addEventListener('click', myPantryHandler)
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
+
+recipeCardSection.addEventListener("click", recipeCardHandler)
 
 window.onload = loadHandler();
 
