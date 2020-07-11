@@ -1,13 +1,11 @@
 class Recipe {
-  constructor(recipe, allIngredients, allRecipes) {
+  constructor(recipe) {
     this.id = this.checkNumber(recipe.id);
     this.name = this.checkName(recipe.name);
     this.image = recipe.image;
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
     this.tags = recipe.tags;
-    this.allIngredients = allIngredients;
-    this.allRecipes = allRecipes;
   }
 
   checkName = (recipe) => {
@@ -24,29 +22,29 @@ class Recipe {
     }, "");
   }
 
-  getRecipeCost = () => {
+  getRecipeCost = (ingredientsList) => {
     return this.ingredients.reduce((sum, recipeIngredient) => {
-      let matchIngredient = this.findIngredient(recipeIngredient);
+      let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
       sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
       return sum;
     }, 0);
   }
 
-  findIngredient = (recipeIngredient) => {
-    let foundIngredient = this.allIngredients.find(ingredient => ingredient.id === recipeIngredient.id);
+  findIngredient = (recipeIngredient, ingredientsList) => {
+    let foundIngredient = ingredientsList.find(ingredient => ingredient.id === recipeIngredient.id);
     if (foundIngredient !== undefined) {
       return foundIngredient;
     }
   }
 
-  filterRecipeByTag = (recipeTag) => {
-    return this.allRecipes.filter(recipe => recipe.tags.includes(recipeTag));
+  filterRecipeByTag = (recipeTag, recipeData) => {
+    return recipeData.filter(recipe => recipe.tags.includes(recipeTag));
   }
 
-  filterRecipeByIngredient = (recipeIngredient) => {
-    let matchedIngredient = this.allIngredients.find(ingredient => ingredient.name === recipeIngredient);
+  filterRecipeByIngredient = (recipeIngredient, ingredientsList, recipeList) => {
+    let matchedIngredient = ingredientsList.find(ingredient => ingredient.name === recipeIngredient);
     if (matchedIngredient !== undefined) {
-    return this.allRecipes.reduce((filteredRecipes, recipe) => {
+    return recipeList.reduce((filteredRecipes, recipe) => {
       recipe.ingredients.forEach(ingredient => {
         if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
           filteredRecipes.push(recipe);
@@ -59,8 +57,8 @@ class Recipe {
     }
   }
 
-  filterRecipeByName(recipeIngredient) {
-    return this.allRecipes.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
+  filterRecipeByName(recipeIngredient, recipeData) {
+    return recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
   }
 
   filterAllRecipesByQuery(recipeIngredient, ingredientsList, recipeList) {
