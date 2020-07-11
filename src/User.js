@@ -1,11 +1,10 @@
 class User {
-  constructor(user, allIngredients) {
+  constructor(user) {
     this.id = this.checkNumber(user.id);
     this.name = this.checkName(user.name);
-    this.pantry = new Pantry(user.pantry);
+    this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
-    this.allIngredients = allIngredients;
   }
 
   checkName = (user) => {
@@ -44,16 +43,16 @@ class User {
     });    
   }  
 
-  searchSavedRecipesByIngred = (query) => {
+  searchSavedRecipesByIngred = (query, ingredientList) => {
     let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
-    let ingredientID = this.changeIngredientNameToID(query);
+    let ingredientID = this.changeIngredientNameToID(query, ingredientList);
     return allSaved.filter(recipe => {
       return this.makeIngredientList(recipe).includes(ingredientID);
     })
   }
   
-  changeIngredientNameToID = (ingredientName) => {
-    let ingredient = this.allIngredients.find(ingredient => ingredient.name.includes(ingredientName)); 
+  changeIngredientNameToID = (ingredientName, ingredientList) => {
+    let ingredient = ingredientList.find(ingredient => ingredient.name.includes(ingredientName)); 
     return ingredient ? ingredient.id : 0;
   }
 
@@ -61,8 +60,8 @@ class User {
     return recipe.ingredients.map(ingredient => ingredient.id);
   }
 
-  searchByIngredAndName = (query) => {
-    let allRecipes = this.searchSavedRecipesByIngred(query).concat(this.searchSavedRecipesByName(query));
+  searchByIngredAndName = (query, ingredientList) => {
+    let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
     let filterDuplicates = [...new Set(allRecipes)];
     return filterDuplicates;
   }

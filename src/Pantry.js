@@ -1,7 +1,6 @@
 class Pantry {
-  constructor(ingredients, allIngredients) {
-    this.ingredients =  ingredients || [];
-    this.allIngredients = allIngredients;
+  constructor(userPantry) {
+    this.ingredients =  userPantry || [];
   }
 
   findIngredientByID = (id) => {
@@ -33,19 +32,24 @@ class Pantry {
     }, []);
   }
 
-  getIngredientCostByID = (ingredientID) => {
-    return (this.allIngredients.find(ingredient => ingredient.id === ingredientID).estimatedCostInCents) / 100;
+  findIngredientGlobally(ingredientID, ingredientsList) {
+    return ingredientsList.find(ingredient => ingredient.id === ingredientID);
+  }
+
+  getIngredientCost = (ingredient) => {
+    return ingredient.estimatedCostInCents / 100;
   }
 
   calculateCost = (cost, quantity) => {
     return (quantity * cost); 
   }
 
-  createGroceryList = (recipe) => {
-   return this.getIngredientsForRecipe(recipe).map(ingredient => {
-     let name = this.allIngredients.find(dataIngredient => dataIngredient.id === ingredient.id).name;
-     let dollarAmount = this.getIngredientCostByID(ingredient.id);
-     let totalCost = this.calculateCost(ingredient.amount, dollarAmount);
+  createGroceryList = (recipe, ingredientsList) => {
+    return this.getIngredientsForRecipe(recipe).map(ingredient => {
+      let foundIngredient = this.findIngredientGlobally(ingredient.id, ingredientsList);
+      let name = foundIngredient.name;
+      let dollarAmount = this.getIngredientCost(foundIngredient);
+      let totalCost = this.calculateCost(dollarAmount, ingredient.amount);
       return {name: name, cost: totalCost};
     });
   }
