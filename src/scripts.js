@@ -68,19 +68,19 @@ const loadHandler = () => {
 
 // recipe modals
 
-const generateRecipeDetails = (recipe, ingredients, unitAmount) => {
-  console.log('ingredients', ingredients);
-  console.log('recipe', recipe);
-  let fullRecipeInfo = document.querySelector(".recipe-instructions");
-  let recipeTitle = `
-      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
-       <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
-       alt = "Image of recipe" >
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
-      <p> ${ingredients} </p> ${unitAmount}</p>` 
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
-}
+// const generateRecipeDetails = (recipe, ingredients) => {
+//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
+//   let recipeTitle = `
+//       <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+//        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
+//        alt = "Image of recipe" >
+//       <h3 id="recipe-title">${recipe.name}</h3>
+//       <h4>Ingredients</h4>
+//       <ul class="ingredients-list">${ingredients}</ul>
+//       <h4>Instructions</h4>
+//       <h4>Cost</h4>` 
+//   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+// }
 
 // const generateRecipeBtns = (recipe) => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
@@ -103,38 +103,71 @@ const openAllRecipeInfo = () => {
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   let recipeIngredients = recipe.ingredients;
-  generateRecipeDetails(recipe, generateIngredientNames(recipeIngredients), generateIngredientUnitQuantity(recipeIngredients));
+  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients));
 };
 
-const generateIngredientNames = (recipeIngredients) => {
-let matchedIngredients = []
-  recipeIngredients.find(recipeIngredient => {
-    let match = ingredientsData.find(ingredient => ingredient.id === recipeIngredient.id)
-    matchedIngredients.push(match)
-  })
-  let singleIngredient = matchedIngredients.map(ingredient => capitalize(ingredient.name));
-  console.log('singleIngredient', singleIngredient);
- return singleIngredient
+const getIngredientName = (recipeIngredient) => {
+  return ingredientsData.find(ingredient => recipeIngredient.id === ingredient.id);
 }
 
-const generateIngredientUnitQuantity = (recipeIngredients) => {
-  console.log('recipeIngredients', recipeIngredients);
-  let unitAmounts = [];
-  recipeIngredients.forEach(recipeIngredient => {
-   let amount  = recipeIngredient.quantity.amount
-   let unit = recipeIngredient.quantity.unit
-   unitAmount = `${amount + ' ' + unit}`
-  unitAmounts.push(unitAmount)
-})
-  return unitAmounts
+const makeIngredientsReadable = (recipeIngredients) => {
+  return recipeIngredients.map(ingredient => {
+    let ingredientName = getIngredientName(ingredient);
+    return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}`;
+  }).join(", ");
 }
 
-recipeCardSection.addEventListener("click", clickedRecipe);
+const generateRecipeDetails = (recipe, ingredients, instructions, cost) => {
+  let fullRecipeInfo = document.querySelector(".recipe-instructions");
+  let recipeTitle = `
+      <button id="exit-recipe-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
+       <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
+       alt = "Image of recipe" >
+      <h3 id="recipe-title">${recipe.name}</h3>
+      <h4>Ingredients</h4>
+      <article class="card-ingredients-list>${ingredients}</article>
+      <h4>Instructions</h4>
+      <article class="card-ingredients>${ingredients}</article>
+      <h4>Cost</h4>`
+  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+}
+
+
+
+
+
+
+// const generateIngredients = (recipeIngredients) => {
+//   let quantities = generateIngredientUnitQuantity(recipeIngredients);
+//   let names = generateIngredientNames(recipeIngredients);
+//   return quantities.reduce((strings, amount) => {
+//     let obj = {amount: 0};
+//     obj.amount = names.find(name => name.indexOf)
+//     strings.push(obj);
+//     return strings;
+//   }, []);
+// }
+
+// const generateInstructions = (recipe) => {
+//   let fullRecipeInfo = document.querySelector(".recipe-instructions");
+//   let instructionsList = "";
+//   let instructions = recipe.instructions.map(i => {
+//     return i.instruction
+//   });
+//   instructions.forEach(i => {
+//     instructionsList += `<li>${i}</li>`
+//   });
+//   fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
+//   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
+// },
 
 // const closeRecipe = () => {
 //   let allRecipeInfo = document.querySelector(".recipe-instructions");
 //   allRecipeInfo.style.display = "block";
 // },
+
+recipeCardSection.addEventListener("click", clickedRecipe);
+
 
 
 window.onload = loadHandler();
