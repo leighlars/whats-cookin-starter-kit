@@ -82,18 +82,8 @@ const loadHandler = () => {
 //   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 // }
 
-// const generateRecipeBtns = (recipe) => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   let recipeButtons = `
-//       <button class="cook-recipe" disabled id="${recipe.id}">Cook This Recipe</button>
-//       <button class="calculate-cost" id="${recipe.id}">Cost to Cook</button>
-//       <button class="check-pantry" id="${recipe.id}">Check Pantry</button>
-//       `;
-//   allRecipeInfo.insertAdjacentHTML("beforeend", recipeButtons);
-// }, 
-
-const clickedRecipe = (event) => {
-  event.target.closest('.recipe-card')
+const viewRecipe = (event) => {
+  event.target.closest('.recipe-card');
   openAllRecipeInfo()
 }
 
@@ -133,21 +123,6 @@ const generateRecipeDetails = (recipe, ingredients, instructions, cost) => {
 }
 
 
-
-
-
-
-// const generateIngredients = (recipeIngredients) => {
-//   let quantities = generateIngredientUnitQuantity(recipeIngredients);
-//   let names = generateIngredientNames(recipeIngredients);
-//   return quantities.reduce((strings, amount) => {
-//     let obj = {amount: 0};
-//     obj.amount = names.find(name => name.indexOf)
-//     strings.push(obj);
-//     return strings;
-//   }, []);
-// }
-
 // const generateInstructions = (recipe) => {
 //   let fullRecipeInfo = document.querySelector(".recipe-instructions");
 //   let instructionsList = "";
@@ -161,12 +136,22 @@ const generateRecipeDetails = (recipe, ingredients, instructions, cost) => {
 //   fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol class="instructions">${instructionsList}</ol>`);
 // },
 
-// const closeRecipe = () => {
-//   let allRecipeInfo = document.querySelector(".recipe-instructions");
-//   allRecipeInfo.style.display = "block";
-// },
+const closeRecipe = () => {
+  let allRecipeInfo = document.querySelector(".recipe-instructions");
+  allRecipeInfo.style.display = "block";
+},
 
-recipeCardSection.addEventListener("click", clickedRecipe);
+
+const recipeCardHandler = (event) => {
+  if (event.target.classList.contains('.recipe-img')) {
+    viewRecipe(event);
+  }; 
+  if (event.target.id === 'exit-recipe-btn') {
+    closeRecipe(event);  
+  };
+},
+
+recipeCardSection.addEventListener("click", recipeCardHandler);
 
 
 
