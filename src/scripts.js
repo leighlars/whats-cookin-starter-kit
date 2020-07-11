@@ -171,7 +171,7 @@ const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-instructions");
   recipeInfo.style.display = "none";
   // document.getElementById("overlay").remove();
-}
+} // close recipe isn't working
 
 const recipeCardHandler = (event) => {
   if (event.target.className === 'recipe-img') {
@@ -179,7 +179,7 @@ const recipeCardHandler = (event) => {
   } 
   if (event.target.id === '#exit-btn') {
     closeRecipe();  
-  }
+  } // close recipe isn't working
 }
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
