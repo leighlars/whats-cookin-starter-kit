@@ -10,6 +10,7 @@ let closeBtn = document.getElementById("#exit-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 
+
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -168,20 +169,19 @@ const generateRecipeDetails = (recipe, ingredients) => {
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
-// const closeRecipe = () => {
-//   console.log(test);
-//   let recipeInfo = document.querySelector(".recipe-instructions");
-//   recipeInfo.style.display = "none";
-//   // document.getElementById("overlay").remove();
-// } // close recipe isn't working
+const closeRecipe = () => {
+  let recipeInfo = document.querySelector(".recipe-instructions");
+  recipeInfo.style.display = "none";
+  // document.getElementById("overlay").remove();
+} 
 
 const recipeCardHandler = (event) => {
   if (event.target.className === 'recipe-img') {
     viewRecipe();
   } 
-  // if (event.target.id === '#exit-btn') {
-  //   closeRecipe();  
-  // } // close recipe isn't working
+  if (event.target.className === 'close-icon') {
+    closeRecipe();  
+  } 
 }
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
