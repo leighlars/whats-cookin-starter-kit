@@ -28,7 +28,8 @@ const welcomeGreeting = () => {
   greeting.innerText = `Welcome, ${firstName}!`;
 }
 
-const populateAllRecipeCards = (recipeList) => {
+const populateRecipeCards = (recipeList) => {
+  recipeCardSection.innerHTML = "";
   recipeList.forEach(recipe => {
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
@@ -71,7 +72,7 @@ const capitalize = (words) => {
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
   populateAllTags(recipeData);
-  populateAllRecipeCards(recipeData);
+  populateRecipeCards(recipeData);
   welcomeGreeting();
 }
 
@@ -119,13 +120,15 @@ userPantryBtn.addEventListener("click", viewPantryList);
 // const hideRecipes = () => {}
 
 const filterRecipes = (event) => {
-  populateAllRecipeCards(currentUser.favoriteRecipes);
+  if (event.target.className === "filter-btns show-favorite-btn") {
+    populateRecipeCards(currentUser.favoriteRecipes);
+  }
 }
 
 filterBtn.addEventListener("click", filterRecipes);
 
 
-showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);
+showAllRecipesBtn.addEventListener("click", populateRecipeCards);
 
 // Recipe Modals //
 
@@ -196,26 +199,6 @@ const recipeCardHandler = (event) => {
   } 
   
 }
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
-// const closePantryList = (event) => {
-
-//   let pantryList = document.querySelector(".pantry-list");
-//   console.log('pantryList', pantryList);
-//   pantryList.style.display = "none";
-// }
-
-// const myPantryHandler = (event) => {
-//   console.log('1', event.target);
-//   if (event.target.className === "close-icon-pantry") {
-//       console.log('2', event.target);
-//     closePantryList(event)
-//   }
-// }
-
-// myPantrySection.addEventListener('click', myPantryHandler)
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
-
-
 
 recipeCardSection.addEventListener("click", function() {
   recipeCardHandler(event)
@@ -224,13 +207,11 @@ recipeCardSection.addEventListener("click", function() {
 
 window.onload = loadHandler();
 
-
 const favoriteRecipe = (event) => {
-  console.log(event.target);
-  if (event.target.className === "user-icons red-heart"){
+  if (event.target.className === "user-icons red-heart") {
     event.target.src = '../assets/heart-active.svg'
-     let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-    currentUser.addFavoriteRecipe(recipe)
+    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+    currentUser.addFavoriteRecipe(recipe);
   }
 }
 

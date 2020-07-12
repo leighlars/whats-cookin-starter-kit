@@ -20,7 +20,9 @@ class User {
   }
 
   addFavoriteRecipe = (recipe) => {
+    if (!this.favoriteRecipes.includes(recipe)) {
       this.favoriteRecipes.push(recipe);
+    }
   }
 
   deleteFavoriteRecipe = (recipe) => {
@@ -29,7 +31,9 @@ class User {
   }
 
   addPlannedRecipe = (recipe) => {
-    this.plannedRecipes.push(recipe);
+    if (!this.plannedRecipes.includes(recipe)) {
+      this.plannedRecipes.push(recipe);
+    }
   }
 
   filterFavoriteByTag = (tag) => {
