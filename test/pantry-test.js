@@ -5,7 +5,7 @@ const Recipe = require('../src/Recipe');
 
 
 describe('Pantry', function () {
-  let pantryFull, pantryEmpty, userPantryIngredients, recipe1, recipeInfo1, recipe2, recipeInfo2, mockIngredientList;
+  let pantryFull, pantryEmpty, userPantryIngredients, recipe1, recipeInfo1, recipe2, recipeInfo2, mockIngredientList, mockRecipeList;
 
   beforeEach(function () {
     mockIngredientList = [
@@ -42,6 +42,67 @@ describe('Pantry', function () {
       {
         ingredient: 9003,
         amount: 10,
+      },
+    ];
+    mockRecipeList = [
+      {
+        id: 595736,
+        image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        ingredients: [
+          {
+            id: 20081,
+            quantity: {
+              amount: 1.5,
+              unit: "c",
+            },
+          },
+          {
+            id: 18372,
+            quantity: {
+              amount: 0.5,
+              unit: "tsp",
+            },
+          },
+          {
+            id: 1009016,
+            quantity: {
+              amount: 10.5,
+              unit: "cups",
+            },
+          },
+          {
+            id: 9003,
+            quantity: {
+              amount: 20,
+            },
+          },
+        ],
+      },
+      {
+        id: 678353,
+        image: "https://spoonacular.com/recipeImages/678353-556x370.jpg",
+        ingredients: [
+          {
+            id: 1009016,
+            quantity: {
+              amount: 10.5,
+              unit: "cups",
+            },
+          },
+          {
+            id: 9003,
+            quantity: {
+              amount: 20,
+            },
+          },
+        ],
+        instructions: [
+          {
+            instruction:
+         "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
+            number: 10,
+          },
+        ],
       },
     ];
     pantryFull = new Pantry(userPantryIngredients);
@@ -117,7 +178,15 @@ describe('Pantry', function () {
       ingredient: 20081,
       amount: 2,
     });
-  })
+  });
+
+  it.only('should return pantry information', function() {
+    expect(pantryFull.getPantryIngredients(mockIngredientList, mockRecipeList)).to.deep.equal([
+      { name: "wheat flour", quantity: 2, unit: "blah" },
+      { name: "bicarbonate of soda", quantity: 1, unit: "blah" },
+      { name: "apple", quantity: 10, unit: "blah" },
+    ]);
+  });
 
   it('should check if pantry has enough ingredients amount for given recipe', function () {
     expect(pantryFull.isInPantry(recipe1)).to.equal(true);
@@ -125,8 +194,8 @@ describe('Pantry', function () {
   });
 
   it('should return missing ingredient and amount needed to make a meal', function() {
-    let expected = [ {"id": 1009016, "amount": 10.5}, {"id": 9003, "amount": 10}];
-    let expected2 = [ {"id": 1009016, "amount": 10.5 }, {"id": 9003, "amount": 20 }];
+    let expected = [ {"id": 1009016, unit: "cups", "amount": 10.5}, {"id": 9003, unit: "tsp", "amount": 10}];
+    let expected2 = [ {"id": 1009016, unit: "cups", "amount": 10.5 }, {"id": 9003, unit: "tsp", "amount": 20 }];
 
     expect(pantryFull.getIngredientsForRecipe(recipe2)).to.deep.equal(expected);
     expect(pantryEmpty.getIngredientsForRecipe(recipe2)).to.deep.equal(expected2);
@@ -142,7 +211,7 @@ describe('Pantry', function () {
     expect(pantryEmpty.getTotalCostOfGroceries(recipe1, mockIngredientList)).to.deep.equal(5.04);
     expect(pantryFull.getTotalCostOfGroceries(recipe2, mockIngredientList)).to.deep.equal(69.84);
 
-  })
+  });
   
 
 });
