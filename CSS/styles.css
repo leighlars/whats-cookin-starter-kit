@@ -121,7 +121,7 @@ h2 {
 
 .user-greeting {
   color: #C94C4C;
-  font-size: 20px;
+  font-size: 26px;
   text-align: right;
   margin-top: 0px;
   margin-bottom: 0px;
@@ -129,6 +129,7 @@ h2 {
 }
 
 .user-list-btns {
+  font-size: 22px;
   text-align: right;
   width: 240px;
   padding: 1%;

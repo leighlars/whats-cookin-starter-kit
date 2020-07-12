@@ -159,7 +159,7 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy: </br></br> ${neededIngredients}.</br>For a total of $${totalCost}!</article>`
+      <article>To make this recipe, you need to buy:</br> </br> ${neededIngredients}.</br>For a total of $${totalCost}!</article>`
   recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
