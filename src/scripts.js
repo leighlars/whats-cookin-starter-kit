@@ -81,8 +81,8 @@ const openPantryInfo = () => {
 // }
 
 const closePantryList = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "none";
+  let pantryModal = document.querySelector(".pantry-list");
+  pantryModal.style.display = "none";
 };
 
 const myPantryHandler = (event) => {
