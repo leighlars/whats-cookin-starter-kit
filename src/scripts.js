@@ -154,12 +154,20 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
+      <div class="modal-btns">
+        <button class="card-btn add-favorite-recipe-btn" id="modal-icons">
+          <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
+        </button>
+        <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
+           <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
+        </button> 
+      </div>  
       <h4>Ingredients</h4>
-      <article class="card-ingredients-list">${ingredients}</article>
+      <article class="card-ingredients-list">${ingredients}</br></article>
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy:</br> </br> ${neededIngredients}.</br>For a total of $${totalCost}!</article>`
+      <article>To make this recipe, you need to spend <b>$${totalCost}</b>:</br> </br> ${neededIngredients}.</article>`;
   recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
 

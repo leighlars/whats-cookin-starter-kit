@@ -2,7 +2,7 @@
   border: none;
   box-sizing: border-box;
   font-family: 'Pacifico', cursive;
-  color: #CBC9CF;
+  color: #C94C4C;
 }
 
 html, body {
@@ -303,13 +303,21 @@ aside {
 #recipe-title {
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 7px 7px 0px 0px;
   color: #b1cbbb;
   font-size: 30px;
   margin: 0;
   padding: 1%;
   text-align: center;
   text-shadow: 0px 0px 4px black;
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: center;
+}
+
+#modal-icons {
+
 }
 
 #recipe-modal-img {
@@ -321,6 +329,7 @@ aside {
 .recipe-modal h4 {
   color: #C94C4C;
   font-size: 1.5em;
+  margin-bottom: 8px;
   margin-left: 3%;
 }
 
