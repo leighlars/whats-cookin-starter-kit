@@ -1,10 +1,7 @@
 // const Recipe = require("./Recipe");
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
-let sidebarSection = document.querySelector(".search-options");
+let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-
-// let searchBtn = document.getElementById("search-btn");
-// let clearSearchBtn = document.getElementById("clear-text-btn");
 
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
@@ -24,7 +21,8 @@ const welcomeGreeting = () => {
 const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
-  recipeList.forEach(recipe => {
+  recipeList.forEach(eachRecipe => {
+    recipe = new Recipe(eachRecipe);
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
@@ -47,7 +45,8 @@ const populateAllTags = (recipeList) => {
   let tagList = document.querySelector(".tag-list");
   let uniqueTags = [];
   recipeList.forEach(recipe => {
-    recipe.tags.forEach(tag => {
+    recipeObj = new Recipe(recipe);
+    recipeObj.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
         let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
@@ -99,25 +98,31 @@ const closePantryList = () => {
   pantryModal.style.display = "none";
 };
 
-const myPantryHandler = (event) => {
+const userSectionHandler = (event) => {
   if (event.target.className === "user-list-btns pantry-btn") {
     openPantryInfo();
   }
   if (event.target.className === "close-icon close-icon-pantry") {
     closePantryList();
   }
+  if (event.target.className === "user-list-btns show-favorite-btn") {
+    populateRecipeCards(currentUser.favoriteRecipes);
+  }
+  if (event.target.className === "user-list-btns show-planned-btn") {
+    populateRecipeCards(currentUser.plannedRecipes);
+  }
 };
 
-userProfileSection.addEventListener("click", myPantryHandler);
+userProfileSection.addEventListener("click", userSectionHandler);
 
 // Sidebar Buttons //
 const sidebarButtonsHandler = (event) => {
-  if (event.target.className === "filter-btns show-favorite-btn") {
-    populateRecipeCards(currentUser.favoriteRecipes);
-  }
-  if (event.target.className === "filter-btns show-planned-btn") {
-    populateRecipeCards(currentUser.plannedRecipes);
-  }
+  // if (event.target.className === "filter-btns show-favorite-btn") {
+  //   populateRecipeCards(currentUser.favoriteRecipes);
+  // }
+  // if (event.target.className === "filter-btns show-planned-btn") {
+  //   populateRecipeCards(currentUser.plannedRecipes);
+  // }
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
   }
@@ -193,7 +198,7 @@ const closeRecipe = () => {
 // RECIPE CARD BUTTONS //
 
 const toggleFavoriteRecipe = (event, recipe) => {
-  if (!currentUser.favoriteRecipes.includes(recipe)) {
+  if (!recipe.isFavorite) {
     makeFavorite(event, recipe);
   } else {
     makeUnfavorite(event, recipe);
@@ -237,8 +242,6 @@ const recipeCardHandler = (event) => {
   if (event.target.className === "close-icon") {
     closeRecipe();
   } 
-  let recipeObj = recipeData.find((recipe) => recipe.id === Number(event.path.find((e) => e.id).id));
-  let recipe = new Recipe(recipeObj); 
   if (event.target.className === "recipe-img") {
     viewRecipe(recipe);
   }
