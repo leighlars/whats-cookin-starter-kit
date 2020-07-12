@@ -219,6 +219,7 @@ const makeUnfavorite = (event, recipe) => {
 };
 
 const togglePlannedRecipe = (event, recipe) => {
+  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isPlanned) {
     makePlanned(event, recipe);
   } else {
@@ -228,13 +229,13 @@ const togglePlannedRecipe = (event, recipe) => {
 
 const makePlanned = (event, recipe) => {
   currentUser.addPlannedRecipe(recipe);
-  event.target.src = "../assets/calendar.svg";
+  event.target.src = "../assets/calendar-active.svg";
   recipe.isPlanned = true;
 };
 
 const makeUnplanned = (event, recipe) => {
   currentUser.deletePlannedRecipe(recipe);
-  event.target.src = "../assets/heart.svg";
+  event.target.src = "../assets/calendar.svg";
   recipe.isPlanned = false;
 };
 
