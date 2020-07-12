@@ -1,12 +1,10 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".search-options");
-let userPantryBtn = document.getElementById("user-pantry-btn");
-let closeBtn = document.getElementById("#exit-btn");
+let userProfileSection = document.querySelector(".user-list");
 
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
-let myPantrySection = document.querySelector(".pantry-list")
-// let redHeart = document.querySelector('.red-heart')
+
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -72,21 +70,31 @@ const loadHandler = () => {
 
 // Pantry Modal //
 
-const viewPantryList = () => {
-  openPantryInfo();
-}
-
 const openPantryInfo = () => {
   let pantryModal = document.querySelector(".pantry-list");
   pantryModal.style.display = "inline";
-  generatePantryDetails(pantryModal);
+  // generatePantryDetails(pantryModal);
 }
 
-const generatePantryDetails = (pantryModal) => {
+// const generatePantryDetails = (pantryModal) => {
  
-}
+// }
 
-userPantryBtn.addEventListener("click", viewPantryList);
+const closePantryList = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "none";
+};
+
+const myPantryHandler = (event) => {
+  if (event.target.className === "user-list-btns pantry-btn") {
+    openPantryInfo();
+  }
+  if (event.target.className === "close-icon close-icon-pantry") {
+    closePantryList();
+  }
+};
+
+userProfileSection.addEventListener("click", myPantryHandler);
 
 // Sidebar Buttons //
 const sidebarButtonsHandler = (event) => {
@@ -167,44 +175,35 @@ const recipeCardDisplayHandler = (event) => {
   } 
 }
 
-const closePantryList = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "none";
-}
-
-const myPantryHandler = (event) => {
-  if (event.target.className === "close-icon close-icon-pantry") {
-    closePantryList()
+const toggleFavoriteRecipe = (event) => {
+  if (event.target.className === "user-icons red-heart") {
+    let recipe = recipeData.find(
+      (recipe) => recipe.id === Number(event.target.id)
+    );
+    if (!currentUser.favoriteRecipes.includes(recipe)) {
+      changeHeartGreen(event);
+      currentUser.addFavoriteRecipe(recipe);
+    } else {
+      changeHeartRed(event);
+      currentUser.deleteFavoriteRecipe(recipe);
+    }
   }
-}
+};
 
-myPantrySection.addEventListener('click', myPantryHandler)
+const changeHeartGreen = (event) => {
+  event.target.src = "../assets/heart-active.svg";
+};
+
+const changeHeartRed = (event) => {
+  event.target.src = "../assets/heart.svg";
+};
+
 
 recipeCardSection.addEventListener("click", function() {
   recipeCardDisplayHandler(event)
   toggleFavoriteRecipe(event)
 })
 
-const toggleFavoriteRecipe = (event) => {
-  if (event.target.className === "user-icons red-heart") {
-    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-    if (!currentUser.favoriteRecipes.includes(recipe)) {
-      changeHeartGreen(event)
-      currentUser.addFavoriteRecipe(recipe)
-    } else {
-      changeHeartRed(event)
-      currentUser.deleteFavoriteRecipe(recipe)
-    }
-  }
-}
-
-const changeHeartGreen = (event) => {
-  event.target.src = '../assets/heart-active.svg'
-}
-
-const changeHeartRed = (event) => {
-  event.target.src = '../assets/heart.svg'
-}
 
 window.onload = loadHandler();
 
