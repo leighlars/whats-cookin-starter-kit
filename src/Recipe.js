@@ -7,6 +7,7 @@ class Recipe {
     this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
     this.tags = recipe.tags || ["miscellaneous"];
     this.isFavorite = false;
+    this.isPlanned = false;
   }
 
   checkNumber = (recipe) => {

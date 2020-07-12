@@ -164,44 +164,61 @@ const closeRecipe = () => {
 } 
 
 const toggleFavoriteRecipe = (event, recipe) => {
-  if (!recipe.isFavorite) {
+  if (!currentUser.favoriteRecipes.includes(recipe)) {
     makeFavorite(event, recipe);
-    currentUser.addFavoriteRecipe(recipe);
   } else {
     makeUnfavorite(event, recipe);
-    currentUser.deleteFavoriteRecipe(recipe);
   }
 };
 
 const makeFavorite = (event, recipe) => {
   recipe.isFavorite = true;
   event.target.src = "../assets/heart-active.svg";
+  currentUser.addFavoriteRecipe(recipe);
 };
 
 const makeUnfavorite = (event, recipe) => {
   recipe.isFavorite = false;
   event.target.src = "../assets/heart.svg";
+  currentUser.deleteFavoriteRecipe(recipe);
 };
 
-const addRecipeToPlanned = (event, recipe) => {
-  currentUser.addPlannedRecipe(recipe);
+const togglePlannedRecipe = (event, recipe) => {
+  if (!recipe.isPlanned) {
+    makePlanned(event, recipe);
+  } else {
+    makeUnplanned(event, recipe);
+  }
 };
+
+const makePlanned = (event, recipe) => {
+  currentUser.addPlannedRecipe(recipe);
+  event.target.src = "../assets/calendar.svg";
+  recipe.isPlanned = true;
+};
+
+const makeUnplanned = (event, recipe) => {
+  currentUser.deletePlannedRecipe(recipe);
+  event.target.src = "../assets/heart.svg";
+  recipe.isPlanned = false;
+};
+
 
 
 const recipeCardHandler = (event) => {
+  if (event.target.className === "close-icon") {
+    closeRecipe();
+  } 
   let recipeObj = recipeData.find((recipe) => recipe.id === Number(event.path.find((e) => e.id).id));
   let recipe = new Recipe(recipeObj); 
   if (event.target.className === "recipe-img") {
     viewRecipe(recipe);
   }
-  if (event.target.className === "close-icon") {
-    closeRecipe();
-  } 
   if (event.target.className === "user-icons red-heart add-to-favorite") {
     toggleFavoriteRecipe(event, recipe);
   }
   if (event.target.className === "user-icons calendar add-to-planned") {
-    addRecipeToPlanned(event, recipe);
+    togglePlannedRecipe(event, recipe);
   }
 }
 

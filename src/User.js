@@ -18,6 +18,7 @@ class User {
 
  addFavoriteRecipe = (recipe) => {
   if (!this.favoriteRecipes.includes(recipe)) {
+    console.log(recipe.id)
    this.favoriteRecipes.push(recipe);
   }
  };
@@ -77,10 +78,7 @@ class User {
  };
 
  searchByIngredAndName = (query, ingredientList) => {
-  let allRecipes = this.searchSavedRecipesByIngred(
-   query,
-   ingredientList
-  ).concat(this.searchSavedRecipesByName(query));
+  let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
   let filterDuplicates = [...new Set(allRecipes)];
   return filterDuplicates;
  };
