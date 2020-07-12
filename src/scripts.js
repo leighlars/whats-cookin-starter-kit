@@ -5,9 +5,8 @@ let closeBtn = document.getElementById("#exit-btn");
 
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
-// let myPantrySection = document.querySelector(".pantry-list")
-let redHeart = document.querySelector('.red-heart');
-
+let myPantrySection = document.querySelector(".pantry-list")
+  // let redHeart = document.querySelector('.red-heart')
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -170,30 +169,47 @@ const recipeCardDisplayHandler = (event) => {
   } 
   if (event.target.className === 'close-icon') {
     closeRecipe();  
-  }   
+  } 
 }
 
-const addRecipeToPlanned = (event) => {
-  if (event.target.className === "add-planned-recipe-btn") {
-    let recipeId = event.path.find(e => e.id).id;
-    let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-    currentUser.addPlannedRecipe(recipe);
-  }
-}; // not adding to planned recipe
+const closePantryList = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "none";
+}
 
-const addRecipeToFavorites = (event) => {
-  if (event.target.className === "user-icons red-heart") {
-    event.target.src = '../assets/heart-active.svg';
-    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-    currentUser.addFavoriteRecipe(recipe);
+const myPantryHandler = (event) => {
+  if (event.target.className === "close-icon close-icon-pantry") {
+    closePantryList()
   }
 }
+
+myPantrySection.addEventListener('click', myPantryHandler)
 
 recipeCardSection.addEventListener("click", function() {
-  recipeCardDisplayHandler(event);
-  addRecipeToFavorites(event);
-  addRecipeToPlanned(event); // not adding to planned recipe
+  recipeCardHandler(event)
+  toggleFavoriteRecipe(event)
 })
 
 window.onload = loadHandler();
+
+const toggleFavoriteRecipe = (event) => {
+  if (event.target.className === "user-icons red-heart") {
+    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+    if (!currentUser.favoriteRecipes.includes(recipe)) {
+      changeHeartGreen(event)
+      currentUser.addFavoriteRecipe(recipe)
+     } else {
+       changeHeartRed(event)
+       currentUser.deleteFavoriteRecipe(recipe)
+     }
+  }
+}
+
+const changeHeartGreen = (event) => {
+  event.target.src = '../assets/heart-active.svg'
+}
+
+const changeHeartRed = (event) => {
+  event.target.src = '../assets/heart.svg'
+}
 
