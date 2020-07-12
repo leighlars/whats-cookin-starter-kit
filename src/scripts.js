@@ -1,5 +1,3 @@
-// const Recipe = require("./Recipe");
-
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let userPantryBtn = document.getElementById("user-pantry-btn");
 let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
@@ -183,7 +181,6 @@ const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredie
 const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-instructions");
   recipeInfo.style.display = "none";
-  // document.getElementById("overlay").remove();
 } 
 
 const recipeCardHandler = (event) => {
@@ -193,7 +190,6 @@ const recipeCardHandler = (event) => {
   if (event.target.className === 'close-icon') {
     closeRecipe();  
   } 
-  
 }
 
 const closePantryList = () => {
@@ -209,34 +205,30 @@ const myPantryHandler = (event) => {
 
 myPantrySection.addEventListener('click', myPantryHandler)
 
-
-
-
 recipeCardSection.addEventListener("click", function() {
   recipeCardHandler(event)
-  favoriteRecipe(event)
+  toggleFavoriteRecipe(event)
 })
 
 window.onload = loadHandler();
 
-
-const favoriteRecipe = (event) => {
-  if (event.target.className === "user-icons red-heart"){
-    event.target.src = '../assets/heart-active.svg'
-     let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-    currentUser.addFavoriteRecipe(recipe)
+const toggleFavoriteRecipe = (event) => {
+  if (event.target.className === "user-icons red-heart") {
+    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+    if (!currentUser.favoriteRecipes.includes(recipe)) {
+      changeHeartGreen(event)
+      currentUser.addFavoriteRecipe(recipe)
+     } else {
+       changeHeartRed(event)
+       currentUser.deleteFavoriteRecipe(recipe)
+     }
   }
 }
 
+const changeHeartGreen = (event) => {
+  event.target.src = '../assets/heart-active.svg'
+}
 
-// const favoriteRecipe = (event) => {
-//   console.log('event', event.target);
-//   let redHeart = document.querySelector('.red-heart')
-//   let greenHeart = document.querySelector('.green-heart')
-//   if (redHeart) {
-//     console.log('heart');
-//     event.target.src = '../assets/heart-active.svg'
-//     redHeart.classList.remove('red-heart')
-//     redHeart.classList.add('green-heart')
-//   }
-// }
+const changeHeartRed = (event) => {
+  event.target.src = '../assets/heart.svg'
+}
