@@ -141,7 +141,7 @@ describe('Recipe', function() {
     expect(recipe1.getInstructions()).to.equal("No instructions provided. Please Google other similar recipes for instructions.")
   });
 
-  it('should get total cost in dollars of ingredients in each recipe', function() {
+  it('should get total cost in dollars of each ingredients in each recipe', function() {
     expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
   });
 

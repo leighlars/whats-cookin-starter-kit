@@ -1,5 +1,4 @@
 // const Recipe = require("./Recipe");
-
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let userPantryBtn = document.getElementById("user-pantry-btn");
 let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
