@@ -109,8 +109,6 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
-
-
 // Sidebar Buttons //
 
 // showPlannedBtn.addEventListener("click", showPlannedRecipes);
@@ -119,7 +117,11 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // const hideRecipes = () => {}
 
-// filterBtn.addEventListener("click", filterRecipes);
+const filterRecipes = (event) => {
+  populateAllRecipeCards(currentUser.favoriteRecipes);
+}
+
+filterBtn.addEventListener("click", filterRecipes);
 
 
 showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);
@@ -148,8 +150,8 @@ const getIngredientName = (recipeIngredient) => {
 const makeIngredientsReadable = (recipeIngredients) => {
   return recipeIngredients.map(ingredient => {
     let ingredientName = getIngredientName(ingredient);
-    return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}`;
-  }).join(", ");
+    return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}</br>`;
+  }).join(" ");
 }
 
 const getRecipeInstructions = (recipe) => {
@@ -158,11 +160,11 @@ const getRecipeInstructions = (recipe) => {
 
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
-    return `${capitalize(ingredient.name)} $${Math.round(ingredient.cost)}`;
-  }).join(", ");
+    return `${capitalize(ingredient.name)} $${Math.round(ingredient.cost)}</br>`;
+  }).join(" ");
 }
 
-const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredients) => {
+const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredients, totalCost) => {
   let fullRecipeInfo = document.querySelector(".recipe-instructions");
   let recipeTitle = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -174,7 +176,7 @@ const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredie
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</article>`
+      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</br>For a total of $${totalCost}.</article>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 

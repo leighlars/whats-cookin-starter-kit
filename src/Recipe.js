@@ -2,10 +2,10 @@ class Recipe {
   constructor(recipe) {
     this.id = this.checkNumber(recipe.id);
     this.name = this.checkName(recipe.name);
-    this.image = recipe.image;
-    this.ingredients = recipe.ingredients;
-    this.instructions = recipe.instructions;
-    this.tags = this.checkTags(recipe);
+    this.image = recipe.image || "https://spoonacular.com/recipeImages/595736-556x370.jpg";
+    this.ingredients = recipe.ingredients || "No ingredients provided. Please Google other similar recipes for ingredients.";
+    this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
+    this.tags = recipe.tags || ["miscellaneous"];
   }
 
   checkNumber = (recipe) => {
@@ -20,27 +20,27 @@ class Recipe {
   }
 
   getInstructions = () => {
-    return this.instructions.reduce((directions, instruction) => {
-      return directions += `${instruction.number}. ${instruction.instruction}<br>`;
-    }, "");
+    if (Array.isArray(this.instructions)) {
+      return this.instructions.reduce((directions, instruction) => {
+        return directions += `${instruction.number}. ${instruction.instruction}<br>`;
+      }, "");
+    } else {
+      return this.instructions;
+    }
   }
-
-  checkTags = (recipe) => {
-    if (!Array.isArray(recipe) || recipe.length === 0) {
-      return ["miscellaneous"];
-    }
-    else {
-      return recipe.tags;
-    }
-  } 
 
   getRecipeCost = (ingredientsList) => {
-    return this.ingredients.reduce((sum, recipeIngredient) => {
-      let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
-      sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
-      return sum;
-    }, 0);
-  }
+    if (Array.isArray(this.ingredients)) {
+      return this.ingredients.reduce((sum, recipeIngredient) => {
+        let matchIngredient = this.findIngredient(recipeIngredient, ingredientsList);
+        sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
+        return sum;
+      }, 0);
+    } 
+    else {
+      return this.ingredients;
+    };
+  };
 
   findIngredient = (recipeIngredient, ingredientsList) => {
     let foundIngredient = ingredientsList.find(ingredient => ingredient.id === recipeIngredient.id);

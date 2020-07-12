@@ -3,9 +3,9 @@ const expect = chai.expect;
 
 const Recipe = require('../src/Recipe')
 describe('Recipe', function() {
-  let recipe, mockIngredientsList, mockRecipeList;
+  let recipe, recipe1, recipeSad, mockRecipe, mockIngredientsList, mockRecipeList;
   beforeEach( () => {
-    let mockRecipe = {
+    mockRecipe = {
       id: 1,
       name: "cookies",
       image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
@@ -20,6 +20,14 @@ describe('Recipe', function() {
       ],
       instructions: [{instruction: "Boil water", number: 1}],
       tags: ["breakfast", "lunch"],
+    };
+    recipeSad = {
+      id: "",
+      name: "",
+      image: "",
+      ingredients: "",
+      instructions: "",
+      tags: "",
     };
     mockIngredientsList = [
       {
@@ -52,6 +60,7 @@ describe('Recipe', function() {
       },
     ];
     recipe = new Recipe(mockRecipe, mockIngredientsList, mockRecipeList);
+    recipe1 = new Recipe(recipeSad, mockIngredientsList, mockRecipeList);
   })
 
   it('should be a function', function() {
@@ -80,6 +89,10 @@ describe('Recipe', function() {
     expect(recipe.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg");
   });
 
+  it("should have default image if none is provided", function() {
+    expect(recipe1.image).to.equal("https://spoonacular.com/recipeImages/595736-556x370.jpg");
+  });
+
   it('should have ingredients', function() {
     expect(recipe.ingredients).to.be.an('array');
     expect(recipe.ingredients[0]).to.deep.equal(
@@ -92,6 +105,11 @@ describe('Recipe', function() {
       })
   });
 
+  it('should have default ingredients if none are provided', function() {
+    expect(recipe1.ingredients).to.deep.equal("No ingredients provided. Please Google other similar recipes for ingredients.");
+
+  });
+
   it('should have instructions', function() {
     expect(recipe.instructions).to.be.an('array');
     expect(recipe.instructions[0]).to.deep.equal(
@@ -101,25 +119,29 @@ describe('Recipe', function() {
       })
   });
 
+  it('should have default instructions if none are given', function() {
+    expect(recipe1.instructions).to.deep.equal("No instructions provided. Please Google other similar recipes for instructions.")
+  });
+
   it('should have tags', function() {
     expect(recipe.tags).to.be.an('array');
     expect(recipe.tags.length).to.equal(2);
   });
 
-  it.only('can have default tags if no tags are given', function() {
-    let testRecipeTags = 
+  it('can have default tags if no tags are given', function() {
+    expect(recipe1.tags).to.be.an('array');
+     
+    expect(recipe.tags).to.deep.equal(["breakfast", "lunch"]);
 
-    expect(recipe.tags).to.be.an('array');
-    
-
-    expect(recipe.tags).to.be.deep.equal(["miscellaneous"]);
+    expect(recipe1.tags).to.deep.equal(["miscellaneous"]);
   })
 
   it('should return recipe instructions', function() {
-    expect(recipe.getInstructions()).to.equal('1. Boil water<br>')
+    expect(recipe.getInstructions()).to.equal('1. Boil water<br>');
+    expect(recipe1.getInstructions()).to.equal("No instructions provided. Please Google other similar recipes for instructions.")
   });
 
-  it('should get total cost in dollars of ingredients in each recipe', function() {
+  it('should get total cost in dollars of each ingredients in each recipe', function() {
     expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
   });
 

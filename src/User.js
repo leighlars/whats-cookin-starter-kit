@@ -1,7 +1,7 @@
 class User {
   constructor(user) {
     this.id = this.checkNumber(user.id);
-    this.name = this.checkName(user.name);
+    this.name = this.checkName(user.name) || "User123";
     this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.plannedRecipes = [];
@@ -12,7 +12,11 @@ class User {
   }
 
   checkNumber = (user) => {
-    return typeof user === 'number' ? user : Date.now();
+    if (typeof user !== 'number' || !user) {
+      return Date.now();
+    } else {
+      return user;
+    }
   }
 
   addFavoriteRecipe = (recipe) => {
