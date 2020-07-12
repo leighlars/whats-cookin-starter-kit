@@ -78,13 +78,14 @@ const openPantryInfo = () => {
 }
 
 const getPantryIngredients = () => {
-  return currentUser.pantry.map(ingredient => {
-    return `You have ${ingredient.amount} of ${ingredient.ingredient}</br>`
+  return currentPantry.ingredients.map(ingredient => {
+    return `${ingredient.ingredient}: ${ingredient.amount} ${ingredient.unit}</br>`;
   })
 }
 
 const displayPantryHeader = () => {
   let pantryModal = document.querySelector(".pantry-modal");
+  pantryModal.innerHTML = "";
   let ingredients = getPantryIngredients();
   let pantryHTML = `
         <button id="exit-btn"><img src="../assets/close.svg" class="close-icon close-icon-pantry" alt="Close instructions"></button>

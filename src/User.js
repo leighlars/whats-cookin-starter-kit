@@ -18,7 +18,6 @@ class User {
 
  addFavoriteRecipe = (recipe) => {
   if (!this.favoriteRecipes.includes(recipe)) {
-    console.log(recipe.id)
    this.favoriteRecipes.push(recipe);
   }
  };
