@@ -1,3 +1,5 @@
+// const Recipe = require("./Recipe");
+
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".search-options");
 let userProfileSection = document.querySelector(".user-list");
@@ -33,7 +35,7 @@ const populateRecipeCards = (recipeList) => {
                   <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
-                  <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
+                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
               </div>
@@ -99,9 +101,9 @@ userProfileSection.addEventListener("click", myPantryHandler);
 
 // Sidebar Buttons //
 const sidebarButtonsHandler = (event) => {
-  console.log(event.target.className);
   if (event.target.className === "filter-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
+
   }
   if (event.target.className === "filter-btns show-planned-btn") {
     populateRecipeCards(currentUser.plannedRecipes);
@@ -178,9 +180,7 @@ const recipeCardDisplay = (event) => {
 }
 
 const toggleFavoriteRecipe = (event) => {
-  let recipe = recipeData.find(
-    (recipe) => recipe.id === Number(event.target.id)
-  );
+  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!currentUser.favoriteRecipes.includes(recipe)) {
     changeHeartGreen(event);
     currentUser.addFavoriteRecipe(recipe);
@@ -188,6 +188,11 @@ const toggleFavoriteRecipe = (event) => {
     changeHeartRed(event);
     currentUser.deleteFavoriteRecipe(recipe);
   }
+};
+
+const addRecipeToPlanned = (event) => {
+  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+  currentUser.addPlannedRecipe(recipe);
 };
 
 const changeHeartGreen = (event) => {
@@ -198,10 +203,15 @@ const changeHeartRed = (event) => {
   event.target.src = "../assets/heart.svg";
 };
 
+
+
 recipeCardSection.addEventListener("click", function() {
   recipeCardDisplay(event);
   if (event.target.className === "user-icons red-heart add-to-favorite") {
     toggleFavoriteRecipe(event);
+  }
+  if (event.target.className === "user-icons calendar add-to-planned") {
+    addRecipeToPlanned(event);
   }
 })
 
