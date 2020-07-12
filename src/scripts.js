@@ -28,8 +28,8 @@ const populateRecipeCards = (recipeList) => {
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
             <div class="card-overlay">
               <div class="card-overlay-top">
-                <button class="card-btn" class="add-favorite-recipe-btn">
-                  <img src="../assets/heart.svg" class="user-icons red-heart" id="${recipe.id}" alt="Image of heart">
+                <button class="card-btn add-favorite-recipe-btn">
+                  <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
                   <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
@@ -166,7 +166,7 @@ const closeRecipe = () => {
   recipeInfo.style.display = "none";
 } 
 
-const recipeCardDisplayHandler = (event) => {
+const recipeCardDisplay = (event) => {
   if (event.target.className === 'recipe-img') {
     viewRecipe();
   } 
@@ -176,16 +176,15 @@ const recipeCardDisplayHandler = (event) => {
 }
 
 const toggleFavoriteRecipe = (event) => {
-  if (event.target.className === "user-icons red-heart") {
-    let recipe = recipeData.find((recipe) => recipe.id === Number(event.target.id)
-    );
-    if (!currentUser.favoriteRecipes.includes(recipe)) {
-      changeHeartGreen(event);
-      currentUser.addFavoriteRecipe(recipe);
-    } else {
-      changeHeartRed(event);
-      currentUser.deleteFavoriteRecipe(recipe);
-    }
+  let recipe = recipeData.find(
+    (recipe) => recipe.id === Number(event.target.id)
+  );
+  if (!currentUser.favoriteRecipes.includes(recipe)) {
+    changeHeartGreen(event);
+    currentUser.addFavoriteRecipe(recipe);
+  } else {
+    changeHeartRed(event);
+    currentUser.deleteFavoriteRecipe(recipe);
   }
 };
 
@@ -199,8 +198,10 @@ const changeHeartRed = (event) => {
 
 
 recipeCardSection.addEventListener("click", function() {
-  recipeCardDisplayHandler(event)
-  toggleFavoriteRecipe(event)
+  recipeCardDisplay(event);
+  if (event.target.className === "user-icons red-heart add-to-favorite") {
+    toggleFavoriteRecipe(event);
+  }
 })
 
 
