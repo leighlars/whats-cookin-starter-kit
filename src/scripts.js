@@ -21,7 +21,8 @@ const welcomeGreeting = () => {
 }
 
 const populateRecipeCards = (recipeList) => {
-  // recipeCardSection.innerHTML = "";
+  recipeCardSection.innerHTML = "";
+  recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-instructions"></div>`);
   recipeList.forEach(recipe => {
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
@@ -98,6 +99,7 @@ userProfileSection.addEventListener("click", myPantryHandler);
 
 // Sidebar Buttons //
 const sidebarButtonsHandler = (event) => {
+  console.log(event.target.className);
   if (event.target.className === "filter-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
   }
@@ -195,7 +197,6 @@ const changeHeartGreen = (event) => {
 const changeHeartRed = (event) => {
   event.target.src = "../assets/heart.svg";
 };
-
 
 recipeCardSection.addEventListener("click", function() {
   recipeCardDisplay(event);
