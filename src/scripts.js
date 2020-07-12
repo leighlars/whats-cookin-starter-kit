@@ -75,12 +75,24 @@ const loadHandler = () => {
 const openPantryInfo = () => {
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
-  // generatePantryDetails(pantryModal);
+  displayPantryHeader(pantryModal);
 }
 
-// const generatePantryDetails = (pantryModal) => {
- 
-// }
+const getPantryIngredients = () => {
+  return currentUser.pantry.map(ingredient => {
+    return `You have ${ingredient.amount} of ${ingredient.ingredient}</br>`
+  })
+}
+
+const displayPantryHeader = () => {
+  let pantryModal = document.querySelector(".pantry-modal");
+  let ingredients = getPantryIngredients();
+  let pantryHTML = `
+        <button id="exit-btn"><img src="../assets/close.svg" class="close-icon close-icon-pantry" alt="Close instructions"></button>
+        <h5 id="pantry-title">My Pantry</h5> 
+        <article class="pantry-content">You have </br> </br>${ingredients}</br> in your pantry.</article>`;
+  pantryModal.insertAdjacentHTML("beforeend", pantryHTML);
+}
 
 const closePantryList = () => {
   let pantryModal = document.querySelector(".pantry-modal");
@@ -170,6 +182,8 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <article>To make this recipe, you need to spend <b>$${totalCost}</b>:</br> </br> ${neededIngredients}.</article>`;
   recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
+
+//^^ need to refactor
 
 const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-modal");
