@@ -1,5 +1,4 @@
 // const Recipe = require("./Recipe");
-
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".search-options");
 let userProfileSection = document.querySelector(".user-list");
@@ -103,7 +102,6 @@ userProfileSection.addEventListener("click", myPantryHandler);
 const sidebarButtonsHandler = (event) => {
   if (event.target.className === "filter-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
-
   }
   if (event.target.className === "filter-btns show-planned-btn") {
     populateRecipeCards(currentUser.plannedRecipes);
@@ -170,14 +168,6 @@ const closeRecipe = () => {
   recipeInfo.style.display = "none";
 } 
 
-const recipeCardDisplay = (event) => {
-  if (event.target.className === 'recipe-img') {
-    viewRecipe();
-  } 
-  if (event.target.className === 'close-icon') {
-    closeRecipe();  
-  } 
-}
 
 const toggleFavoriteRecipe = (event) => {
   let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
@@ -190,10 +180,6 @@ const toggleFavoriteRecipe = (event) => {
   }
 };
 
-const addRecipeToPlanned = (event) => {
-  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-  currentUser.addPlannedRecipe(recipe);
-};
 
 const changeHeartGreen = (event) => {
   event.target.src = "../assets/heart-active.svg";
@@ -203,18 +189,28 @@ const changeHeartRed = (event) => {
   event.target.src = "../assets/heart.svg";
 };
 
+const addRecipeToPlanned = (event) => {
+  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+  currentUser.addPlannedRecipe(recipe);
+};
 
-
-recipeCardSection.addEventListener("click", function() {
-  recipeCardDisplay(event);
+const recipeCardHandler = (event) => {
+  if (event.target.className === "recipe-img") {
+    viewRecipe();
+  }
+  if (event.target.className === "close-icon") {
+    closeRecipe();
+  } 
   if (event.target.className === "user-icons red-heart add-to-favorite") {
     toggleFavoriteRecipe(event);
   }
   if (event.target.className === "user-icons calendar add-to-planned") {
     addRecipeToPlanned(event);
   }
-})
+}
 
+
+recipeCardSection.addEventListener("click", recipeCardHandler);
 
 window.onload = loadHandler();
 
