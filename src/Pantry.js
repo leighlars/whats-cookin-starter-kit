@@ -59,7 +59,7 @@ class Pantry {
      totalCost += item.cost;
       return totalCost;
     }, 0);
-  } //make test for this
+  }
 }
 
 if (typeof module !== 'undefined') {

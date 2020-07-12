@@ -137,6 +137,12 @@ describe('Pantry', function () {
     expect(pantryFull.createGroceryList(recipe2, mockIngredientList)[0]).to.deep.equal({name: 'apple cider', cost: 49.14})
     expect(pantryFull.createGroceryList(recipe2, mockIngredientList)[1]).to.deep.equal({ name: "apple", cost: 20.7});
   });
+
+  it('should return total cost of all missing ingredients to buy for a meal', function() {
+    expect(pantryEmpty.getTotalCostOfGroceries(recipe1, mockIngredientList)).to.deep.equal(5.04);
+    expect(pantryFull.getTotalCostOfGroceries(recipe2, mockIngredientList)).to.deep.equal(69.84);
+
+  })
   
 
 });
