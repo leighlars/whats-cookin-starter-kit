@@ -1,4 +1,3 @@
-// const Recipe = require("./Recipe");
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".search-options");
 let userPantryBtn = document.getElementById("user-pantry-btn");
@@ -25,7 +24,7 @@ const welcomeGreeting = () => {
 }
 
 const populateRecipeCards = (recipeList) => {
-  recipeCardSection.innerHTML = "";
+  // recipeCardSection.innerHTML = "";
   recipeList.forEach(recipe => {
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
@@ -113,6 +112,7 @@ const viewRecipe = () => {
 
 const openAllRecipeInfo = () => {
   let allRecipeInfo = document.querySelector(".recipe-instructions");
+  
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
