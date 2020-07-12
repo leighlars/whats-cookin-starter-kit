@@ -99,25 +99,31 @@ const closePantryList = () => {
   pantryModal.style.display = "none";
 };
 
-const myPantryHandler = (event) => {
+const userSectionHandler = (event) => {
   if (event.target.className === "user-list-btns pantry-btn") {
     openPantryInfo();
   }
   if (event.target.className === "close-icon close-icon-pantry") {
     closePantryList();
   }
+  if (event.target.className === "user-list-btns show-favorite-btn") {
+    populateRecipeCards(currentUser.favoriteRecipes);
+  }
+  if (event.target.className === "user-list-btns show-planned-btn") {
+    populateRecipeCards(currentUser.plannedRecipes);
+  }
 };
 
-userProfileSection.addEventListener("click", myPantryHandler);
+userProfileSection.addEventListener("click", userSectionHandler);
 
 // Sidebar Buttons //
 const sidebarButtonsHandler = (event) => {
-  if (event.target.className === "filter-btns show-favorite-btn") {
-    populateRecipeCards(currentUser.favoriteRecipes);
-  }
-  if (event.target.className === "filter-btns show-planned-btn") {
-    populateRecipeCards(currentUser.plannedRecipes);
-  }
+  // if (event.target.className === "filter-btns show-favorite-btn") {
+  //   populateRecipeCards(currentUser.favoriteRecipes);
+  // }
+  // if (event.target.className === "filter-btns show-planned-btn") {
+  //   populateRecipeCards(currentUser.plannedRecipes);
+  // }
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
   }
