@@ -49,9 +49,16 @@ class Pantry {
       let foundIngredient = this.findIngredientGlobally(ingredient.id, ingredientsList);
       let name = foundIngredient.name;
       let dollarAmount = this.getIngredientCost(foundIngredient);
-      let totalCost = this.calculateCost(dollarAmount, ingredient.amount);
-      return {name: name, cost: totalCost};
+      let cost = this.calculateCost(dollarAmount, ingredient.amount);
+      return {name: name, cost: cost};
     });
+  }
+
+  getTotalCostOfGroceries = (recipe, ingredientsList) => {
+   return this.createGroceryList(recipe, ingredientsList).reduce((totalCost, item) => {
+     totalCost += item.cost;
+      return totalCost;
+    }, 0);
   }
 }
 

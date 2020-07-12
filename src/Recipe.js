@@ -6,6 +6,8 @@ class Recipe {
     this.ingredients = recipe.ingredients || "No ingredients provided. Please Google other similar recipes for ingredients.";
     this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
     this.tags = recipe.tags || ["miscellaneous"];
+    this.isFavorite = false;
+    this.isPlanned = false;
   }
 
   checkNumber = (recipe) => {
@@ -22,7 +24,7 @@ class Recipe {
   getInstructions = () => {
     if (Array.isArray(this.instructions)) {
       return this.instructions.reduce((directions, instruction) => {
-        return directions += `${instruction.number}. ${instruction.instruction}<br>`;
+        return directions += `${instruction.number}. ${instruction.instruction}</br></br>`;
       }, "");
     } else {
       return this.instructions;

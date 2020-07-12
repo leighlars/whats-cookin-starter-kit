@@ -137,7 +137,7 @@ describe('Recipe', function() {
   })
 
   it('should return recipe instructions', function() {
-    expect(recipe.getInstructions()).to.equal('1. Boil water<br>');
+    expect(recipe.getInstructions()).to.equal('1. Boil water</br></br>');
     expect(recipe1.getInstructions()).to.equal("No instructions provided. Please Google other similar recipes for instructions.")
   });
 

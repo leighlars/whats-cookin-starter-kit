@@ -2,7 +2,7 @@
   border: none;
   box-sizing: border-box;
   font-family: 'Pacifico', cursive;
-  color: #CBC9CF;
+  color: #C94C4C;
 }
 
 html, body {
@@ -121,7 +121,7 @@ h2 {
 
 .user-greeting {
   color: #C94C4C;
-  font-size: 20px;
+  font-size: 26px;
   text-align: right;
   margin-top: 0px;
   margin-bottom: 0px;
@@ -129,6 +129,7 @@ h2 {
 }
 
 .user-list-btns {
+  font-size: 22px;
   text-align: right;
   width: 240px;
   padding: 1%;
@@ -254,9 +255,7 @@ aside {
 }
   
 .card-btn:hover {
-  border-radius: 50%;
-  border: 1px solid #FFFACD;
-  transform: skewX(0deg);
+  transform: skewX(-10deg);
 }
 
 .recipe-title {
@@ -267,9 +266,9 @@ aside {
   }
 
 
- /* modal */
- .pantry-list,
-.recipe-instructions {
+ /* modals */
+ .pantry-modal,
+.recipe-modal {
   background: #FFFACD;
   border: 3px solid #C94C4C;
   border-radius: 10px;
@@ -304,7 +303,6 @@ aside {
 #recipe-title {
   background-repeat: no-repeat;
   background-size: cover;
-  border-radius: 7px 7px 0px 0px;
   color: #b1cbbb;
   font-size: 30px;
   margin: 0;
@@ -313,38 +311,33 @@ aside {
   text-shadow: 0px 0px 4px black;
 }
 
+.modal-btns {
+  display: flex;
+  justify-content: center;
+}
+
+#modal-icons {
+
+}
+
 #recipe-modal-img {
   margin-left: 30%;
   width: 40%;
   height: 40%;
 }
 
-.recipe-instructions h4 {
+.recipe-modal h4 {
   color: #C94C4C;
-  font-size: 1em;
+  font-size: 1.5em;
+  margin-bottom: 8px;
   margin-left: 3%;
 }
 
-.recipe-instructions article {
+.pantry-content,
+.recipe-modal article {
   color: #C94C4C;
   font-family: 'Raleway';
   width: 90%;
   margin-left: 3%;
-}
-
-.recipe-instructions ol {
-  margin-right: 3%;
-}
-
-#overlay {
-  filter:alpha(opacity=50);
-  background-color: #5B7894;
-  height:100%;
-  left:0;
-  opacity:0.5;
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
 }
 

@@ -1,17 +1,11 @@
+// const Recipe = require("./Recipe");
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
-let userPantryBtn = document.getElementById("user-pantry-btn");
-let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
-let addToPlannedBtn = document.querySelector(".add-planned-recipe-btn");
-let showFavesBtn = document.getElementById("show-favorite-recipe-btn");
-let showPlannedBtn = document.getElementById("show-planned-btn");
-let filterBtn = document.getElementById("filter-recipe-btn");
-let showAllRecipesBtn = document.getElementById("show-all-btn");
-let closeBtn = document.getElementById("#exit-btn");
+let sidebarSection = document.querySelector(".search-options");
+let userProfileSection = document.querySelector(".user-list");
 
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
-let myPantrySection = document.querySelector(".pantry-list")
-  // let redHeart = document.querySelector('.red-heart')
+
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -29,17 +23,18 @@ const welcomeGreeting = () => {
 
 const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
+  recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(recipe => {
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
             <div class="card-overlay">
               <div class="card-overlay-top">
-                <button class="card-btn" class ='add-favorite-recipe-btn'>
-                  <img src="../assets/heart.svg" class="user-icons red-heart" id="${recipe.id}" alt="Image of heart">
+                <button class="card-btn add-favorite-recipe-btn">
+                  <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
                 </button>   
-                <button class="card-btn" class="add-planned-recipe-btn">
-                  <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
+                <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
+                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
               </div>
@@ -77,82 +72,71 @@ const loadHandler = () => {
 
 // Pantry Modal //
 
-const viewPantryList = () => {
-  openPantryInfo();
-}
-
 const openPantryInfo = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "inline";
+  let pantryModal = document.querySelector(".pantry-modal");
+  pantryModal.style.display = "inline";
+  displayPantryHeader(pantryModal);
 }
 
-// const generatePantryDetails = () => {}
+const getPantryIngredients = () => {
+  return currentUser.pantry.map(ingredient => {
+    return `You have ${ingredient.amount} of ${ingredient.ingredient}</br>`
+  })
+}
 
+const displayPantryHeader = () => {
+  let pantryModal = document.querySelector(".pantry-modal");
+  let ingredients = getPantryIngredients();
+  let pantryHTML = `
+        <button id="exit-btn"><img src="../assets/close.svg" class="close-icon close-icon-pantry" alt="Close instructions"></button>
+        <h5 id="pantry-title">My Pantry</h5> 
+        <article class="pantry-content">You have </br> </br>${ingredients}</br> in your pantry.</article>`;
+  pantryModal.insertAdjacentHTML("beforeend", pantryHTML);
+}
 
-userPantryBtn.addEventListener("click", viewPantryList);
+const closePantryList = () => {
+  let pantryModal = document.querySelector(".pantry-modal");
+  pantryModal.style.display = "none";
+};
 
+const myPantryHandler = (event) => {
+  if (event.target.className === "user-list-btns pantry-btn") {
+    openPantryInfo();
+  }
+  if (event.target.className === "close-icon close-icon-pantry") {
+    closePantryList();
+  }
+};
 
-// Buttons on Recipe Cards //
-
-// const addRecipeToFaves = (event) => {
-// let recipeId = event.path.find(e => e.id).id;
-// let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-//   currentUser.addFavoriteRecipe(recipe); 
-// } /// not functional 
-
-// addToFavesBtn.addEventListener("click", addRecipeToFaves); says method is null
-
-// const addRecipeToPlanned = () => {
-//   let recipeId = event.path.find(e => e.id).id;
-//   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-//   currentUser.addPlannedRecipe(recipe);
-// } // not functional
-
-// addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
+userProfileSection.addEventListener("click", myPantryHandler);
 
 // Sidebar Buttons //
-
-// showPlannedBtn.addEventListener("click", showPlannedRecipes);
-
-// showFavesBtn.addEventListener("click", showFavoriteRecipe);
-
-// const hideRecipes = () => {}
-
-const filterRecipes = (event) => {
+const sidebarButtonsHandler = (event) => {
   if (event.target.className === "filter-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
   }
+  if (event.target.className === "filter-btns show-planned-btn") {
+    populateRecipeCards(currentUser.plannedRecipes);
+  }
+  if (event.target.className === "filter-btns show-all-btn") {
+    populateRecipeCards(recipeData);
+  }
 }
 
-filterBtn.addEventListener("click", filterRecipes);
+sidebarSection.addEventListener("click", sidebarButtonsHandler);
 
+// RECIPE MODALS //
 
-showAllRecipesBtn.addEventListener("click", populateRecipeCards);
-
-// Recipe Modals //
-
-const viewRecipe = () => {
-  openAllRecipeInfo()
-}
-
-const openAllRecipeInfo = () => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
+const viewRecipe = (recipe) => {
+  let allRecipeInfo = document.querySelector(".recipe-modal");
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
-  let recipeObj = recipeData.find(recipe => recipe.id === Number(recipeId));
-  let recipe =  new Recipe(recipeObj); 
-  let recipeIngredients = recipe.ingredients;
-  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients), getRecipeInstructions(recipe), getNeededIngredientsList(recipe, ingredientsData));
+  displayRecipeDetails(recipe, ingredientsData);
 };
-
-const getIngredientName = (recipeIngredient) => {
-  return ingredientsData.find(ingredient => recipeIngredient.id === ingredient.id);
-}
-
-const makeIngredientsReadable = (recipeIngredients) => {
-  return recipeIngredients.map(ingredient => {
-    let ingredientName = getIngredientName(ingredient);
+ 
+const makeIngredientsList = (recipe, ingredientsList) => {
+  return recipe.ingredients.map(ingredient => {
+    let ingredientName = recipe.findIngredient(ingredient, ingredientsList);
     return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}</br>`;
   }).join(" ");
 }
@@ -167,74 +151,108 @@ const getNeededIngredientsList = (recipe, ingredientsList) => {
   }).join(" ");
 }
 
-const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredients, totalCost) => {
-  let fullRecipeInfo = document.querySelector(".recipe-instructions");
+const getTotalCostNeededIngred = (recipe, ingredientsList) => {
+  return Math.round(currentPantry.getTotalCostOfGroceries(recipe, ingredientsList));
+}
+
+const displayRecipeDetails = (recipe, ingredientsList) => {
+  let ingredients = makeIngredientsList(recipe, ingredientsList);
+  let instructions = getRecipeInstructions(recipe);
+  let neededIngredients = getNeededIngredientsList(recipe, ingredientsList);
+  let totalCost = getTotalCostNeededIngred(recipe, ingredientsList);
+  let recipeModalContent = document.querySelector(".recipe-modal");
   let recipeTitle = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
+      <div class="modal-btns">
+        <button class="card-btn add-favorite-recipe-btn" id="modal-icons">
+          <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
+        </button>
+        <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
+           <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
+        </button> 
+      </div>  
       <h4>Ingredients</h4>
-      <article class="card-ingredients-list">${ingredients}</article>
+      <article class="card-ingredients-list">${ingredients}</br></article>
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</br>For a total of $${totalCost}.</article>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+      <article>To make this recipe, you need to spend <b>$${totalCost}</b>:</br> </br> ${neededIngredients}.</article>`;
+  recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
+//^^ need to refactor
+
 const closeRecipe = () => {
-  let recipeInfo = document.querySelector(".recipe-instructions");
+  let recipeInfo = document.querySelector(".recipe-modal");
   recipeInfo.style.display = "none";
 } 
 
+// RECIPE CARD BUTTONS //
+
+const toggleFavoriteRecipe = (event, recipe) => {
+  if (!currentUser.favoriteRecipes.includes(recipe)) {
+    makeFavorite(event, recipe);
+  } else {
+    makeUnfavorite(event, recipe);
+  }
+};
+
+const makeFavorite = (event, recipe) => {
+  recipe.isFavorite = true;
+  event.target.src = "../assets/heart-active.svg";
+  currentUser.addFavoriteRecipe(recipe);
+};
+
+const makeUnfavorite = (event, recipe) => {
+  recipe.isFavorite = false;
+  event.target.src = "../assets/heart.svg";
+  currentUser.deleteFavoriteRecipe(recipe);
+};
+
+const togglePlannedRecipe = (event, recipe) => {
+  if (!recipe.isPlanned) {
+    makePlanned(event, recipe);
+  } else {
+    makeUnplanned(event, recipe);
+  }
+};
+
+const makePlanned = (event, recipe) => {
+  currentUser.addPlannedRecipe(recipe);
+  event.target.src = "../assets/calendar.svg";
+  recipe.isPlanned = true;
+};
+
+const makeUnplanned = (event, recipe) => {
+  currentUser.deletePlannedRecipe(recipe);
+  event.target.src = "../assets/heart.svg";
+  recipe.isPlanned = false;
+};
+
+
 const recipeCardHandler = (event) => {
-  if (event.target.className === 'recipe-img') {
-    viewRecipe();
+  if (event.target.className === "close-icon") {
+    closeRecipe();
   } 
-  if (event.target.className === 'close-icon') {
-    closeRecipe();  
-  } 
-}
-
-const closePantryList = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "none";
-}
-
-const myPantryHandler = (event) => {
-  if (event.target.className === "close-icon close-icon-pantry") {
-    closePantryList()
+  let recipeObj = recipeData.find((recipe) => recipe.id === Number(event.path.find((e) => e.id).id));
+  let recipe = new Recipe(recipeObj); 
+  if (event.target.className === "recipe-img") {
+    viewRecipe(recipe);
+  }
+  if (event.target.className === "user-icons red-heart add-to-favorite") {
+    toggleFavoriteRecipe(event, recipe);
+  }
+  if (event.target.className === "user-icons calendar add-to-planned") {
+    togglePlannedRecipe(event, recipe);
   }
 }
 
-myPantrySection.addEventListener('click', myPantryHandler)
 
-recipeCardSection.addEventListener("click", function() {
-  recipeCardHandler(event)
-  toggleFavoriteRecipe(event)
-})
+recipeCardSection.addEventListener("click", recipeCardHandler);
 
 window.onload = loadHandler();
 
-const toggleFavoriteRecipe = (event) => {
-  if (event.target.className === "user-icons red-heart") {
-    let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-    if (!currentUser.favoriteRecipes.includes(recipe)) {
-      changeHeartGreen(event)
-      currentUser.addFavoriteRecipe(recipe)
-     } else {
-       changeHeartRed(event)
-       currentUser.deleteFavoriteRecipe(recipe)
-     }
-  }
-}
-
-const changeHeartGreen = (event) => {
-  event.target.src = '../assets/heart-active.svg'
-}
-
-const changeHeartRed = (event) => {
-  event.target.src = '../assets/heart.svg'
-}
 
