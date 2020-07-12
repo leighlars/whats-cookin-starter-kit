@@ -19,6 +19,7 @@ const welcomeGreeting = () => {
 }
 
 const populateRecipeCards = (recipeList) => {
+  
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(eachRecipe => {
@@ -199,8 +200,10 @@ const closeRecipe = () => {
 // RECIPE CARD BUTTONS //
 
 const toggleFavoriteRecipe = (event, recipe) => {
+  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isFavorite) {
     makeFavorite(event, recipe);
+    // persistIconState(event.target, recipe)
   } else {
     makeUnfavorite(event, recipe);
   }
@@ -219,6 +222,7 @@ const makeUnfavorite = (event, recipe) => {
 };
 
 const togglePlannedRecipe = (event, recipe) => {
+  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isPlanned) {
     makePlanned(event, recipe);
   } else {
@@ -228,16 +232,15 @@ const togglePlannedRecipe = (event, recipe) => {
 
 const makePlanned = (event, recipe) => {
   currentUser.addPlannedRecipe(recipe);
-  event.target.src = "../assets/calendar.svg";
+  event.target.src = "../assets/calendar-active.svg";
   recipe.isPlanned = true;
 };
 
 const makeUnplanned = (event, recipe) => {
   currentUser.deletePlannedRecipe(recipe);
-  event.target.src = "../assets/heart.svg";
+  event.target.src = "../assets/calendar.svg";
   recipe.isPlanned = false;
 };
-
 
 const recipeCardHandler = (event) => {
   if (event.target.className === "close-icon") {
@@ -254,6 +257,18 @@ const recipeCardHandler = (event) => {
   }
 }
 
+//>>>>>>>>>>>>>>>>. function not working.
+// const persistIconState = (eventTarget, recipe) => {
+//   recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+//   console.log('recipe', recipe);
+//   let myFavorites = currentUser.favoriteRecipes;
+//   let myPlanned = currentUser.plannedRecipes;
+//   myFavorites.forEach(fav => {
+//       eventTarget.src = "../assets/heart-active.svg";
+  
+//   })
+//   // console.log('Fav', myFavorites, 'myPlanned', myPlanned);
+// }
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
