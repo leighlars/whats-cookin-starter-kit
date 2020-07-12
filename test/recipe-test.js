@@ -103,8 +103,17 @@ describe('Recipe', function() {
 
   it('should have tags', function() {
     expect(recipe.tags).to.be.an('array');
-    expect(recipe.tags.length).to.equal(2)
+    expect(recipe.tags.length).to.equal(2);
   });
+
+  it.only('can have default tags if no tags are given', function() {
+    let testRecipeTags = 
+
+    expect(recipe.tags).to.be.an('array');
+    
+
+    expect(recipe.tags).to.be.deep.equal(["miscellaneous"]);
+  })
 
   it('should return recipe instructions', function() {
     expect(recipe.getInstructions()).to.equal('1. Boil water<br>')

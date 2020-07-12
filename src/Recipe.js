@@ -5,15 +5,18 @@ class Recipe {
     this.image = recipe.image;
     this.ingredients = recipe.ingredients;
     this.instructions = recipe.instructions;
-    this.tags = recipe.tags;
-  }
-
-  checkName = (recipe) => {
-    return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
+    this.tags = this.checkTags(recipe);
   }
 
   checkNumber = (recipe) => {
     return typeof recipe === 'number' ? recipe : Date.now();
+  }
+
+  checkName = (recipe) => {
+    if (!recipe) {
+      return "Recipe";
+    }
+    return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
   }
 
   getInstructions = () => {
@@ -21,6 +24,15 @@ class Recipe {
       return directions += `${instruction.number}. ${instruction.instruction}<br>`;
     }, "");
   }
+
+  checkTags = (recipe) => {
+    if (!Array.isArray(recipe) || recipe.length === 0) {
+      return ["miscellaneous"];
+    }
+    else {
+      return recipe.tags;
+    }
+  } 
 
   getRecipeCost = (ingredientsList) => {
     return this.ingredients.reduce((sum, recipeIngredient) => {
