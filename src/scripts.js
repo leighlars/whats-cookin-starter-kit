@@ -7,10 +7,11 @@ let showPlannedBtn = document.getElementById("show-planned-btn");
 let filterBtn = document.getElementById("filter-recipe-btn");
 let showAllRecipesBtn = document.getElementById("show-all-btn");
 let closeBtn = document.getElementById("#exit-btn");
+
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 // let myPantrySection = document.querySelector(".pantry-list")
-
+  let redHeart = document.querySelector('.red-heart')
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -34,7 +35,7 @@ const populateAllRecipeCards = (recipeList) => {
             <div class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn" class ='add-favorite-recipe-btn'>
-                  <img src="../assets/heart.svg" class="user-icons" id="${recipe.id}" alt="Image of heart">
+                  <img src="../assets/heart.svg" class="user-icons red-heart" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn">
                   <img src="../assets/calendar.svg" class="user-icons" alt="Image of calendar">
@@ -199,9 +200,34 @@ const recipeCardHandler = (event) => {
 // myPantrySection.addEventListener('click', myPantryHandler)
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
 
-recipeCardSection.addEventListener("click", recipeCardHandler)
+
+
+recipeCardSection.addEventListener("click", function() {
+  recipeCardHandler(event)
+  favoriteRecipe(event)
+})
 
 window.onload = loadHandler();
 
 
+const favoriteRecipe = (event) => {
+  console.log(event.target);
+  if (event.target.className === "user-icons red-heart"){
+    event.target.src = '../assets/heart-active.svg'
+     let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+    currentUser.addFavoriteRecipe(recipe)
+  }
+}
 
+
+// const favoriteRecipe = (event) => {
+//   console.log('event', event.target);
+//   let redHeart = document.querySelector('.red-heart')
+//   let greenHeart = document.querySelector('.green-heart')
+//   if (redHeart) {
+//     console.log('heart');
+//     event.target.src = '../assets/heart-active.svg'
+//     redHeart.classList.remove('red-heart')
+//     redHeart.classList.add('green-heart')
+//   }
+// }
