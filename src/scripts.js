@@ -19,6 +19,7 @@ const welcomeGreeting = () => {
 }
 
 const populateRecipeCards = (recipeList) => {
+  
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(eachRecipe => {
@@ -201,6 +202,7 @@ const toggleFavoriteRecipe = (event, recipe) => {
   recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isFavorite) {
     makeFavorite(event, recipe);
+    // persistIconState(event.target, recipe)
   } else {
     makeUnfavorite(event, recipe);
   }
@@ -253,6 +255,19 @@ const recipeCardHandler = (event) => {
     togglePlannedRecipe(event, recipe);
   }
 }
+
+//>>>>>>>>>>>>>>>>. function not working.
+// const persistIconState = (eventTarget, recipe) => {
+//   recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+//   console.log('recipe', recipe);
+//   let myFavorites = currentUser.favoriteRecipes;
+//   let myPlanned = currentUser.plannedRecipes;
+//   myFavorites.forEach(fav => {
+//       eventTarget.src = "../assets/heart-active.svg";
+  
+//   })
+//   // console.log('Fav', myFavorites, 'myPlanned', myPlanned);
+// }
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
