@@ -12,11 +12,7 @@ class User {
   }
 
   checkNumber = (user) => {
-    if (typeof user !== 'number' || !user) {
-      return Date.now();
-    } else {
-      return user;
-    }
+    return typeof data === "number" ? data : Date.now();
   }
 
   addFavoriteRecipe = (recipe) => {

@@ -23,7 +23,7 @@ const welcomeGreeting = () => {
 
 const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
-  recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-instructions"></div>`);
+  recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(recipe => {
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
@@ -73,7 +73,7 @@ const loadHandler = () => {
 // Pantry Modal //
 
 const openPantryInfo = () => {
-  let pantryModal = document.querySelector(".pantry-list");
+  let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
   // generatePantryDetails(pantryModal);
 }
@@ -83,7 +83,7 @@ const openPantryInfo = () => {
 // }
 
 const closePantryList = () => {
-  let pantryModal = document.querySelector(".pantry-list");
+  let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "none";
 };
 
@@ -116,23 +116,18 @@ sidebarSection.addEventListener("click", sidebarButtonsHandler);
 // Recipe Modals //
 
 const viewRecipe = () => {
-  let allRecipeInfo = document.querySelector(".recipe-instructions");
+  let allRecipeInfo = document.querySelector(".recipe-modal");
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
   let recipeObj = recipeData.find(recipe => recipe.id === Number(recipeId));
   let recipe =  new Recipe(recipeObj); 
-  let recipeIngredients = recipe.ingredients;
-  generateRecipeDetails(recipe, makeIngredientsReadable(recipeIngredients), getRecipeInstructions(recipe), getNeededIngredientsList(recipe, ingredientsData));
+  displayRecipeDetails(recipe, ingredientsData);
 };
-
-const getIngredientName = (recipeIngredient) => {
-  return ingredientsData.find(ingredient => recipeIngredient.id === ingredient.id);
-}
-
-const makeIngredientsReadable = (recipeIngredients) => {
-  return recipeIngredients.map(ingredient => {
-    let ingredientName = getIngredientName(ingredient);
+ 
+const makeIngredientsList = (recipe, ingredientsList) => {
+  return recipe.ingredients.map(ingredient => {
+    let ingredientName = recipe.findIngredient(ingredient, ingredientsList);
     return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}</br>`;
   }).join(" ");
 }
@@ -147,8 +142,11 @@ const getNeededIngredientsList = (recipe, ingredientsList) => {
   }).join(" ");
 }
 
-const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredients, totalCost) => {
-  let fullRecipeInfo = document.querySelector(".recipe-instructions");
+const displayRecipeDetails = (recipe, ingredientsList) => {
+  let ingredients = makeIngredientsList(recipe, ingredientsList);
+  let instructions = getRecipeInstructions(recipe);
+  let neededIngredients = getNeededIngredientsList(recipe, ingredientsList)
+  let recipeModalContent = document.querySelector(".recipe-modal");
   let recipeTitle = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
@@ -159,15 +157,14 @@ const generateRecipeDetails = (recipe, ingredients, instructions, neededIngredie
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</br>For a total of $${totalCost}.</article>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
+      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</br>For a total of $20!</article>`
+  recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
 const closeRecipe = () => {
-  let recipeInfo = document.querySelector(".recipe-instructions");
+  let recipeInfo = document.querySelector(".recipe-modal");
   recipeInfo.style.display = "none";
 } 
-
 
 const toggleFavoriteRecipe = (event) => {
   let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
@@ -179,7 +176,6 @@ const toggleFavoriteRecipe = (event) => {
     currentUser.deleteFavoriteRecipe(recipe);
   }
 };
-
 
 const changeHeartGreen = (event) => {
   event.target.src = "../assets/heart-active.svg";

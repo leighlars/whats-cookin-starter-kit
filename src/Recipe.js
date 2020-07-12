@@ -23,7 +23,7 @@ class Recipe {
   getInstructions = () => {
     if (Array.isArray(this.instructions)) {
       return this.instructions.reduce((directions, instruction) => {
-        return directions += `${instruction.number}. ${instruction.instruction}<br>`;
+        return directions += `${instruction.number}. ${instruction.instruction}</br></br>`;
       }, "");
     } else {
       return this.instructions;

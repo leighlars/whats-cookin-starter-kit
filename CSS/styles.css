@@ -265,9 +265,9 @@ aside {
   }
 
 
- /* modal */
- .pantry-list,
-.recipe-instructions {
+ /* modals */
+ .pantry-modal,
+.recipe-modal {
   background: #FFFACD;
   border: 3px solid #C94C4C;
   border-radius: 10px;
@@ -317,32 +317,16 @@ aside {
   height: 40%;
 }
 
-.recipe-instructions h4 {
+.recipe-modal h4 {
   color: #C94C4C;
-  font-size: 1em;
+  font-size: 1.5em;
   margin-left: 3%;
 }
 
-.recipe-instructions article {
+.recipe-modal article {
   color: #C94C4C;
   font-family: 'Raleway';
   width: 90%;
   margin-left: 3%;
-}
-
-.recipe-instructions ol {
-  margin-right: 3%;
-}
-
-#overlay {
-  filter:alpha(opacity=50);
-  background-color: #5B7894;
-  height:100%;
-  left:0;
-  opacity:0.5;
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:100;
 }
 
