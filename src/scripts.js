@@ -113,15 +113,12 @@ const sidebarButtonsHandler = (event) => {
 
 sidebarSection.addEventListener("click", sidebarButtonsHandler);
 
-// Recipe Modals //
+// RECIPE MODALS //
 
-const viewRecipe = () => {
+const viewRecipe = (recipe) => {
   let allRecipeInfo = document.querySelector(".recipe-modal");
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
-  let recipeObj = recipeData.find(recipe => recipe.id === Number(recipeId));
-  let recipe =  new Recipe(recipeObj); 
   displayRecipeDetails(recipe, ingredientsData);
 };
  
@@ -166,42 +163,45 @@ const closeRecipe = () => {
   recipeInfo.style.display = "none";
 } 
 
-const toggleFavoriteRecipe = (event) => {
-  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-  if (!currentUser.favoriteRecipes.includes(recipe)) {
-    changeHeartGreen(event);
+const toggleFavoriteRecipe = (event, recipe) => {
+  if (!recipe.isFavorite) {
+    makeFavorite(event, recipe);
     currentUser.addFavoriteRecipe(recipe);
   } else {
-    changeHeartRed(event);
+    makeUnfavorite(event, recipe);
     currentUser.deleteFavoriteRecipe(recipe);
   }
 };
 
-const changeHeartGreen = (event) => {
+const makeFavorite = (event, recipe) => {
+  recipe.isFavorite = true;
   event.target.src = "../assets/heart-active.svg";
 };
 
-const changeHeartRed = (event) => {
+const makeUnfavorite = (event, recipe) => {
+  recipe.isFavorite = false;
   event.target.src = "../assets/heart.svg";
 };
 
-const addRecipeToPlanned = (event) => {
-  let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
+const addRecipeToPlanned = (event, recipe) => {
   currentUser.addPlannedRecipe(recipe);
 };
 
+
 const recipeCardHandler = (event) => {
+  let recipeObj = recipeData.find((recipe) => recipe.id === Number(event.path.find((e) => e.id).id));
+  let recipe = new Recipe(recipeObj); 
   if (event.target.className === "recipe-img") {
-    viewRecipe();
+    viewRecipe(recipe);
   }
   if (event.target.className === "close-icon") {
     closeRecipe();
   } 
   if (event.target.className === "user-icons red-heart add-to-favorite") {
-    toggleFavoriteRecipe(event);
+    toggleFavoriteRecipe(event, recipe);
   }
   if (event.target.className === "user-icons calendar add-to-planned") {
-    addRecipeToPlanned(event);
+    addRecipeToPlanned(event, recipe);
   }
 }
 
