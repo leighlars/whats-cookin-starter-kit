@@ -12,8 +12,8 @@ let closeBtn = document.getElementById("#exit-btn");
 
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
-// let myPantrySection = document.querySelector(".pantry-list")
-  let redHeart = document.querySelector('.red-heart')
+let myPantrySection = document.querySelector(".pantry-list")
+  // let redHeart = document.querySelector('.red-heart')
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -195,24 +195,20 @@ const recipeCardHandler = (event) => {
   } 
   
 }
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
-// const closePantryList = (event) => {
 
-//   let pantryList = document.querySelector(".pantry-list");
-//   console.log('pantryList', pantryList);
-//   pantryList.style.display = "none";
-// }
+const closePantryList = () => {
+  let pantryList = document.querySelector(".pantry-list");
+  pantryList.style.display = "none";
+}
 
-// const myPantryHandler = (event) => {
-//   console.log('1', event.target);
-//   if (event.target.className === "close-icon-pantry") {
-//       console.log('2', event.target);
-//     closePantryList(event)
-//   }
-// }
+const myPantryHandler = (event) => {
+  if (event.target.className === "close-icon close-icon-pantry") {
+    closePantryList()
+  }
+}
 
-// myPantrySection.addEventListener('click', myPantryHandler)
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Not currently working
+myPantrySection.addEventListener('click', myPantryHandler)
+
 
 
 
@@ -225,7 +221,6 @@ window.onload = loadHandler();
 
 
 const favoriteRecipe = (event) => {
-  console.log(event.target);
   if (event.target.className === "user-icons red-heart"){
     event.target.src = '../assets/heart-active.svg'
      let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
