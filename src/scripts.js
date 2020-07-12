@@ -232,3 +232,4 @@ const changeHeartGreen = (event) => {
 const changeHeartRed = (event) => {
   event.target.src = '../assets/heart.svg'
 }
+
