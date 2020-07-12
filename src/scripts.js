@@ -6,7 +6,7 @@ let closeBtn = document.getElementById("#exit-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 let myPantrySection = document.querySelector(".pantry-list")
-  // let redHeart = document.querySelector('.red-heart')
+// let redHeart = document.querySelector('.red-heart')
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -106,12 +106,7 @@ sidebarSection.addEventListener("click", sidebarButtonsHandler);
 // Recipe Modals //
 
 const viewRecipe = () => {
-  openAllRecipeInfo()
-}
-
-const openAllRecipeInfo = () => {
   let allRecipeInfo = document.querySelector(".recipe-instructions");
-  
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
@@ -186,11 +181,9 @@ const myPantryHandler = (event) => {
 myPantrySection.addEventListener('click', myPantryHandler)
 
 recipeCardSection.addEventListener("click", function() {
-  recipeCardHandler(event)
+  recipeCardDisplayHandler(event)
   toggleFavoriteRecipe(event)
 })
-
-window.onload = loadHandler();
 
 const toggleFavoriteRecipe = (event) => {
   if (event.target.className === "user-icons red-heart") {
@@ -198,10 +191,10 @@ const toggleFavoriteRecipe = (event) => {
     if (!currentUser.favoriteRecipes.includes(recipe)) {
       changeHeartGreen(event)
       currentUser.addFavoriteRecipe(recipe)
-     } else {
-       changeHeartRed(event)
-       currentUser.deleteFavoriteRecipe(recipe)
-     }
+    } else {
+      changeHeartRed(event)
+      currentUser.deleteFavoriteRecipe(recipe)
+    }
   }
 }
 
@@ -212,4 +205,7 @@ const changeHeartGreen = (event) => {
 const changeHeartRed = (event) => {
   event.target.src = '../assets/heart.svg'
 }
+
+window.onload = loadHandler();
+
 
