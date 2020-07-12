@@ -254,9 +254,7 @@ aside {
 }
   
 .card-btn:hover {
-  border-radius: 50%;
-  border: 1px solid #FFFACD;
-  transform: skewX(0deg);
+  transform: skewX(-10deg);
 }
 
 .recipe-title {

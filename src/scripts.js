@@ -177,8 +177,7 @@ const recipeCardDisplayHandler = (event) => {
 
 const toggleFavoriteRecipe = (event) => {
   if (event.target.className === "user-icons red-heart") {
-    let recipe = recipeData.find(
-      (recipe) => recipe.id === Number(event.target.id)
+    let recipe = recipeData.find((recipe) => recipe.id === Number(event.target.id)
     );
     if (!currentUser.favoriteRecipes.includes(recipe)) {
       changeHeartGreen(event);
