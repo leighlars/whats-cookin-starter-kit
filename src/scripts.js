@@ -1,5 +1,4 @@
 // const Recipe = require("./Recipe");
-
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let userPantryBtn = document.getElementById("user-pantry-btn");
 let addToFavesBtn = document.querySelector(".add-favorite-recipe-btn");
@@ -111,8 +110,6 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
-
-
 // Sidebar Buttons //
 
 // showPlannedBtn.addEventListener("click", showPlannedRecipes);
@@ -121,7 +118,11 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // const hideRecipes = () => {}
 
-// filterBtn.addEventListener("click", filterRecipes);
+const filterRecipes = (event) => {
+  populateAllRecipeCards(currentUser.favoriteRecipes);
+}
+
+filterBtn.addEventListener("click", filterRecipes);
 
 
 showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);

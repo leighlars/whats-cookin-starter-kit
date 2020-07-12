@@ -42,11 +42,6 @@ class Recipe {
     };
   };
 
-  getTotalCost = (ingredientsList) => {
-    let ingredientsCost = this.getRecipeCost(ingredientsList);
-    console.log(ingredientsCost);
-  };
-
   findIngredient = (recipeIngredient, ingredientsList) => {
     let foundIngredient = ingredientsList.find(ingredient => ingredient.id === recipeIngredient.id);
     if (foundIngredient !== undefined) {
