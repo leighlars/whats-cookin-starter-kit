@@ -139,10 +139,15 @@ const getNeededIngredientsList = (recipe, ingredientsList) => {
   }).join(" ");
 }
 
+const getTotalCostNeededIngred = (recipe, ingredientsList) => {
+  return Math.round(currentPantry.getTotalCostOfGroceries(recipe, ingredientsList));
+}
+
 const displayRecipeDetails = (recipe, ingredientsList) => {
   let ingredients = makeIngredientsList(recipe, ingredientsList);
   let instructions = getRecipeInstructions(recipe);
-  let neededIngredients = getNeededIngredientsList(recipe, ingredientsList)
+  let neededIngredients = getNeededIngredientsList(recipe, ingredientsList);
+  let totalCost = getTotalCostNeededIngred(recipe, ingredientsList);
   let recipeModalContent = document.querySelector(".recipe-modal");
   let recipeTitle = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -154,7 +159,7 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <h4>Instructions</h4>
       <article>${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to buy: </br> ${neededIngredients}.</br>For a total of $20!</article>`
+      <article>To make this recipe, you need to buy: </br></br> ${neededIngredients}.</br>For a total of $${totalCost}!</article>`
   recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
@@ -162,6 +167,8 @@ const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-modal");
   recipeInfo.style.display = "none";
 } 
+
+// RECIPE CARD BUTTONS //
 
 const toggleFavoriteRecipe = (event, recipe) => {
   if (!currentUser.favoriteRecipes.includes(recipe)) {
@@ -202,7 +209,6 @@ const makeUnplanned = (event, recipe) => {
   event.target.src = "../assets/heart.svg";
   recipe.isPlanned = false;
 };
-
 
 
 const recipeCardHandler = (event) => {
