@@ -7,7 +7,8 @@ let closeBtn = document.getElementById("#exit-btn");
 // let searchBtn = document.getElementById("search-btn");
 // let clearSearchBtn = document.getElementById("clear-text-btn");
 // let myPantrySection = document.querySelector(".pantry-list")
-let redHeart = document.querySelector('.red-heart')
+let redHeart = document.querySelector('.red-heart');
+
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -31,7 +32,7 @@ const populateRecipeCards = (recipeList) => {
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
             <div class="card-overlay">
               <div class="card-overlay-top">
-                <button class="card-btn" class ='add-favorite-recipe-btn'>
+                <button class="card-btn" class="add-favorite-recipe-btn">
                   <img src="../assets/heart.svg" class="user-icons red-heart" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
@@ -78,39 +79,31 @@ const viewPantryList = () => {
 }
 
 const openPantryInfo = () => {
-  let pantryList = document.querySelector(".pantry-list");
-  pantryList.style.display = "inline";
-  generatePantryDetails(pantryList);
+  let pantryModal = document.querySelector(".pantry-list");
+  pantryModal.style.display = "inline";
+  generatePantryDetails(pantryModal);
 }
 
-const generatePantryDetails = (pantryList) => {
-
+const generatePantryDetails = (pantryModal) => {
+ 
 }
-
 
 userPantryBtn.addEventListener("click", viewPantryList);
 
 // Sidebar Buttons //
-
-const showFavoriteRecipes = (event) => {
+const sidebarButtonsHandler = (event) => {
   if (event.target.className === "filter-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
   }
-}
-
-const showPlannedRecipes = (event) => {
   if (event.target.className === "filter-btns show-planned-btn") {
     populateRecipeCards(currentUser.plannedRecipes);
   }
-};
-
-sidebarSection.addEventListener("click", function() {
-  showFavoriteRecipes(event);
-  showPlannedRecipes(event);
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
   }
-})
+}
+
+sidebarSection.addEventListener("click", sidebarButtonsHandler);
 
 // Recipe Modals //
 
@@ -171,7 +164,7 @@ const closeRecipe = () => {
   recipeInfo.style.display = "none";
 } 
 
-const recipeCardHandler = (event) => {
+const recipeCardDisplayHandler = (event) => {
   if (event.target.className === 'recipe-img') {
     viewRecipe();
   } 
@@ -186,20 +179,20 @@ const addRecipeToPlanned = (event) => {
     let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
     currentUser.addPlannedRecipe(recipe);
   }
-};
+}; // not adding to planned recipe
 
 const addRecipeToFavorites = (event) => {
   if (event.target.className === "user-icons red-heart") {
-    event.target.src = '../assets/heart-active.svg'
+    event.target.src = '../assets/heart-active.svg';
     let recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
     currentUser.addFavoriteRecipe(recipe);
   }
 }
 
 recipeCardSection.addEventListener("click", function() {
-  recipeCardHandler(event);
+  recipeCardDisplayHandler(event);
   addRecipeToFavorites(event);
-  addRecipeToPlanned(event);
+  addRecipeToPlanned(event); // not adding to planned recipe
 })
 
 window.onload = loadHandler();
