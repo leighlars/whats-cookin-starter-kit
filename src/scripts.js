@@ -109,8 +109,6 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // addToPlannedBtn.addEventListener("click", addRecipeToPlanned);
 
-
-
 // Sidebar Buttons //
 
 // showPlannedBtn.addEventListener("click", showPlannedRecipes);
@@ -119,7 +117,11 @@ userPantryBtn.addEventListener("click", viewPantryList);
 
 // const hideRecipes = () => {}
 
-// filterBtn.addEventListener("click", filterRecipes);
+const filterRecipes = (event) => {
+  populateAllRecipeCards(currentUser.favoriteRecipes);
+}
+
+filterBtn.addEventListener("click", filterRecipes);
 
 
 showAllRecipesBtn.addEventListener("click", populateAllRecipeCards);
