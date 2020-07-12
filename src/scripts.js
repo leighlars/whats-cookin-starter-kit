@@ -198,6 +198,7 @@ const closeRecipe = () => {
 // RECIPE CARD BUTTONS //
 
 const toggleFavoriteRecipe = (event, recipe) => {
+  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isFavorite) {
     makeFavorite(event, recipe);
   } else {
@@ -237,7 +238,6 @@ const makeUnplanned = (event, recipe) => {
   recipe.isPlanned = false;
 };
 
-
 const recipeCardHandler = (event) => {
   if (event.target.className === "close-icon") {
     closeRecipe();
@@ -252,7 +252,6 @@ const recipeCardHandler = (event) => {
     togglePlannedRecipe(event, recipe);
   }
 }
-
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
