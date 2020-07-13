@@ -60,12 +60,15 @@ class User {
  searchSavedRecipesByIngred = (query, ingredientList) => {
   let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
   let ingredientID = this.changeIngredientNameToID(query, ingredientList);
+  console.log('user Ingred List', ingredientList);
   return allSaved.filter((recipe) => {
    return this.makeIngredientList(recipe).includes(ingredientID);
   });
  };
 
  changeIngredientNameToID = (ingredientName, ingredientList) => {
+  console.log('user Ingred List 2', ingredientList);
+
   let ingredient = ingredientList.find((ingredient) =>
    ingredient.name.includes(ingredientName)
   );
@@ -76,7 +79,7 @@ class User {
   return recipe.ingredients.map((ingredient) => ingredient.id);
  };
 
- searchByIngredAndName = (query, ingredientList) => {
+ searchByIngredAndName = (event, query, ingredientList) => {
   let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
   let filterDuplicates = [...new Set(allRecipes)];
   return filterDuplicates;
