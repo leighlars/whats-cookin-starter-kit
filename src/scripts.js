@@ -19,7 +19,6 @@ const welcomeGreeting = () => {
 }
 
 const populateRecipeCards = (recipeList) => {
-  
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(eachRecipe => {
@@ -45,23 +44,17 @@ const populateRecipeCards = (recipeList) => {
 const populateAllTags = (recipeList) => {
   let tagList = document.querySelector(".tag-list");
   let uniqueTags = [];
-  recipeList.forEach(recipe => {
-    recipeObj = new Recipe(recipe);
-    recipeObj.tags.forEach(tag => {
+  recipeList.forEach(eachRecipe => {
+    recipe = new Recipe(eachRecipe);
+    recipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
-        let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
+        let tagHTML = `<button class="tag-buttons" id="${tag}">${recipe.capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
       }
     });
   })
 }
-
-const capitalize = (words) => {
-  return words.split(" ").map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(" ");
-};
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
@@ -75,23 +68,23 @@ const loadHandler = () => {
 const openPantryInfo = () => {
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
-  displayPantryHeader(pantryModal);
+  displayPantryHeader();
 }
 
-const getPantryIngredients = () => {
-  return currentPantry.ingredients.map(ingredient => {
-    return `${ingredient.ingredient}: ${ingredient.amount} ${ingredient.unit}</br>`;
-  })
+const displayPantryIngredients = () => {
+  return currentPantry.getPantryIngredients(ingredientsData, recipeData).map(ingredient => {
+    return `${recipe.capitalize(ingredient.name)}: ${ingredient.quantity} ${ingredient.unit}</br>`;
+  }).join("");
 }
 
 const displayPantryHeader = () => {
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.innerHTML = "";
-  let ingredients = getPantryIngredients();
+  let ingredients = displayPantryIngredients();
   let pantryHTML = `
         <button id="exit-btn"><img src="../assets/close.svg" class="close-icon close-icon-pantry" alt="Close instructions"></button>
         <h5 id="pantry-title">My Pantry</h5> 
-        <article class="pantry-content">You have </br> </br>${ingredients}</br> in your pantry.</article>`;
+        <article class="pantry-content">You have the following ingredients in your pantry: </br> </br>${ingredients}</br></article>`;
   pantryModal.insertAdjacentHTML("beforeend", pantryHTML);
 }
 
@@ -141,34 +134,19 @@ const viewRecipe = (recipe) => {
   displayRecipeDetails(recipe, ingredientsData);
 };
  
-const makeIngredientsList = (recipe, ingredientsList) => {
-  return recipe.ingredients.map(ingredient => {
-    let ingredientName = recipe.findIngredient(ingredient, ingredientsList);
-    return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}</br>`;
-  }).join(" ");
-}
-
-const getRecipeInstructions = (recipe) => {
-  return recipe.getInstructions();
-}
-
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
-    return `${capitalize(ingredient.name)} $${Math.round(ingredient.cost)}</br>`;
+    return `${recipe.capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
   }).join(" ");
-}
-
-const getTotalCostNeededIngred = (recipe, ingredientsList) => {
-  return Math.round(currentPantry.getTotalCostOfGroceries(recipe, ingredientsList));
 }
 
 const displayRecipeDetails = (recipe, ingredientsList) => {
-  let ingredients = makeIngredientsList(recipe, ingredientsList);
-  let instructions = getRecipeInstructions(recipe);
+  let ingredients = recipe.getIngredients(ingredientsList);
+  let instructions = recipe.getInstructions();
   let neededIngredients = getNeededIngredientsList(recipe, ingredientsList);
-  let totalCost = getTotalCostNeededIngred(recipe, ingredientsList);
+  let totalCostNeeded = currentPantry.getTotalCostOfGroceries(recipe, ingredientsList).toFixed(2);
   let recipeModalContent = document.querySelector(".recipe-modal");
-  let recipeTitle = `
+  let recipeContent = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
        alt = "Image of recipe" >
@@ -184,10 +162,10 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <h4>Ingredients</h4>
       <article class="card-ingredients-list">${ingredients}</br></article>
       <h4>Instructions</h4>
-      <article>${instructions}</article>
+      <article "card-instructions-list">${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to spend <b>$${totalCost}</b>:</br> </br> ${neededIngredients}.</article>`;
-  recipeModalContent.insertAdjacentHTML("beforeend", recipeTitle);
+      <article "card-cost-details">Based on what's available in your pantry, you need to spend <b>$${totalCostNeeded}</b> and purchase the following ingredients:</br> </br> ${neededIngredients}.</article>`;
+  recipeModalContent.insertAdjacentHTML("beforeend", recipeContent);
 }
 
 //^^ need to refactor
@@ -247,6 +225,9 @@ const recipeCardHandler = (event) => {
     closeRecipe();
   } 
   if (event.target.className === "recipe-img") {
+    let targetRecipeID = event.target.closest(".recipe-card").id; 
+    let targetRecipe = recipeData.find((recipe) => recipe.id === Number(targetRecipeID));
+    let recipe = new Recipe(targetRecipe);
     viewRecipe(recipe);
   }
   if (event.target.className === "user-icons red-heart add-to-favorite") {

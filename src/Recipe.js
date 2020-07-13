@@ -31,6 +31,19 @@ class Recipe {
     }
   }
 
+  capitalize = (words) => {
+  return words.split(" ").map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(" ");
+};
+
+  getIngredients = ingredientsList => {
+    return this.ingredients.map(ingredient => {
+       let ingredientName = this.findIngredient(ingredient, ingredientsList);
+        return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${this.capitalize(ingredientName.name)}</br>`;
+      }).join(" ");
+    };
+
   getRecipeCost = (ingredientsList) => {
     if (Array.isArray(this.ingredients)) {
       return this.ingredients.reduce((sum, recipeIngredient) => {
