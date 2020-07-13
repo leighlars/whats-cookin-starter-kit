@@ -67,8 +67,6 @@ class User {
  };
 
  changeIngredientNameToID = (ingredientName, ingredientList) => {
-  console.log('user Ingred List 2', ingredientList);
-
   let ingredient = ingredientList.find((ingredient) =>
    ingredient.name.includes(ingredientName)
   );

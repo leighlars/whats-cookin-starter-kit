@@ -24,9 +24,9 @@ const populateRecipeCards = (recipeList) => {
   recipeList.forEach(eachRecipe => {
     recipe = new Recipe(eachRecipe);
     let cardHtml = `
-        <div class="recipe-card" id="${recipe.id}">
+        <section class="recipe-card" id="${recipe.id}">
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
-            <div class="card-overlay">
+            <section class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn add-favorite-recipe-btn">
                   <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
@@ -36,7 +36,7 @@ const populateRecipeCards = (recipeList) => {
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
               </div>
-            </div>`
+            </section>`
     recipeCardSection.insertAdjacentHTML("beforeend", cardHtml);
   })
 }
@@ -66,6 +66,7 @@ const loadHandler = () => {
 // Pantry Modal //
 
 const openPantryInfo = () => {
+  let allRecipeInfo = document.querySelector(".recipe-modal");
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
   displayPantryHeader();
@@ -73,7 +74,7 @@ const openPantryInfo = () => {
 
 const displayPantryIngredients = () => {
   return currentPantry.getPantryIngredients(ingredientsData, recipeData).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)}: ${ingredient.quantity} ${ingredient.unit}</br>`;
+    return `${recipe.capitalize(ingredient.name)}: ${ingredient.quantity.toFixed(2)} ${ingredient.unit}</br>`;
   }).join("");
 }
 
@@ -111,6 +112,7 @@ const userSectionHandler = (event) => {
 userProfileSection.addEventListener("click", userSectionHandler);
 
 // Sidebar Buttons //
+
 const sidebarButtonsHandler = (event) => {
   // if (event.target.className === "filter-btns show-favorite-btn") {
   //   populateRecipeCards(currentUser.favoriteRecipes);
@@ -269,6 +271,6 @@ search.addEventListener('click', displaySearchedSaved)
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
-window.onload = loadHandler();
+window.onload = loadHandler;
 
 
