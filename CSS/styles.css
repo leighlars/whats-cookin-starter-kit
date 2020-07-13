@@ -184,7 +184,7 @@ aside {
 .tag-list {
   flex-wrap: wrap;
   width: 85%;
-  height: 40%;
+  height: 50%;
   overflow: scroll;
 }
 
@@ -195,8 +195,9 @@ aside {
   margin: 1px 2px;
 }
 
-.tag-button.active {
+.tag-buttons.active {
   background-color: #C94C4C;
+  border: 2px solid #b1cbbb;
   color: #FFFACD;
   font-weight: bold;
 }
@@ -313,10 +314,6 @@ aside {
 .modal-btns {
   display: flex;
   justify-content: center;
-}
-
-#modal-icons {
-
 }
 
 #recipe-modal-img {

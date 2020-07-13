@@ -1,3 +1,5 @@
+// const recipeData = require("../data/recipes");
+
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
@@ -113,13 +115,33 @@ userProfileSection.addEventListener("click", userSectionHandler);
 
 // Sidebar Buttons //
 
+const toggleTagButton = (tagsClicked) => {
+  let tag = event.target.id;
+  let tagButton = event.target.closest(".tag-buttons");
+  if (!tagButton.classList.contains("active")) {
+    tagButton.classList.add("active");
+    tagsClicked.push(tag);
+  } else {
+    tagButton.classList.remove("active");
+    let i = tagsClicked.indexOf(tag);
+    tagsClicked.splice(i, 1);
+  }
+  return tagsClicked;
+} 
+
+
 const sidebarButtonsHandler = (event) => {
+  let tagsClicked = []
   // if (event.target.className === "filter-btns show-favorite-btn") {
   //   populateRecipeCards(currentUser.favoriteRecipes);
   // }
-  // if (event.target.className === "filter-btns show-planned-btn") {
-  //   populateRecipeCards(currentUser.plannedRecipes);
-  // }
+
+  if (event.target.closest(".tag-buttons")) {
+    toggleTagButton(tagsClicked);
+  } 
+  // if (event.target.id === "filter-btns filter-recipes-btn") {
+    
+  // } 
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
   }
@@ -273,5 +295,3 @@ search.addEventListener('click', displaySearchedSaved)
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
 window.onload = loadHandler;
-
-
