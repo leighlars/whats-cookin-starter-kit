@@ -79,6 +79,7 @@ class Pantry {
   getTotalCostOfGroceries = (recipe, ingredientsList) => {
    return this.createGroceryList(recipe, ingredientsList).reduce((totalCost, item) => {
      totalCost += item.cost;
+     totalCost = totalCost;
       return totalCost;
     }, 0);
   }

@@ -134,29 +134,18 @@ const viewRecipe = (recipe) => {
   displayRecipeDetails(recipe, ingredientsData);
 };
  
-// const makeIngredientsList = (recipe, ingredientsList) => {
-//   return recipe.ingredients.map(ingredient => {
-//     let ingredientName = recipe.findIngredient(ingredient, ingredientsList);
-//     return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${capitalize(ingredientName.name)}</br>`;
-//   }).join(" ");
-// }
-
-
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)} $${ingredient.cost}</br>`;
+    return `${recipe.capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
   }).join(" ");
 }
 
-const getTotalCostNeededIngred = (recipe, ingredientsList) => {
-  return currentPantry.getTotalCostOfGroceries(recipe, ingredientsList);
-}
 
 const displayRecipeDetails = (recipe, ingredientsList) => {
   let ingredients = recipe.getIngredients(ingredientsList);
   let instructions = recipe.getInstructions();
   let neededIngredients = getNeededIngredientsList(recipe, ingredientsList);
-  let totalCost = getTotalCostNeededIngred(recipe, ingredientsList);
+  let totalCostNeeded = currentPantry.getTotalCostOfGroceries(recipe, ingredientsList).toFixed(2);
   let recipeModalContent = document.querySelector(".recipe-modal");
   let recipeContent = `
       <button id="exit-btn"><img src="../assets/close.svg" class="close-icon" alt="Close instructions"></button>
@@ -174,9 +163,9 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <h4>Ingredients</h4>
       <article class="card-ingredients-list">${ingredients}</br></article>
       <h4>Instructions</h4>
-      <article>${instructions}</article>
+      <article "card-instructions-list">${instructions}</article>
       <h4>Cost</h4>
-      <article>To make this recipe, you need to spend <b>$${totalCost}</b>:</br> </br> ${neededIngredients}.</article>`;
+      <article "card-cost-details">Based on what's available in your pantry, you need to spend <b>$${totalCostNeeded}</b> and purchase the following ingredients:</br> </br> ${neededIngredients}.</article>`;
   recipeModalContent.insertAdjacentHTML("beforeend", recipeContent);
 }
 
