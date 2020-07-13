@@ -5,7 +5,7 @@ class Recipe {
     this.image = recipe.image || "https://spoonacular.com/recipeImages/595736-556x370.jpg";
     this.ingredients = recipe.ingredients || "No ingredients provided. Please Google other similar recipes for ingredients.";
     this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
-    this.tags = recipe.tags || ["miscellaneous"];
+    this.tags = recipe.tags.length != 0 ? recipe.tags : ["miscellaneous"];
     this.isFavorite = false;
     this.isPlanned = false;
   }
