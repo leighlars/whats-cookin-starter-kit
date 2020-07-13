@@ -140,7 +140,6 @@ const getNeededIngredientsList = (recipe, ingredientsList) => {
   }).join(" ");
 }
 
-
 const displayRecipeDetails = (recipe, ingredientsList) => {
   let ingredients = recipe.getIngredients(ingredientsList);
   let instructions = recipe.getInstructions();
