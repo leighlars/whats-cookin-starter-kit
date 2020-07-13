@@ -66,7 +66,7 @@ const loadHandler = () => {
 // Pantry Modal //
 
 const openPantryInfo = () => {
-  let allRecipeInfo = document.querySelector(".recipe-modal");
+  document.querySelector(".recipe-modal").style.display = "none";
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
   displayPantryHeader();
@@ -130,6 +130,7 @@ sidebarSection.addEventListener("click", sidebarButtonsHandler);
 // RECIPE MODALS //
 
 const viewRecipe = (recipe) => {
+  document.querySelector(".pantry-modal").style.display = "none";
   let allRecipeInfo = document.querySelector(".recipe-modal");
   allRecipeInfo.innerHTML = "";
   allRecipeInfo.style.display = "inline";
