@@ -1,8 +1,8 @@
-// const Recipe = require("./Recipe");
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-
+let search = document.querySelector('.search-icon')
+let searchInput = document.getElementById('search-text')
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -250,6 +250,22 @@ const recipeCardHandler = (event) => {
 //   })
 //   // console.log('Fav', myFavorites, 'myPlanned', myPlanned);
 // }
+
+const displaySearchedSaved = (event, query, ingredientList) => {
+  event.preventDefault()
+  if (event.target.className === 'search-icon') {
+    query = searchInput.value
+    ingredientList = ingredientsData
+    // console.log('ingredientsList', ingredientsData);
+    currentUser.searchByIngredAndName(event, query, ingredientList)
+    console.log('result', currentUser.searchByIngredAndName(event, query));
+    searchInput.value = ''
+    // query = 
+    // currentUser.searchByIngredAndName = (query, ingredientList)
+  }
+}
+
+search.addEventListener('click', displaySearchedSaved)
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 
