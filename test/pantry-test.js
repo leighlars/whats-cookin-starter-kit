@@ -180,11 +180,11 @@ describe('Pantry', function () {
     });
   });
 
-  it.only('should return pantry information', function() {
+  it('should return pantry information', function() {
     expect(pantryFull.getPantryIngredients(mockIngredientList, mockRecipeList)).to.deep.equal([
-      { name: "wheat flour", quantity: 2, unit: "blah" },
-      { name: "bicarbonate of soda", quantity: 1, unit: "blah" },
-      { name: "apple", quantity: 10, unit: "blah" },
+      { name: "wheat flour", quantity: 2, unit: "c"},
+      { name: "bicarbonate of soda", quantity: 1, unit: "tsp"},
+      { name: "apple", quantity: 10, unit: "whole"},
     ]);
   });
 

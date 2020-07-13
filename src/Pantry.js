@@ -31,24 +31,23 @@ class Pantry {
     }, []);
   }
 
-// getUnit = (recipeList) => {
-//   recipeList.find((recipe) => {
-//    recipe.ingredients.forEach((recipeIngredient) => {
-//     recipeIngredient.id === ingredient.id;
-//    });
-//   });
-// } can't figure out logic
-// basic: if pantry pantry ingred id match recipe ingred id
-// logic: loop through pantry ingredients, get the id of each ingred
-// loop through recipe data for each recipe, loop through recipe's ingredients
-// find recipe ingred id that matches pantry ingred id
-// get that recipe ingred unit value
+  findIngredientMeasurement = (id, recipeList) => {
+    let result = "whole";
+    recipeList.forEach(recipe => {
+      let foundIngredient = recipe.ingredients.find(ingredient => {
+        return ingredient.id === id;
+      });
+      if (foundIngredient && foundIngredient.quantity.unit) {
+       result = foundIngredient.quantity.unit;
+      }
+    });
+    return result;
+  }
 
   getPantryIngredients = (ingredientsList, recipeList) => {
    return this.ingredients.reduce((totalInfo, ingredient) => {
       let nameIngred = this.findIngredientGlobally(ingredient.ingredient, ingredientsList).name;
-      console.log(recipeList);  
-      let unit = "blah";
+      let unit = this.findIngredientMeasurement(ingredient.ingredient, recipeList);
       let ingredientObj = {name: nameIngred, quantity: ingredient.amount, unit: unit};
       totalInfo.push(ingredientObj);
       return totalInfo;
