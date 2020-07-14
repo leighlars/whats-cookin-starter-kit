@@ -279,7 +279,6 @@ describe('User', function() {
     expect(user.searchSavedByName('cookie')[0]).to.equal(recipe1);
     expect(user.searchSavedByName('apple')[0]).to.deep.equal(recipe2);
     expect(user.searchSavedByName("brick")).to.deep.equal([]);
-
   });
 
   it('should search for all saved recipes by ingredient', function() {
@@ -300,7 +299,20 @@ describe('User', function() {
 
     expect(user.searchAllSavedByAll('wheat flour', mockIngredientsList)[0]).to.deep.equal(recipe1);
     expect(user.searchAllSavedByAll("wheat flour", mockIngredientsList).length).to.deep.equal(2);
+  });
 
+  it('should search all recipe data by name', function() {
+    expect(user.searchAllRecipesByName("cookie", mockRecipeList)).to.deep.equal(recipe1);
+  });
+
+  it('should search all recipe data by ingredients', function() {
+    expect(user.searchAllRecipesByIngred("wheat flour", mockRecipeList)).to.deep.equal(recipe1);
+  });
+
+  it('should search all recipe data by name and ingredient', function() {
+    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList)).to.equal(recipe1);
+    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList).length).to.deep.equal(2);
 
   })
+
 });

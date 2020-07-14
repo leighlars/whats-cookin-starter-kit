@@ -258,16 +258,17 @@ const recipeCardHandler = (event) => {
 // SEARCH BOX//
 
 
-const displaySearchedPlanned = (query, ingredientsData) => {
-  let savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
-  console.log(savedSearch)
-  populateRecipeCards(savedSearch);
-};
-
-// const displaySearchedAllRecipes = (query) => {
-
-//   populateRecipeCards(savedSearch);
-// }
+const displaySearchedAllRecipes = (query, ingredientList, recipeList) => {
+  let allNameMatches = recipeList.filter(recipe => recipe.name.toLowerCase().includes(query));
+  let ingredientIDs = currentUser.changeIngredientNameToID(query, ingredientList);
+  console.log(ingredientIDs);
+  let ingredientMatches = recipeList.filter(recipe => {
+    let recipeIngredientIDs = currentUser.makeIngredientList(recipe);
+    return ingredientIDs.some(id => recipeIngredientIDs.includes(id));
+  })
+  let allMatches = allNameMatches.concat(ingredientMatches);
+  populateRecipeCards(allMatches);
+}
 
 const searchHandler = () => {
   let savedSearch;
@@ -286,9 +287,8 @@ const searchHandler = () => {
       savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
     }
-    if (event.target.className === "search-box-btns search-all-saved") {
-      // savedSearch=  
-      populateRecipeCards(savedSearch);
+    if (event.target.className === "search-box-btns search-all") {
+      displaySearchedAllRecipes(query, ingredientsData, recipeData);   
     }
     if (event.target.className === "search-box-btns clear-text-btn") {
       searchInput.value = "";

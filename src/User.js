@@ -130,21 +130,20 @@ class User {
  };
 }
 
-
-// search all recipe data by name 
+// search all recipe data by name // all 3 of these tests throw errors for "not a function"?
 searchAllRecipesByName = (query, recipeList) => {
   return recipeList.filter(recipe => recipe.name.toLowerCase().includes(query));
 }
 
 searchAllRecipesByIngred = (query, recipeList, ingredientList) => {
   let ingredientIDs = this.changeIngredientNameToID(query, ingredientList);
-  return recipeList.filter((recipe) => {
+  return recipeList.filter(recipe => {
    let recipeIngredientIDs = this.makeIngredientList(recipe);
-    return ingredientIDs.some((id) => recipeIngredientIDs.includes(id));
+    return ingredientIDs.some(id => recipeIngredientIDs.includes(id));
   })
 }
 
-searchRecipes = (query, recipeList, ingredientList) => {
+searchAllRecipesByAll = (query, recipeList, ingredientList) => {
   let allSearchedRecipes = this.searchAllRecipesByIngred(query, recipeList, ingredientList).concat(this.searchAllRecipesByName(query, recipeList));
   let filterDuplicates = [...new Set(allSearchedRecipes)];
   return filterDuplicates;
