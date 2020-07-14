@@ -31,16 +31,16 @@ This project will demonstrate our understanding and implementation of ES6 classe
 
 ## Gif Showcase
 
-![gif of random user and user's pantry on page load](/readme-gifs/refreshUser.gif)
+![gif of random user and user's pantry on page load](/readme-gifs/refreshUser.gif)</br>
 *Random user and user's pantry contents on page load*
 
-![gif of viewing and saving recipes to favorites and planned](/readme-gifs/viewingsavingrecipes.gif)
+![gif of viewing and saving recipes to favorites and planned](/readme-gifs/viewingsavingrecipes.gif)</br>
 *Viewing recipe contents and saving recipes to user's favorites and planned*
 
-![gif of viewing and saving recipes in favorites and planned, and also by tag](/readme-gifs/viewSavedTagged.gif)
+![gif of viewing and saving recipes in favorites and planned, and also by tag](/readme-gifs/viewSavedTagged.gif)</br>
 *View saved recipes in favorites and planned, and view recipes by tag*
 
-![gif of search bar functionality](/readme-gifs/searchbar.gif)
+![gif of search bar functionality](/readme-gifs/searchbar.gif)</br>
 *Search ingredients or recipe names in search bar. Can search through all recipes, all saved, favorites, and planned*
 
 ## Reflections / Project Progression
