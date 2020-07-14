@@ -132,7 +132,7 @@ const displayRecipesByTag = () => {
   let filteredRecipesByTag = [];
   let recipesWithTags = [];
   tagsSelected.forEach(tag => recipesWithTags = recipesWithTags.concat(currentUser.filterRecipeByTag(tag, recipeData)));
-  recipesWithTags.forEach(recipe => if (!filteredRecipesByTag.includes(recipe)) { filteredRecipesByTag.push(recipe) });
+  recipesWithTags.forEach(recipe => (!filteredRecipesByTag.includes(recipe)) ? filteredRecipesByTag.push(recipe) : null);
   filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
 }
 

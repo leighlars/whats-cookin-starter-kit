@@ -32,15 +32,14 @@ class User {
   }
  };
 
- filterRecipeByTag = (recipeTag, recipeData) => {
-  return recipeData.filter((recipe) => recipe.tags.includes(recipeTag));
- };
-//  copy test from Recipe
-
  deletePlannedRecipe = (recipe) => {
-  let i = this.plannedRecipes.indexOf(recipe);
-  this.plannedRecipes.splice(i, 1);
- };
+   let i = this.plannedRecipes.indexOf(recipe);
+   this.plannedRecipes.splice(i, 1);
+  };
+  
+  filterRecipeByTag = (recipeTag, recipeList) => {
+   return recipeList.filter((recipe) => recipe.tags.includes(recipeTag));
+  };
 
  filterFavoriteByTag = (tag) => {
   return this.favoriteRecipes.filter((faveRecipe) => faveRecipe.tags.includes(tag));

@@ -145,10 +145,6 @@ describe('Recipe', function() {
     expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
   });
 
-  it('should filter a recipes by tag', function() {
-    expect(recipe.filterRecipeByTag('breakfast', mockRecipeList).length).to.deep.equal(1);
-  });
-
   it('should filter recipes by ingredient', function() {
     expect(recipe.filterRecipeByIngredient('wheat flour', mockIngredientsList, mockRecipeList)).to.deep.equal([mockRecipeList[0]])
   });

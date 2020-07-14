@@ -194,8 +194,8 @@ describe('Pantry', function () {
   });
 
   it('should return missing ingredient and amount needed to make a meal', function() {
-    let expected = [ {"id": 1009016, unit: "cups", "amount": 10.5}, {"id": 9003, unit: "tsp", "amount": 10}];
-    let expected2 = [ {"id": 1009016, unit: "cups", "amount": 10.5 }, {"id": 9003, unit: "tsp", "amount": 20 }];
+    let expected = [ {"id": 1009016, unit: "cups", "amount": 10.5}, {"id": 9003, unit: "whole", "amount": 10}];
+    let expected2 = [ {"id": 1009016, unit: "cups", "amount": 10.5 }, {"id": 9003, unit: "whole", "amount": 20 }];
 
     expect(pantryFull.getIngredientsForRecipe(recipe2)).to.deep.equal(expected);
     expect(pantryEmpty.getIngredientsForRecipe(recipe2)).to.deep.equal(expected2);
