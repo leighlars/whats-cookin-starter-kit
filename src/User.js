@@ -77,10 +77,7 @@ class User {
  };
 
  searchByIngredAndName = (event, query, ingredientList) => {
-  let allRecipes = this.searchSavedRecipesByIngred(
-   query,
-   ingredientList
-  ).concat(this.searchSavedRecipesByName(query));
+  let allRecipes = this.searchSavedRecipesByIngred(query,ingredientList).concat(this.searchSavedRecipesByName(query));
   let filterDuplicates = [...new Set(allRecipes)];
   return filterDuplicates;
  };
