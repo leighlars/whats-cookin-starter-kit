@@ -1,9 +1,8 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-// let search = document.querySelector('.search-icon')
-let searchInput = document.getElementById('search-text');
-let searchSaved = document.querySelector('.search-saved')
+let searchSection = document.querySelector(".search-box")
+
 
 
 const generateRandomUser = () => {
@@ -14,7 +13,7 @@ const currentUser = new User(usersData[generateRandomUser()]);
 const currentPantry = new Pantry(currentUser.pantry);
 const tagsSelected = [];
 
-// DOM display onload
+// DOM Display Onload //
 
 const welcomeGreeting = () => {
   let greeting = document.querySelector(".user-greeting");
@@ -51,12 +50,16 @@ const populateAllTags = (recipeList) => {
     eachRecipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
-        let tagHTML = `<button class="tag-buttons" id="${tag}">${eachRecipe.capitalize(tag)}</button>`
+        let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
       }
     });
   })
 }
+
+const capitalize = (words) => {
+  return words.split(" ").map((word) =>  word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+};
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
@@ -66,7 +69,7 @@ const loadHandler = () => {
   welcomeGreeting();
 }
 
-// Pantry Modal //
+// PANTRY MODAL //
 
 const openPantryInfo = () => {
   document.querySelector(".recipe-modal").style.display = "none";
@@ -75,9 +78,11 @@ const openPantryInfo = () => {
   displayPantryHeader();
 }
 
+
+
 const displayPantryIngredients = () => {
   return currentPantry.getPantryIngredients(ingredientsData, recipeData).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)}: ${ingredient.quantity.toFixed(2)} ${ingredient.unit}</br>`;
+    return `${capitalize(ingredient.name)}: ${ingredient.quantity} ${ingredient.unit}</br>`;
   }).join("");
 }
 
@@ -136,8 +141,7 @@ const displayRecipesByTag = () => {
   filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
 }
 
-
-const sidebarButtonsHandler = (event) => {
+const sidebarHandler = (event) => {
   if (event.target.closest(".tag-buttons")) {
     toggleTagButton();
   } 
@@ -146,7 +150,7 @@ const sidebarButtonsHandler = (event) => {
   }
 }
 
-// RECIPE MODALS //
+// RECIPE MODAL //
 
 const viewRecipe = (recipe) => {
   document.querySelector(".pantry-modal").style.display = "none";
@@ -158,7 +162,7 @@ const viewRecipe = (recipe) => {
  
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
+    return `${capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
   }).join(" ");
 }
 
@@ -255,22 +259,51 @@ const recipeCardHandler = (event) => {
   }
 }
 
+// SEARCH BOX//
 
-const displaySearchedSaved = (query) => {
-  if (event.target.className === 'search-box-btns search-saved') {
-    query = searchInput.value.toLowerCase()
-    let savedSearch = currentUser.searchByIngredAndName(query, ingredientsData)
-    searchInput.value = ''
-    populateRecipeCards(savedSearch)
+const displaySearchedAllRecipes = (query, ingredientList, recipeList) => {
+  let allNameMatches = recipeList.filter(recipe => recipe.name.toLowerCase().includes(query));
+  let ingredientIDs = currentUser.changeIngredientNameToID(query, ingredientList);
+  let allIngredientMatches = recipeList.filter(recipe => {
+    let recipeIngredientIDs = currentUser.makeIngredientList(recipe);
+    return ingredientIDs.some(id => recipeIngredientIDs.includes(id));
+  })
+  return allNameMatches.concat(allIngredientMatches);
+}
+
+const searchHandler = () => {
+  let savedSearch;
+  let searchInput = document.getElementById('search-text');
+  let query = searchInput.value.toLowerCase();
+  if (query !== "") {
+    if (event.target.className === 'search-box-btns search-saved') {
+      savedSearch = currentUser.searchByIngredAndName(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    } 
+    if (event.target.className === "search-box-btns search-favorites") {
+      savedSearch = currentUser.searchFavoritesByAll(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns search-planned") {
+      savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns search-all") {
+      savedSearch = displaySearchedAllRecipes(query, ingredientsData, recipeData);   
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns clear-text-btn") {
+      searchInput.value = "";
+    }
+    searchInput.value = "";
   }
 }
 
+// Event Listeners //
 
-searchSaved.addEventListener('click', displaySearchedSaved)
+searchSection.addEventListener('click', searchHandler)
 
-// search.addEventListener('click', displaySearchedSaved);
-
-sidebarSection.addEventListener("click", sidebarButtonsHandler);
+sidebarSection.addEventListener("click", sidebarHandler);
 
 userProfileSection.addEventListener("click", userSectionHandler);
 
