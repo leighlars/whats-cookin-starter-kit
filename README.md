@@ -12,7 +12,7 @@ Mod 2 Pair Project
 - [Project Spec](https://frontend.turing.io/projects/whats-cookin.html)
 
 ## Abstract 
-In this project, we will design an interactive web page for multiple users to store and search recipes! A user will be able to view recipe instructions, ingredients, and cost; save recipes to a 'favorites list' or 'weekly-planned' list; create a grocery list; and search/filter recipes by tag and/or type.
+In this project, we will design an interactive web page for multiple users to store and search recipes! A user will be able to view recipe instructions, ingredients, and the name and cost of needed ingredients based on their pantry contents; save recipes to a 'favorites list' or 'weekly-planned' list; use the search bar to search either name of recipe or recipes that include a searched ingredient within all recipes, their planned recipes, their favorite recipes, or by both favorite and planned recipes; and search/filter recipes by tag.
 
 This project will demonstrate our understanding and implementation of ES6 classes, TDD and testing suites, HTML/CSS UX/UI design, ability to write modular, reusable code that follows SRP, using array prototypes for data manipulation, and last but certainly not least, ability to follow spec/comp to complete a functional app.
 
@@ -37,6 +37,11 @@ This project will demonstrate our understanding and implementation of ES6 classe
 ![gif of viewing and saving recipes to favorites and planned](/readme-gifs/viewingsavingrecipes.gif)
 *Viewing recipe contents and saving recipes to user's favorites and planned*
 
+![gif of viewing and saving recipes in favorites and planned, and also by tag](/readme-gifs/viewSavedTagged.gif)
+*View saved recipes in favorites and planned, and view recipes by tag*
 
+![gif of search bar functionality](/readme-gifs/searchbar.gif)
+*Search ingredients or recipe names in search bar. Can search through all recipes, all saved, favorites, and planned*
 
 ## Reflections / Project Progression
+This was an absolute whirlwind of a project. We were given a very abstract spec, and we were able to create our own goals, methods, and interpretations of what this project needed. While our CSS is not very responsive, we did invest time in our testing and functionality. If we had more time, we would want to have a more responsive site, functionality for filtering through favorite and planned recipes via tags, and to alphabetize our tags on display, a mobile layout, and a grocery list for all the ingredients needed for the planned recipes. We would have slowed down at the beginning to utilize a better plan with increased utilization of Git project board and issues. Alas, this was our first project with this level of autonomy, and we are grateful for that experience moving forward.
