@@ -145,25 +145,5 @@ describe('Recipe', function() {
     expect(recipe.getRecipeCost(mockIngredientsList)).to.equal(2.13);
   });
 
-  it('should filter a recipes by tag', function() {
-    expect(recipe.filterRecipeByTag('breakfast', mockRecipeList).length).to.deep.equal(1);
-  });
-
-  it('should filter recipes by ingredient', function() {
-    expect(recipe.filterRecipeByIngredient('wheat flour', mockIngredientsList, mockRecipeList)).to.deep.equal([mockRecipeList[0]])
-  });
-
-  it('should filter recipes by name', function () {
-    expect(recipe.filterRecipeByName('cookie', mockRecipeList)).to.deep.equal([mockRecipeList[0]]);
-    expect(recipe.filterRecipeByName('cookie', mockRecipeList).length).to.deep.equal(1);
-
-  });
-
-  it('should return all recipes that match searched recipe name or ingredient', function() {
-    expect(recipe.filterAllRecipesByQuery('cookie', mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
-    expect(recipe.filterAllRecipesByQuery( "wheat flour", mockIngredientsList, mockRecipeList).length).to.deep.equal(1);
-
-  });
-
 
 })

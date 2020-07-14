@@ -5,7 +5,7 @@ class Recipe {
     this.image = recipe.image || "https://spoonacular.com/recipeImages/595736-556x370.jpg";
     this.ingredients = recipe.ingredients || "No ingredients provided. Please Google other similar recipes for ingredients.";
     this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
-    this.tags = recipe.tags || ["miscellaneous"];
+    this.tags = this.checkTags(recipe.tags);
     this.isFavorite = false;
     this.isPlanned = false;
   }
@@ -19,6 +19,14 @@ class Recipe {
       return "Recipe";
     }
     return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
+  }
+
+  checkTags = (recipe) => {
+    if (!recipe === "undefined" || Array.isArray(recipe)) {
+      return recipe;
+    } else {
+      return ["miscellaneous"];
+    }
   }
 
   getInstructions = () => {
@@ -64,35 +72,6 @@ class Recipe {
     }
   }
 
-  filterRecipeByTag = (recipeTag, recipeData) => {
-    return recipeData.filter(recipe => recipe.tags.includes(recipeTag));
-  }
-
-  filterRecipeByIngredient = (recipeIngredient, ingredientsList, recipeList) => {
-    let matchedIngredient = ingredientsList.find(ingredient => ingredient.name === recipeIngredient);
-    if (matchedIngredient !== undefined) {
-    return recipeList.reduce((filteredRecipes, recipe) => {
-      recipe.ingredients.forEach(ingredient => {
-        if (ingredient.id === matchedIngredient.id && (!filteredRecipes.includes(recipe))) {
-          filteredRecipes.push(recipe);
-        }
-      })
-      return filteredRecipes;
-    }, []);
-    } else {
-      return [];
-    }
-  }
-
-  filterRecipeByName(recipeIngredient, recipeData) {
-    return recipeData.filter(recipe => recipe.name.toLowerCase().includes(recipeIngredient));
-  }
-
-  filterAllRecipesByQuery(recipeIngredient, ingredientsList, recipeList) {
-    let allSearchedRecipes = this.filterRecipeByIngredient(recipeIngredient, ingredientsList, recipeList).concat(this.filterRecipeByName(recipeIngredient, recipeList));
-    let filterDuplicates = [...new Set(allSearchedRecipes)];
-    return filterDuplicates;
-  }
 }
 
 if (typeof module !== 'undefined') {
