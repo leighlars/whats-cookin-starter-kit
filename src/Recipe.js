@@ -8,26 +8,26 @@ class Recipe {
     this.tags = this.checkTags(recipe.tags);
     this.isFavorite = false;
     this.isPlanned = false;
-  }
+  };
 
   checkNumber = (recipe) => {
     return typeof recipe === 'number' ? recipe : Date.now();
-  }
+  };
 
   checkName = (recipe) => {
     if (!recipe) {
       return "Recipe";
-    }
+    };
     return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
-  }
+  };
 
   checkTags = (recipe) => {
     if (!recipe === "undefined" || Array.isArray(recipe)) {
       return recipe;
     } else {
       return ["miscellaneous"];
-    }
-  }
+    };
+  };
 
   getInstructions = () => {
     if (Array.isArray(this.instructions)) {
@@ -36,20 +36,19 @@ class Recipe {
       }, "");
     } else {
       return this.instructions;
-    }
-  }
+    };
+  };
 
   capitalize = (words) => {
-  return words.split(" ").map((word) =>  word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-};
-
+    return words.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  };
 
   getIngredients = (ingredientsList) => {
     return this.ingredients.map(ingredient => {
-       let ingredientName = this.findIngredient(ingredient, ingredientsList);
-        return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${this.capitalize(ingredientName.name)}</br>`;
-      }).join(" ");
-    };
+      let ingredientName = this.findIngredient(ingredient, ingredientsList);
+      return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${this.capitalize(ingredientName.name)}</br>`;
+    }).join(" ");
+  };
 
   getRecipeCost = (ingredientsList) => {
     if (Array.isArray(this.ingredients)) {
@@ -58,8 +57,7 @@ class Recipe {
         sum += (matchIngredient.estimatedCostInCents * recipeIngredient.quantity.amount) / 100;
         return sum;
       }, 0);
-    } 
-    else {
+    } else {
       return this.ingredients;
     };
   };
@@ -68,9 +66,10 @@ class Recipe {
     let foundIngredient = ingredientsList.find(ingredient => ingredient.id === recipeIngredient.id);
     if (foundIngredient !== undefined) {
       return foundIngredient;
-    }
-  }
-}
+    };
+  };
+
+};
 
 if (typeof module !== 'undefined') {
   module.exports = Recipe;
