@@ -5,7 +5,7 @@ const Recipe = require('../src/Recipe');
 const Pantry = require('../src/Pantry');
 
 describe('User', function() {
-  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList, pantry; 
+  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList, mockRecipeList; 
   
   beforeEach(function() {
     userInfo = {
@@ -26,6 +26,24 @@ describe('User', function() {
         },
       ],
     };
+    mockRecipeList = [
+      {
+        id: 1,
+        name: "cookies",
+        image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        ingredients: [
+          {
+            "id": 20081,
+            "quantity": {
+              "amount": 1.5,
+              "unit": "c"
+            }
+          }
+        ],
+        instructions: [{instruction: "Boil water", number: 1}],
+        tags: ["breakfast", "lunch"],
+      }
+    ];
     mockIngredientsList = [
       {
         id: 9003,
@@ -152,6 +170,7 @@ describe('User', function() {
     expect(user.id).to.equal(1);
     const user2 = new User({name: "Sally", id: "five", pantry: []}); 
     expect(user2.id).to.equal(Date.now());
+    // Note: if internet is laggy, this test will fail
   })
 
   it('should have a name', function () {
@@ -194,6 +213,10 @@ describe('User', function() {
     user.addPlannedRecipe(recipe1);
 
     expect(user.plannedRecipes.length).to.deep.equal(1);
+  });
+
+  it("should filter a recipes by tag", function () {
+    expect(user.filterRecipeByTag("breakfast", mockRecipeList).length).to.deep.equal(1);
   });
 
   it('should filter favorite recipes by tag', function () {

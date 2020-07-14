@@ -41,7 +41,6 @@ button {
   color: #C94C4C;
   font-family: 'Pacifico', cursive;
   font-size: 18px;
-  outline: none;
 }
 
 button:hover {
@@ -93,7 +92,6 @@ h2 {
   border-radius: 6px;
   margin: 5px;
   padding: 6px;
-  outline: none;
   height: 50px;
   width: 450px;
 }
@@ -126,7 +124,6 @@ h2 {
   margin-top: 0px;
   margin-bottom: 0px;
   margin-right: 18px;
-  width: 240px;
 }
 
 .user-list-btns {
@@ -187,7 +184,7 @@ aside {
 .tag-list {
   flex-wrap: wrap;
   width: 85%;
-  height: 40%;
+  height: 50%;
   overflow: scroll;
 }
 
@@ -198,8 +195,9 @@ aside {
   margin: 1px 2px;
 }
 
-.tag-button.active {
+.tag-buttons.active {
   background-color: #C94C4C;
+  border: 2px solid #b1cbbb;
   color: #FFFACD;
   font-weight: bold;
 }
@@ -316,10 +314,6 @@ aside {
 .modal-btns {
   display: flex;
   justify-content: center;
-}
-
-#modal-icons {
-
 }
 
 #recipe-modal-img {
