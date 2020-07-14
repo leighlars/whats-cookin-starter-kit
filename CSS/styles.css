@@ -20,7 +20,7 @@ h1, h4, p {
   margin: 0;
 }
 
-/* header */
+/* Header */
 
 header {
   display: flex;
@@ -79,11 +79,30 @@ h2 {
 
 .search-box {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 100%;
   width: 34%;
+}
+
+.search-bar {
+  flex-direction: row;
+}
+
+.search-btns {
+  background-color:  #b1cbbb;;
+}
+
+.search-box-btns {
+  flex-direction: row;
+  background-color: #FFFACD;
+  border: 1px solid #b1cbbb;
+  border-radius: 6px;
+  font: bold 14px 'Raleway';
+  margin: 0 7px;
+  padding: 6px;
 }
 
 #search-text {
@@ -94,13 +113,13 @@ h2 {
   margin: 5px;
   padding: 6px;
   height: 50px;
-  width: 450px;
+  width: 400px;
 }
 
-.search-icon {
+/* .search-icon {
   width: 40px;
   height: 40px;
-}
+} */
 
 .close-icon {
   margin-top: 10px;
@@ -336,13 +355,4 @@ aside {
   font-family: 'Raleway';
   width: 93%;
   margin-left: 3%;
-}
-
-.search-saved, .search-planned, .search-all-saved {
-  border: 1px solid #b1cbbb;
-  border-radius: 6px;
-  font: bold 14px 'Raleway';
-  margin: 0 7px;
-  background-color: #FFFACD;
-  padding: 6px;
 }

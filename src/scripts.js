@@ -1,8 +1,8 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-let search = document.querySelector('.search-icon')
-let searchInput = document.getElementById('search-text')
+// let search = document.querySelector('.search-icon')
+let searchInput = document.getElementById('search-text');
 let searchSaved = document.querySelector('.search-saved')
 
 
@@ -32,10 +32,10 @@ const populateRecipeCards = (recipeList) => {
             <section class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn add-favorite-recipe-btn">
-                  <img src="../assets/${recipe.isFavorite ? 'heart-active' :'heart'}.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
+                  <img src="../assets/${eachRecipe.isFavorite ? 'heart-active' :'heart'}.svg" class="user-icons red-heart add-to-favorite" id="${eachRecipe.id}" alt="Image of heart">
                 </button>   
-                <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
-                  <img src="../assets/${recipe.isPlanned ? 'calendar-active' :'calendar'}.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
+                <button class="card-btn" class="add-planned-recipe-btn" id="${eachRecipe.id}">
+                  <img src="../assets/${eachRecipe.isPlanned ? 'calendar-active' :'calendar'}.svg" class="user-icons calendar add-to-planned" id="${eachRecipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${eachRecipe.name}</h5>
               </div>
@@ -51,7 +51,7 @@ const populateAllTags = (recipeList) => {
     eachRecipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
-        let tagHTML = `<button class="tag-buttons" id="${tag}">${recipe.capitalize(tag)}</button>`
+        let tagHTML = `<button class="tag-buttons" id="${tag}">${eachRecipe.capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
       }
     });
@@ -60,10 +60,9 @@ const populateAllTags = (recipeList) => {
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
-  recipeData.forEach(recipe => new Recipe(recipe));
-  
-  populateAllTags(recipeData);
-  populateRecipeCards(recipeData.map(recipe => new Recipe(recipe)));
+  let recipeObjs = recipeData.map(recipe => new Recipe(recipe));
+  populateAllTags(recipeObjs);
+  populateRecipeCards(recipeObjs);
   welcomeGreeting();
 }
 
@@ -239,12 +238,11 @@ const makeUnplanned = (event, recipe) => {
 };
 
 const recipeCardHandler = (event) => {
-  let recipeCard = event.target.closest(".recipe-card")
+  let recipeCard = event.target.closest(".recipe-card");
   if (event.target.className === "close-icon") {
     closeRecipe();
   } else if (recipeCard) {
-    let targetRecipe = recipeData.find((recipe) => recipe.id === Number(recipeCard.id));
-    let recipe = new Recipe(targetRecipe);
+    let recipe = recipeData.find((recipe) => recipe.id === Number(recipeCard.id));
     if (event.target.className === "recipe-img") {
       viewRecipe(recipe);
     }
@@ -270,7 +268,7 @@ const displaySearchedSaved = (query) => {
 
 searchSaved.addEventListener('click', displaySearchedSaved)
 
-search.addEventListener('click', displaySearchedSaved);
+// search.addEventListener('click', displaySearchedSaved);
 
 sidebarSection.addEventListener("click", sidebarButtonsHandler);
 
