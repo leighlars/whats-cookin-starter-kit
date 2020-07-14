@@ -18,7 +18,8 @@ class User {
 
  addFavoriteRecipe = (recipe) => {
   if (!this.favoriteRecipes.includes(recipe)) {
-   this.favoriteRecipes.push(recipe);
+    recipe.isFavorite = true;
+    this.favoriteRecipes.push(recipe);
   }
  };
 
@@ -58,30 +59,36 @@ class User {
  };
 
  searchSavedRecipesByIngred = (query, ingredientList) => {
+   console.log(this.favoriteRecipes);
   let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
-  let ingredientID = this.changeIngredientNameToID(query, ingredientList);
-  console.log('user Ingred List', ingredientList);
+  let ingredientIDs = this.changeIngredientNameToID(query, ingredientList);
+  console.log({allSaved});
   return allSaved.filter((recipe) => {
-   return this.makeIngredientList(recipe).includes(ingredientID);
+  let recipeIngredientIDs = this.makeIngredientList(recipe)
+  console.log({recipeIngredientIDs});
+  return ingredientIDs.some(id => recipeIngredientIDs.includes(id))
   });
  };
 
  changeIngredientNameToID = (ingredientName, ingredientList) => {
-  console.log('user Ingred List 2', ingredientList);
-
-  let ingredient = ingredientList.find((ingredient) =>
-   ingredient.name.includes(ingredientName)
-  );
-  return ingredient ? ingredient.id : 0;
+   console.log('ingredientList', ingredientList);
+  let ingredients = ingredientList.filter((ingredient) => {
+    return ingredient.name.includes(ingredientName);
+  });
+  ingredients = ingredients.map(ingredient => ingredient.id)
+  console.log('ingredientID', ingredients);
+  return ingredients;
  };
 
  makeIngredientList = (recipe) => {
   return recipe.ingredients.map((ingredient) => ingredient.id);
  };
 
- searchByIngredAndName = (event, query, ingredientList) => {
+ searchByIngredAndName = (query, ingredientList) => {
   let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
+  console.log('allRecipes', allRecipes);
   let filterDuplicates = [...new Set(allRecipes)];
+  console.log('filterDuplicates', filterDuplicates);
   return filterDuplicates;
  };
 }
