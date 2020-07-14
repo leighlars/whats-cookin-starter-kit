@@ -5,17 +5,20 @@
   color: #C94C4C;
 }
 
-html, body {
+html,
+body {
   height: 100%
 }
 
 body {
   display: flex;
   flex-direction: column;
-  background:#b1cbbb;
+  background: #b1cbbb;
 }
 
-h1, h4, p {
+h1,
+h4,
+p {
   padding: 0;
   margin: 0;
 }
@@ -92,7 +95,7 @@ h2 {
 }
 
 .search-btns {
-  background-color:  #b1cbbb;;
+  background-color: #b1cbbb;
 }
 
 .search-box-btns {
@@ -244,36 +247,36 @@ h3 {
 }
 
 .recipe-card:hover {
-  transform: scale(1.1); 
-  }
-  
+  transform: scale(1.1);
+}
+
 .recipe-img {
   border-radius: 5px;
   height: 100%;
   width: 100%;
 }
-  
- .card-overlay {
+
+.card-overlay {
   display: flex;
   flex-direction: column;
-  background-color:rgba(99, 98, 94, 0.7);
+  background-color: rgba(99, 98, 94, 0.7);
   position: absolute;
   border-radius: 0px 0px 4px 4px;
   bottom: 0px;
   width: 100%;
 }
-   
- .card-overlay-top {
+
+.card-overlay-top {
   flex-direction: row;
   justify-content: center;
   align-items: center;
   padding: 2%;
-} 
-  
+}
+
 .card-btn {
   background-color: transparent;
 }
-  
+
 .card-btn:hover {
   transform: skewX(-10deg);
 }
@@ -282,12 +285,12 @@ h3 {
   color: #FFFACD;
   font-size: 20px;
   text-shadow: -1px 0 black, 0 2px black, 2px 0 black, 0 -1px black;
-  margin: 0px;    
-  }
+  margin: 0px;
+}
 
 
- /* MODALS */
- .pantry-modal,
+/* MODALS */
+.pantry-modal,
 .recipe-modal {
   background: #FFFACD;
   border: 3px solid #C94C4C;

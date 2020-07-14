@@ -2,17 +2,15 @@ const chai = require('chai');
 const expect = chai.expect;
 const User = require('../src/User');
 const Recipe = require('../src/Recipe');
-const Pantry = require('../src/Pantry');
 
-describe('User', function() {
-  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList, mockRecipeList; 
-  
-  beforeEach(function() {
+describe('User', function () {
+  let user, userInfo, recipeInfo1, recipeInfo2, recipe1, recipe2, mockIngredientsList, mockRecipeList;
+
+  beforeEach(function () {
     userInfo = {
       name: "Saige O'Kon",
       id: 1,
-      pantry: [
-        {
+      pantry: [{
           ingredient: 11477,
           amount: 4,
         },
@@ -26,26 +24,24 @@ describe('User', function() {
         },
       ],
     };
-    mockRecipeList = [
-      {
-        id: 1,
-        name: "cookies",
-        image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-        ingredients: [
-          {
-            "id": 20081,
-            "quantity": {
-              "amount": 1.5,
-              "unit": "c"
-            }
-          }
-        ],
-        instructions: [{instruction: "Boil water", number: 1}],
-        tags: ["breakfast", "lunch"],
-      }
-    ];
-    mockIngredientsList = [
-      {
+    mockRecipeList = [{
+      id: 1,
+      name: "cookies",
+      image: "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+      ingredients: [{
+        "id": 20081,
+        "quantity": {
+          "amount": 1.5,
+          "unit": "c"
+        }
+      }],
+      instructions: [{
+        instruction: "Boil water",
+        number: 1
+      }],
+      tags: ["breakfast", "lunch"],
+    }];
+    mockIngredientsList = [{
         id: 9003,
         name: "apple",
         estimatedCostInCents: 207,
@@ -69,8 +65,7 @@ describe('User', function() {
     recipeInfo1 = {
       "id": 595736,
       "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-      "ingredients": [
-        {
+      "ingredients": [{
           "id": 20081,
           "quantity": {
             "amount": 1.5,
@@ -92,8 +87,7 @@ describe('User', function() {
           }
         }
       ],
-      "instructions": [
-        {
+      "instructions": [{
           "instruction": "In a large mixing bowl, whisk together the dry ingredients (flour, pudding mix, soda and salt). Set aside.In a large mixing bowl of a stand mixer, cream butter for 30 seconds. Gradually add granulated sugar and brown sugar and cream until light and fluffy.",
           "number": 1
         },
@@ -115,8 +109,7 @@ describe('User', function() {
     recipeInfo2 = {
       id: 678353,
       image: "https://spoonacular.com/recipeImages/678353-556x370.jpg",
-      ingredients: [
-        {
+      ingredients: [{
           id: 20081,
           quantity: {
             amount: 1.5,
@@ -138,13 +131,10 @@ describe('User', function() {
           },
         },
       ],
-      instructions: [
-        {
-          instruction:
-        "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
-          number: 1,
-        },
-      ],
+      instructions: [{
+        instruction: "Season the pork chops with salt and pepper and grill or pan fry over medium high heat until cooked, about 3-5 minutes per side. (If grilling, baste the chops in the maple dijon apple cider sauce as you grill.)Meanwhile, mix the remaining ingredients except the apple slices, bring to a simmer and cook until the sauce thickens, about 2-5 minutes.Grill or saute the apple slices until just tender but still crisp.Toss the pork chops and apple slices in the maple dijon apple cider sauce and enjoy!",
+        number: 1,
+      }, ],
       name: "Maple Dijon Apple Cider Grilled Pork Chops Cookie",
       tags: ["lunch", "main course", "main dish", "dinner"],
     };
@@ -152,7 +142,7 @@ describe('User', function() {
     recipe2 = new Recipe(recipeInfo2);
   });
 
-  it('should be a function', function() {
+  it('should be a function', function () {
     expect(User).to.be.a('function');
   });
 
@@ -165,20 +155,27 @@ describe('User', function() {
     expect(user.id).to.equal(1);
   });
 
-  it('if id is not a number, assign it to Date.now()', function() {
+  it('if id is not a number, assign it to Date.now()', function () {
     expect(user.id).to.equal(1);
-    const user2 = new User({name: "Sally", id: "five", pantry: []}); 
+    const user2 = new User({
+      name: "Sally",
+      id: "five",
+      pantry: []
+    });
     expect(user2.id).to.equal(Date.now());
-    // Note: if internet is laggy, this test will fail
   })
 
   it('should have a name', function () {
     expect(user.name).to.be.a('string');
     expect(user.name).to.equal("Saige O'Kon");
   });
-  
-  it('user name should be a string', function() {
-    const user2 = new User({name: 123, id: 2, pantry: []});
+
+  it('user name should be a string', function () {
+    const user2 = new User({
+      name: 123,
+      id: 2,
+      pantry: []
+    });
     expect(user2.name).to.equal('User123');
   });
 
@@ -197,20 +194,17 @@ describe('User', function() {
   it('should be able add recipe to favorites', function () {
     user.addFavoriteRecipe(recipe1);
     expect(user.favoriteRecipes.length).to.deep.equal(1);
-
     user.addFavoriteRecipe(recipe2);
     expect(user.favoriteRecipes.length).to.deep.equal(2);
   });
 
-  it('should delete recipe from favorites', function() {
+  it('should delete recipe from favorites', function () {
     user.deleteFavoriteRecipe(recipe1);
-
     expect(user.favoriteRecipes.length).to.deep.equal(0);
   });
 
   it('should add recipe to planned recipes', function () {
     user.addPlannedRecipe(recipe1);
-
     expect(user.plannedRecipes.length).to.deep.equal(1);
   });
 
@@ -220,32 +214,27 @@ describe('User', function() {
 
   it('should filter favorite recipes by tag', function () {
     user.addFavoriteRecipe(recipe1);
-    
     expect(user.filterFavoriteByTag('antipasti')[0]).to.equal(recipe1);
   });
 
   it('should filter planned recipes by tag', function () {
     user.addPlannedRecipe(recipe1);
-
     expect(user.filterPlannedByTag('antipasti')[0]).to.equal(recipe1);
   });
 
-  it('should search for all favorite recipes by name', function() {
+  it('should search for all favorite recipes by name', function () {
     user.addFavoriteRecipe(recipe1);
-
     expect(user.searchFavoritesByName("cookie")[0]).to.deep.equal(recipe1);
   });
 
-  it('should search for all favorite recipes by ingredient', function() {
+  it('should search for all favorite recipes by ingredient', function () {
     user.addFavoriteRecipe(recipe1);
-
     expect(user.searchFavoritesByIngred("wheat flour", mockIngredientsList)[0]).to.deep.equal(recipe1);
   });
 
-  it('should search all favorite recipes by ingredient and name', function() {
-    user.addFavoriteRecipe(recipe1); 
+  it('should search all favorite recipes by ingredient and name', function () {
+    user.addFavoriteRecipe(recipe1);
     user.addFavoriteRecipe(recipe2);
-
     expect(user.searchFavoritesByAll("cookie", mockIngredientsList)[0]).to.deep.equal(recipe1);
     expect(user.searchFavoritesByAll("wheat flour", mockIngredientsList).length).to.deep.equal(2);
     expect(user.searchFavoritesByAll("brick", mockIngredientsList)).to.deep.equal([]);
@@ -253,66 +242,58 @@ describe('User', function() {
 
   it("should search for all planned recipes by name", function () {
     user.addPlannedRecipe(recipe1);
-
     expect(user.searchPlannedByName("cookie")[0]).to.deep.equal(recipe1);
   });
 
   it("should search for all planned recipes by ingredient", function () {
     user.addPlannedRecipe(recipe1);
-
     expect(user.searchPlannedByIngred("wheat flour", mockIngredientsList)[0]).to.deep.equal(recipe1);
   });
 
   it("should search all planned recipes by ingredient and name", function () {
     user.addPlannedRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
-
     expect(user.searchPlannedByAll("cookie", mockIngredientsList)[0]).to.deep.equal(recipe1);
     expect(user.searchPlannedByAll("wheat flour", mockIngredientsList).length).to.deep.equal(2);
     expect(user.searchPlannedByAll("brick", mockIngredientsList)).to.deep.equal([]);
   });
 
-  it('should search for all saved recipes by name', function() {
+  it('should search for all saved recipes by name', function () {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
-
     expect(user.searchSavedByName('cookie')[0]).to.equal(recipe1);
     expect(user.searchSavedByName('apple')[0]).to.deep.equal(recipe2);
     expect(user.searchSavedByName("brick")).to.deep.equal([]);
   });
 
-  it('should search for all saved recipes by ingredient', function() {
+  it('should search for all saved recipes by ingredient', function () {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
-
     expect(user.searchSavedByIngred('wheat flour', mockIngredientsList)[0]).to.deep.equal(recipe1);
     expect(user.searchSavedByIngred('apple', mockIngredientsList)[0]).to.deep.equal(recipe2);
     expect(user.searchSavedByIngred("brick", mockIngredientsList)).to.deep.equal([]);
   });
 
-  it('should search for all saved recipes by ingredient or name', function() {
+  it('should search for all saved recipes by ingredient or name', function () {
     user.addFavoriteRecipe(recipe1);
     user.addPlannedRecipe(recipe2);
     user.addPlannedRecipe(recipe1);
-
     user.searchAllSavedByAll('wheat flour', mockIngredientsList);
-
     expect(user.searchAllSavedByAll('wheat flour', mockIngredientsList)[0]).to.deep.equal(recipe1);
     expect(user.searchAllSavedByAll("wheat flour", mockIngredientsList).length).to.deep.equal(2);
   });
 
-  it('should search all recipe data by name', function() {
-    expect(user.searchAllRecipesByName("cookie", mockRecipeList)).to.deep.equal(recipe1);
+  it('should search all recipe data by name', function () {
+    expect(user.searchAllRecipesByName("cookie", mockRecipeList)).to.deep.equal(mockRecipeList);
   });
 
-  it('should search all recipe data by ingredients', function() {
-    expect(user.searchAllRecipesByIngred("wheat flour", mockRecipeList)).to.deep.equal(recipe1);
+  it('should search all recipe data by ingredients', function () {
+    expect(user.searchAllRecipesByIngred("wheat flour", mockRecipeList, mockIngredientsList)).to.deep.equal(mockRecipeList);
   });
 
-  it('should search all recipe data by name and ingredient', function() {
-    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList)).to.equal(recipe1);
-    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList).length).to.deep.equal(2);
-
-  })
+  it('should search all recipe data by name and ingredient', function () {
+    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList)).to.deep.equal(mockRecipeList);
+    expect(user.searchAllRecipesByAll("cookie", mockRecipeList, mockIngredientsList).length).to.deep.equal(1);
+  });
 
 });

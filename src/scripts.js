@@ -3,11 +3,10 @@ let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
 let searchSection = document.querySelector(".search-box")
 
-
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
-}
-  
+};
+
 const currentUser = new User(usersData[generateRandomUser()]);
 const currentPantry = new Pantry(currentUser.pantry);
 const tagsSelected = [];
@@ -18,11 +17,11 @@ const welcomeGreeting = () => {
   let greeting = document.querySelector(".user-greeting");
   let firstName = currentUser.name.split(" ")[0];
   greeting.innerText = `Welcome, ${firstName}!`;
-}
+};
 
 const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
-  recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
+  recipeCardSection.insertAdjacentHTML("beforeend", `<div class="recipe-modal"></div>`);
   recipeList.forEach(eachRecipe => {
     let cardHtml = `
         <section class="recipe-card" id="${eachRecipe.id}">
@@ -30,34 +29,34 @@ const populateRecipeCards = (recipeList) => {
             <section class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn add-favorite-recipe-btn">
-                  <img src="../assets/${eachRecipe.isFavorite ? 'heart-active' :'heart'}.svg" class="user-icons red-heart add-to-favorite" id="${eachRecipe.id}" alt="Image of heart">
+                  <img src="../assets/${eachRecipe.isFavorite ? "heart-active" :"heart"}.svg" class="user-icons red-heart add-to-favorite" id="${eachRecipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn" id="${eachRecipe.id}">
-                  <img src="../assets/${eachRecipe.isPlanned ? 'calendar-active' :'calendar'}.svg" class="user-icons calendar add-to-planned" id="${eachRecipe.id}" alt="Image of calendar">
+                  <img src="../assets/${eachRecipe.isPlanned ? "calendar-active" :"calendar"}.svg" class="user-icons calendar add-to-planned" id="${eachRecipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${eachRecipe.name}</h5>
               </div>
             </section>`
     recipeCardSection.insertAdjacentHTML("beforeend", cardHtml);
-  })
-}
+  });
+};
 
 const populateAllTags = (recipeList) => {
   let tagList = document.querySelector(".tag-list");
   let uniqueTags = [];
   recipeList.forEach(eachRecipe => {
     eachRecipe.tags.forEach(tag => {
-      if (!uniqueTags.includes(tag)) { 
+      if (!uniqueTags.includes(tag)) {
         uniqueTags.push(tag);
         let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
-      }
+      };
     });
-  })
-}
+  });
+};
 
 const capitalize = (words) => {
-  return words.split(" ").map((word) =>  word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+  return words.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 };
 
 const loadHandler = () => {
@@ -66,7 +65,7 @@ const loadHandler = () => {
   populateRecipeCards(recipes);
   populateAllTags(recipes);
   welcomeGreeting();
-}
+};
 
 // PANTRY MODAL //
 
@@ -75,8 +74,7 @@ const openPantryInfo = () => {
   let pantryModal = document.querySelector(".pantry-modal");
   pantryModal.style.display = "inline";
   displayPantryHeader();
-}
-
+};
 
 const displayPantryIngredients = () => {
   return currentPantry.getPantryIngredients(ingredientsData, recipeData).map(ingredient => {
@@ -93,7 +91,7 @@ const displayPantryHeader = () => {
         <h5 id="pantry-title">My Pantry</h5> 
         <article class="pantry-content">You have the following ingredients in your pantry: </br> </br>${ingredients}</br></article>`;
   pantryModal.insertAdjacentHTML("beforeend", pantryHTML);
-}
+};
 
 const closePantryList = () => {
   let pantryModal = document.querySelector(".pantry-modal");
@@ -103,16 +101,16 @@ const closePantryList = () => {
 const userSectionHandler = (event) => {
   if (event.target.className === "user-list-btns pantry-btn") {
     openPantryInfo();
-  }
+  };
   if (event.target.className === "close-icon close-icon-pantry") {
     closePantryList();
-  }
+  };
   if (event.target.className === "user-list-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
-  }
+  };
   if (event.target.className === "user-list-btns show-planned-btn") {
     populateRecipeCards(currentUser.plannedRecipes);
-  }
+  };
 };
 
 // SIDEBAR //
@@ -127,9 +125,9 @@ const toggleTagButton = () => {
     tagButton.classList.remove("active");
     let i = tagsSelected.indexOf(tag);
     tagsSelected.splice(i, 1);
-  }
+  };
   displayRecipesByTag();
-} 
+};
 
 const displayRecipesByTag = () => {
   let filteredRecipesByTag = [];
@@ -139,16 +137,16 @@ const displayRecipesByTag = () => {
   });
   recipesWithTags.forEach(recipe => (!filteredRecipesByTag.includes(recipe)) ? filteredRecipesByTag.push(recipe) : null);
   filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
-}
+};
 
 const sidebarHandler = (event) => {
   if (event.target.closest(".tag-buttons")) {
     toggleTagButton();
-  } 
+  };
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
-  }
-}
+  };
+};
 
 // RECIPE MODAL //
 
@@ -159,12 +157,12 @@ const viewRecipe = (recipe) => {
   allRecipeInfo.style.display = "inline";
   displayRecipeDetails(recipe, ingredientsData);
 };
- 
+
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
     return `${capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
   }).join(" ");
-}
+};
 
 const displayRecipeDetails = (recipe, ingredientsList) => {
   let recipeInstance = new Recipe(recipe);
@@ -185,14 +183,14 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <h4>Cost</h4>
       <article "card-cost-details">Based on what's available in your pantry, you need to spend <b>$${totalCostNeeded}</b> and purchase the following ingredients:</br> </br> ${neededIngredients}.</article>`;
   recipeModalContent.insertAdjacentHTML("beforeend", recipeContent);
-}
+};
 
 //^^ need to refactor
 
 const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-modal");
   recipeInfo.style.display = "none";
-} 
+};
 
 // RECIPE CARD BUTTONS //
 
@@ -201,7 +199,7 @@ const toggleFavoriteRecipe = (event, recipe) => {
     makeFavorite(event, recipe);
   } else {
     makeUnfavorite(event, recipe);
-  }
+  };
 };
 
 const makeFavorite = (event, recipe) => {
@@ -219,7 +217,7 @@ const togglePlannedRecipe = (event, recipe) => {
     makePlanned(event, recipe);
   } else {
     makeUnplanned(event, recipe);
-  }
+  };
 };
 
 const makePlanned = (event, recipe) => {
@@ -242,15 +240,15 @@ const recipeCardHandler = (event) => {
     let recipe = recipeData.find((recipe) => recipe.id === Number(recipeCard.id));
     if (event.target.className === "recipe-img") {
       viewRecipe(recipe);
-    }
+    };
     if (event.target.classList.contains('add-to-favorite')) {
       toggleFavoriteRecipe(event, recipe);
-    }
+    };
     if (event.target.classList.contains('add-to-planned')) {
       togglePlannedRecipe(event, recipe);
-    }
-  }
-}
+    };
+  };
+};
 
 // SEARCH BOX//
 
@@ -260,9 +258,9 @@ const displaySearchedAllRecipes = (query, ingredientList, recipeList) => {
   let allIngredientMatches = recipeList.filter(recipe => {
     let recipeIngredientIDs = currentUser.makeIngredientList(recipe);
     return ingredientIDs.some(id => recipeIngredientIDs.includes(id));
-  })
+  });
   return allNameMatches.concat(allIngredientMatches);
-}
+};
 
 const searchHandler = () => {
   let savedSearch;
@@ -272,29 +270,29 @@ const searchHandler = () => {
     if (event.target.className === 'search-box-btns search-saved') {
       savedSearch = currentUser.searchAllSavedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    } 
+    };
     if (event.target.className === "search-box-btns search-favorites") {
       savedSearch = currentUser.searchFavoritesByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    }
+    };
     if (event.target.className === "search-box-btns search-planned") {
       savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    }
+    };
     if (event.target.className === "search-box-btns search-all") {
-      savedSearch = displaySearchedAllRecipes(query, ingredientsData, recipeData);   
+      savedSearch = displaySearchedAllRecipes(query, ingredientsData, recipeData);
       populateRecipeCards(savedSearch);
-    }
+    };
     if (event.target.className === "search-box-btns clear-text-btn") {
       searchInput.value = "";
-    }
+    };
     searchInput.value = "";
-  }
-}
+  };
+};
 
 // Event Listeners //
 
-searchSection.addEventListener('click', searchHandler)
+searchSection.addEventListener("click", searchHandler);
 
 sidebarSection.addEventListener("click", sidebarHandler);
 
