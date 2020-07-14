@@ -178,6 +178,10 @@ aside {
   margin-top: 10em;
 }
 
+h3 {
+  font-size: 1.6em;
+}
+
 .filter-options {
   display: flex;
   flex-direction: column;
@@ -199,8 +203,8 @@ aside {
 
 .tag-list {
   flex-wrap: wrap;
-  width: 85%;
-  height: 50%;
+  width: 65%;
+  height: 70%;
   overflow: scroll;
 }
 
@@ -208,7 +212,7 @@ aside {
   border: 1px solid #b1cbbb;
   border-radius: 6px;
   font: bold 14px 'Raleway';
-  margin: 1px 2px;
+  margin: 1px 4px;
 }
 
 .tag-buttons.active {

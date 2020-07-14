@@ -31,4 +31,12 @@ This project will demonstrate our understanding and implementation of ES6 classe
 
 ## Gif Showcase
 
+![gif of random user and user's pantry on page load](/readme-gifs/refresh-user.gif)
+*Random user and user's pantry contents on page load*
+
+![gif of viewing and saving recipes to favorites and planned](/readme-gifs/viewingsavingrecipes.gif)
+*Viewing recipe contents and saving recipes to user's favorites and planned*
+
+
+
 ## Reflections / Project Progression

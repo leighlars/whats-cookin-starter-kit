@@ -40,10 +40,9 @@ class Recipe {
   }
 
   capitalize = (words) => {
-  return words.split(" ").map(word => {
-    return word.charAt(0).toUpperCase() + word.slice(1);
-  }).join(" ");
+  return words.split(" ").map((word) =>  word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 };
+
 
   getIngredients = (ingredientsList) => {
     return this.ingredients.map(ingredient => {
