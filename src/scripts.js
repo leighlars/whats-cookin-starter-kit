@@ -1,16 +1,16 @@
-// const recipeData = require("../data/recipes");
-
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-let search = document.querySelector('.search-icon')
-let searchInput = document.getElementById('search-text')
+let search = document.querySelector('.search-icon');
+let searchInput = document.getElementById('search-text');
+
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
   
 const currentUser = new User(usersData[generateRandomUser()]);
 const currentPantry = new Pantry(currentUser.pantry);
+const tagsSelected = [];
 
 // DOM display onload
 
@@ -24,19 +24,18 @@ const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(eachRecipe => {
-    recipe = new Recipe(eachRecipe);
     let cardHtml = `
-        <section class="recipe-card" id="${recipe.id}">
-          <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
+        <section class="recipe-card" id="${eachRecipe.id}">
+          <img src=${eachRecipe.image} class="recipe-img" alt="Image of recipe">
             <section class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn add-favorite-recipe-btn">
-                  <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
+                  <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${eachRecipe.id}" alt="Image of heart">
                 </button>   
-                <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
-                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
+                <button class="card-btn" class="add-planned-recipe-btn" id="${eachRecipe.id}">
+                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${eachRecipe.id}" alt="Image of calendar">
                 </button>
-              <h5 class="recipe-title">${recipe.name}</h5>
+              <h5 class="recipe-title">${eachRecipe.name}</h5>
               </div>
             </section>`
     recipeCardSection.insertAdjacentHTML("beforeend", cardHtml);
@@ -60,8 +59,9 @@ const populateAllTags = (recipeList) => {
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
-  populateAllTags(recipeData);
-  populateRecipeCards(recipeData);
+  let recipeObjs = recipeData.map(recipe => new Recipe(recipe));
+  populateAllTags(recipeObjs);
+  populateRecipeCards(recipeObjs);
   welcomeGreeting();
 }
 
@@ -111,43 +111,40 @@ const userSectionHandler = (event) => {
   }
 };
 
-userProfileSection.addEventListener("click", userSectionHandler);
 
-// Sidebar Buttons //
+// SIDEBAR //
 
-const toggleTagButton = (tagsClicked) => {
+const toggleTagButton = () => {
   let tag = event.target.id;
   let tagButton = event.target.closest(".tag-buttons");
   if (!tagButton.classList.contains("active")) {
     tagButton.classList.add("active");
-    tagsClicked.push(tag);
+    tagsSelected.push(tag);
   } else {
     tagButton.classList.remove("active");
-    let i = tagsClicked.indexOf(tag);
-    tagsClicked.splice(i, 1);
+    let i = tagsSelected.indexOf(tag);
+    tagsSelected.splice(i, 1);
   }
-  return tagsClicked;
+  displayRecipesByTag();
 } 
+
+const displayRecipesByTag = () => {
+  let filteredRecipesByTag = [];
+  let recipesWithTags = [];
+  tagsSelected.forEach(tag => recipesWithTags = recipesWithTags.concat(currentUser.filterRecipeByTag(tag, recipeData)));
+  recipesWithTags.forEach(recipe => if (!filteredRecipesByTag.includes(recipe)) { filteredRecipesByTag.push(recipe) });
+  filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
+}
 
 
 const sidebarButtonsHandler = (event) => {
-  let tagsClicked = []
-  // if (event.target.className === "filter-btns show-favorite-btn") {
-  //   populateRecipeCards(currentUser.favoriteRecipes);
-  // }
-
   if (event.target.closest(".tag-buttons")) {
-    toggleTagButton(tagsClicked);
+    toggleTagButton();
   } 
-  // if (event.target.id === "filter-btns filter-recipes-btn") {
-    
-  // } 
   if (event.target.className === "filter-btns show-all-btn") {
     populateRecipeCards(recipeData);
   }
 }
-
-sidebarSection.addEventListener("click", sidebarButtonsHandler);
 
 // RECIPE MODALS //
 
@@ -290,7 +287,12 @@ const displaySearchedSaved = (event, query, ingredientList) => {
   }
 }
 
-search.addEventListener('click', displaySearchedSaved)
+
+search.addEventListener('click', displaySearchedSaved);
+
+sidebarSection.addEventListener("click", sidebarButtonsHandler);
+
+userProfileSection.addEventListener("click", userSectionHandler);
 
 recipeCardSection.addEventListener("click", recipeCardHandler);
 

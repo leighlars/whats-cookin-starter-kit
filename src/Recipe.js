@@ -5,7 +5,7 @@ class Recipe {
     this.image = recipe.image || "https://spoonacular.com/recipeImages/595736-556x370.jpg";
     this.ingredients = recipe.ingredients || "No ingredients provided. Please Google other similar recipes for ingredients.";
     this.instructions = recipe.instructions || "No instructions provided. Please Google other similar recipes for instructions.";
-    this.tags = recipe.tags.length != 0 ? recipe.tags : ["miscellaneous"];
+    this.tags = this.checkTags(recipe.tags);
     this.isFavorite = false;
     this.isPlanned = false;
   }
@@ -19,6 +19,14 @@ class Recipe {
       return "Recipe";
     }
     return typeof recipe === 'string' ? recipe : JSON.stringify(recipe);
+  }
+
+  checkTags = (recipe) => {
+    if (!recipe === "undefined" || Array.isArray(recipe)) {
+      return recipe;
+    } else {
+      return ["miscellaneous"];
+    }
   }
 
   getInstructions = () => {
@@ -64,9 +72,9 @@ class Recipe {
     }
   }
 
-  filterRecipeByTag = (recipeTag, recipeData) => {
-    return recipeData.filter(recipe => recipe.tags.includes(recipeTag));
-  }
+  // filterRecipeByTag = (recipeTag, recipeData) => {
+  //   return recipeData.filter(recipe => recipe.tags.includes(recipeTag));
+  // }
 
   filterRecipeByIngredient = (recipeIngredient, ingredientsList, recipeList) => {
     let matchedIngredient = ingredientsList.find(ingredient => ingredient.name === recipeIngredient);
