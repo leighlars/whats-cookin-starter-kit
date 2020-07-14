@@ -71,7 +71,6 @@ class Recipe {
       return foundIngredient;
     }
   }
-
 }
 
 if (typeof module !== 'undefined') {

@@ -1,9 +1,10 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
+let searchSection = document.querySelector(".search-box")
 // let search = document.querySelector('.search-icon')
-let searchInput = document.getElementById('search-text');
-let searchSaved = document.querySelector('.search-saved')
+// let searchInput = document.getElementById('search-text');
+// let searchSaved = document.querySelector('.search-saved')
 
 
 const generateRandomUser = () => {
@@ -14,7 +15,7 @@ const currentUser = new User(usersData[generateRandomUser()]);
 const currentPantry = new Pantry(currentUser.pantry);
 const tagsSelected = [];
 
-// DOM display onload
+// DOM Display Onload //
 
 const welcomeGreeting = () => {
   let greeting = document.querySelector(".user-greeting");
@@ -66,7 +67,7 @@ const loadHandler = () => {
   welcomeGreeting();
 }
 
-// Pantry Modal //
+// PANTRY MODAL //
 
 const openPantryInfo = () => {
   document.querySelector(".recipe-modal").style.display = "none";
@@ -136,8 +137,7 @@ const displayRecipesByTag = () => {
   filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
 }
 
-
-const sidebarButtonsHandler = (event) => {
+const sidebarHandler = (event) => {
   if (event.target.closest(".tag-buttons")) {
     toggleTagButton();
   } 
@@ -146,7 +146,7 @@ const sidebarButtonsHandler = (event) => {
   }
 }
 
-// RECIPE MODALS //
+// RECIPE MODAL //
 
 const viewRecipe = (recipe) => {
   document.querySelector(".pantry-modal").style.display = "none";
@@ -255,22 +255,52 @@ const recipeCardHandler = (event) => {
   }
 }
 
+// SEARCH BOX//
 
-const displaySearchedSaved = (query) => {
-  if (event.target.className === 'search-box-btns search-saved') {
-    query = searchInput.value.toLowerCase()
-    let savedSearch = currentUser.searchByIngredAndName(query, ingredientsData)
-    searchInput.value = ''
-    populateRecipeCards(savedSearch)
+
+const displaySearchedPlanned = (query, ingredientsData) => {
+  let savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
+  console.log(savedSearch)
+  populateRecipeCards(savedSearch);
+};
+
+// const displaySearchedAllRecipes = (query) => {
+
+//   populateRecipeCards(savedSearch);
+// }
+
+const searchHandler = () => {
+  let savedSearch;
+  let searchInput = document.getElementById('search-text');
+  let query = searchInput.value.toLowerCase();
+  if (query !== "") {
+    if (event.target.className === 'search-box-btns search-saved') {
+      savedSearch = currentUser.searchByIngredAndName(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    } 
+    if (event.target.className === "search-box-btns search-favorites") {
+      savedSearch = currentUser.searchFavoritesByAll(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns search-planned") {
+      savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns search-all-saved") {
+      // savedSearch=  
+      populateRecipeCards(savedSearch);
+    }
+    if (event.target.className === "search-box-btns clear-text-btn") {
+      searchInput.value = "";
+    }
+    searchInput.value = "";
   }
 }
 
 
-searchSaved.addEventListener('click', displaySearchedSaved)
+searchSection.addEventListener('click', searchHandler)
 
-// search.addEventListener('click', displaySearchedSaved);
-
-sidebarSection.addEventListener("click", sidebarButtonsHandler);
+sidebarSection.addEventListener("click", sidebarHandler);
 
 userProfileSection.addEventListener("click", userSectionHandler);
 
