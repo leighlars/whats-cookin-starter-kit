@@ -79,10 +79,11 @@ h2 {
 
 .search-box {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 45%;
+  width: 34%;
 }
 
 #search-text {
@@ -337,3 +338,11 @@ aside {
   margin-left: 3%;
 }
 
+.search-saved, .search-planned, .search-all-saved {
+  border: 1px solid #b1cbbb;
+  border-radius: 6px;
+  font: bold 14px 'Raleway';
+  margin: 0 7px;
+  background-color: #FFFACD;
+  padding: 6px;
+}

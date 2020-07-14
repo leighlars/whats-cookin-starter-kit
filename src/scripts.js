@@ -1,8 +1,10 @@
 let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
-let search = document.querySelector('.search-icon');
-let searchInput = document.getElementById('search-text');
+let search = document.querySelector('.search-icon')
+let searchInput = document.getElementById('search-text')
+let searchSaved = document.querySelector('.search-saved')
+
 
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
@@ -30,10 +32,10 @@ const populateRecipeCards = (recipeList) => {
             <section class="card-overlay">
               <div class="card-overlay-top">
                 <button class="card-btn add-favorite-recipe-btn">
-                  <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${eachRecipe.id}" alt="Image of heart">
+                  <img src="../assets/${recipe.isFavorite ? 'heart-active' :'heart'}.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
                 </button>   
-                <button class="card-btn" class="add-planned-recipe-btn" id="${eachRecipe.id}">
-                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${eachRecipe.id}" alt="Image of calendar">
+                <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
+                  <img src="../assets/${recipe.isPlanned ? 'calendar-active' :'calendar'}.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${eachRecipe.name}</h5>
               </div>
@@ -46,7 +48,7 @@ const populateAllTags = (recipeList) => {
   let tagList = document.querySelector(".tag-list");
   let uniqueTags = [];
   recipeList.forEach(eachRecipe => {
-    recipe = new Recipe(eachRecipe);
+    let recipe = new Recipe(eachRecipe);
     recipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
@@ -59,9 +61,8 @@ const populateAllTags = (recipeList) => {
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
-  let recipeObjs = recipeData.map(recipe => new Recipe(recipe));
-  populateAllTags(recipeObjs);
-  populateRecipeCards(recipeObjs);
+  populateAllTags(recipeData);
+  populateRecipeCards(recipeData.map(recipe => new Recipe(recipe)));
   welcomeGreeting();
 }
 
@@ -200,29 +201,24 @@ const closeRecipe = () => {
 // RECIPE CARD BUTTONS //
 
 const toggleFavoriteRecipe = (event, recipe) => {
-  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isFavorite) {
     makeFavorite(event, recipe);
-    // persistIconState(event.target, recipe)
   } else {
     makeUnfavorite(event, recipe);
   }
 };
 
 const makeFavorite = (event, recipe) => {
-  recipe.isFavorite = true;
   event.target.src = "../assets/heart-active.svg";
   currentUser.addFavoriteRecipe(recipe);
 };
 
 const makeUnfavorite = (event, recipe) => {
-  recipe.isFavorite = false;
   event.target.src = "../assets/heart.svg";
   currentUser.deleteFavoriteRecipe(recipe);
 };
 
 const togglePlannedRecipe = (event, recipe) => {
-  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isPlanned) {
     makePlanned(event, recipe);
   } else {
@@ -243,50 +239,36 @@ const makeUnplanned = (event, recipe) => {
 };
 
 const recipeCardHandler = (event) => {
+  let recipeCard = event.target.closest(".recipe-card")
   if (event.target.className === "close-icon") {
     closeRecipe();
-  } 
-  if (event.target.className === "recipe-img") {
-    let targetRecipeID = event.target.closest(".recipe-card").id; 
-    let targetRecipe = recipeData.find((recipe) => recipe.id === Number(targetRecipeID));
+  } else if (recipeCard) {
+    let targetRecipe = recipeData.find((recipe) => recipe.id === Number(recipeCard.id));
     let recipe = new Recipe(targetRecipe);
-    viewRecipe(recipe);
-  }
-  if (event.target.className === "user-icons red-heart add-to-favorite") {
-    toggleFavoriteRecipe(event, recipe);
-  }
-  if (event.target.className === "user-icons calendar add-to-planned") {
-    togglePlannedRecipe(event, recipe);
+    if (event.target.className === "recipe-img") {
+      viewRecipe(recipe);
+    }
+    if (event.target.classList.contains('add-to-favorite')) {
+      toggleFavoriteRecipe(event, recipe);
+    }
+    if (event.target.classList.contains('add-to-planned')) {
+      togglePlannedRecipe(event, recipe);
+    }
   }
 }
 
-//>>>>>>>>>>>>>>>>. function not working.
-// const persistIconState = (eventTarget, recipe) => {
-//   recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
-//   console.log('recipe', recipe);
-//   let myFavorites = currentUser.favoriteRecipes;
-//   let myPlanned = currentUser.plannedRecipes;
-//   myFavorites.forEach(fav => {
-//       eventTarget.src = "../assets/heart-active.svg";
-  
-//   })
-//   // console.log('Fav', myFavorites, 'myPlanned', myPlanned);
-// }
 
-const displaySearchedSaved = (event, query, ingredientList) => {
-  event.preventDefault()
-  if (event.target.className === 'search-icon') {
-    query = searchInput.value
-    ingredientList = ingredientsData
-    // console.log('ingredientsList', ingredientsData);
-    currentUser.searchByIngredAndName(event, query, ingredientList)
-    console.log('result', currentUser.searchByIngredAndName(event, query));
+const displaySearchedSaved = (query) => {
+  if (event.target.className === 'search-box-btns search-saved') {
+    query = searchInput.value.toLowerCase()
+    let savedSearch = currentUser.searchByIngredAndName(query, ingredientsData)
     searchInput.value = ''
-    // query = 
-    // currentUser.searchByIngredAndName = (query, ingredientList)
+    populateRecipeCards(savedSearch)
   }
 }
 
+
+searchSaved.addEventListener('click', displaySearchedSaved)
 
 search.addEventListener('click', displaySearchedSaved);
 

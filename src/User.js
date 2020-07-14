@@ -17,13 +17,15 @@ class User {
 
  addFavoriteRecipe = (recipe) => {
   if (!this.favoriteRecipes.includes(recipe)) {
-   this.favoriteRecipes.push(recipe);
+    recipe.isFavorite = true;
+    this.favoriteRecipes.push(recipe);
   }
  };
 
  deleteFavoriteRecipe = (recipe) => {
   let i = this.favoriteRecipes.indexOf(recipe);
   this.favoriteRecipes.splice(i, 1);
+  recipe.isFavorite = false;
  };
 
  addPlannedRecipe = (recipe) => {
@@ -58,26 +60,27 @@ class User {
 
  searchSavedRecipesByIngred = (query, ingredientList) => {
   let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
-  let ingredientID = this.changeIngredientNameToID(query, ingredientList);
-  console.log("user Ingred List", ingredientList);
+  let ingredientIDs = this.changeIngredientNameToID(query, ingredientList);
   return allSaved.filter((recipe) => {
-   return this.makeIngredientList(recipe).includes(ingredientID);
+  let recipeIngredientIDs = this.makeIngredientList(recipe)
+  return ingredientIDs.some(id => recipeIngredientIDs.includes(id))
   });
  };
 
  changeIngredientNameToID = (ingredientName, ingredientList) => {
-  let ingredient = ingredientList.find((ingredient) =>
-   ingredient.name.includes(ingredientName)
-  );
-  return ingredient ? ingredient.id : 0;
+  let ingredients = ingredientList.filter((ingredient) => {
+    return ingredient.name.includes(ingredientName);
+  });
+  ingredients = ingredients.map(ingredient => ingredient.id)
+  return ingredients;
  };
 
  makeIngredientList = (recipe) => {
   return recipe.ingredients.map((ingredient) => ingredient.id);
  };
 
- searchByIngredAndName = (event, query, ingredientList) => {
-  let allRecipes = this.searchSavedRecipesByIngred(query,ingredientList).concat(this.searchSavedRecipesByName(query));
+ searchByIngredAndName = (query, ingredientList) => {
+  let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
   let filterDuplicates = [...new Set(allRecipes)];
   return filterDuplicates;
  };
