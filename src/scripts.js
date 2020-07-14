@@ -4,7 +4,6 @@ let userProfileSection = document.querySelector(".user-list");
 let searchSection = document.querySelector(".search-box")
 
 
-
 const generateRandomUser = () => {
   return Math.round(Math.random() * usersData.length);
 }
@@ -63,9 +62,9 @@ const capitalize = (words) => {
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
-  let recipeObjs = recipeData.map(recipe => new Recipe(recipe));
-  populateAllTags(recipeObjs);
-  populateRecipeCards(recipeObjs);
+  let recipes = recipeData.map(recipe => new Recipe(recipe));
+  populateRecipeCards(recipes);
+  populateAllTags(recipes);
   welcomeGreeting();
 }
 
@@ -77,7 +76,6 @@ const openPantryInfo = () => {
   pantryModal.style.display = "inline";
   displayPantryHeader();
 }
-
 
 
 const displayPantryIngredients = () => {
@@ -136,7 +134,9 @@ const toggleTagButton = () => {
 const displayRecipesByTag = () => {
   let filteredRecipesByTag = [];
   let recipesWithTags = [];
-  tagsSelected.forEach(tag => recipesWithTags = recipesWithTags.concat(currentUser.filterRecipeByTag(tag, recipeData)));
+  tagsSelected.forEach(tag => {
+    recipesWithTags = recipesWithTags.concat(currentUser.filterRecipeByTag(tag, recipeData))
+  });
   recipesWithTags.forEach(recipe => (!filteredRecipesByTag.includes(recipe)) ? filteredRecipesByTag.push(recipe) : null);
   filteredRecipesByTag.length !== 0 ? populateRecipeCards(filteredRecipesByTag) : populateRecipeCards(recipeData);
 }
@@ -167,8 +167,9 @@ const getNeededIngredientsList = (recipe, ingredientsList) => {
 }
 
 const displayRecipeDetails = (recipe, ingredientsList) => {
-  let ingredients = recipe.getIngredients(ingredientsList);
-  let instructions = recipe.getInstructions();
+  let recipeInstance = new Recipe(recipe);
+  let ingredients = recipeInstance.getIngredients(ingredientsList);
+  let instructions = recipeInstance.getInstructions();
   let neededIngredients = getNeededIngredientsList(recipe, ingredientsList);
   let totalCostNeeded = currentPantry.getTotalCostOfGroceries(recipe, ingredientsList).toFixed(2);
   let recipeModalContent = document.querySelector(".recipe-modal");
@@ -177,14 +178,6 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
        <img src="${recipe.image}" class="recipe-img" id="recipe-modal-img"
        alt = "Image of recipe" >
       <h3 id="recipe-title">${recipe.name}</h3>
-      <div class="modal-btns">
-        <button class="card-btn add-favorite-recipe-btn" id="modal-icons">
-          <img src="../assets/heart.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
-        </button>
-        <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
-           <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
-        </button> 
-      </div>  
       <h4>Ingredients</h4>
       <article class="card-ingredients-list">${ingredients}</br></article>
       <h4>Instructions</h4>
@@ -277,7 +270,7 @@ const searchHandler = () => {
   let query = searchInput.value.toLowerCase();
   if (query !== "") {
     if (event.target.className === 'search-box-btns search-saved') {
-      savedSearch = currentUser.searchByIngredAndName(query, ingredientsData);
+      savedSearch = currentUser.searchAllSavedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
     } 
     if (event.target.className === "search-box-btns search-favorites") {
