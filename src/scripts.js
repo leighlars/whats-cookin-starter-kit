@@ -2,9 +2,7 @@ let recipeCardSection = document.querySelector(".recipe-cards-parent");
 let sidebarSection = document.querySelector(".filter-options");
 let userProfileSection = document.querySelector(".user-list");
 let searchSection = document.querySelector(".search-box")
-// let search = document.querySelector('.search-icon')
-// let searchInput = document.getElementById('search-text');
-// let searchSaved = document.querySelector('.search-saved')
+
 
 
 const generateRandomUser = () => {
@@ -52,12 +50,16 @@ const populateAllTags = (recipeList) => {
     eachRecipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
-        let tagHTML = `<button class="tag-buttons" id="${tag}">${eachRecipe.capitalize(tag)}</button>`
+        let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
       }
     });
   })
 }
+
+const capitalize = (words) => {
+  return words.split(" ").map((word) =>  word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+};
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
@@ -76,9 +78,11 @@ const openPantryInfo = () => {
   displayPantryHeader();
 }
 
+
+
 const displayPantryIngredients = () => {
   return currentPantry.getPantryIngredients(ingredientsData, recipeData).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)}: ${ingredient.quantity.toFixed(2)} ${ingredient.unit}</br>`;
+    return `${capitalize(ingredient.name)}: ${ingredient.quantity} ${ingredient.unit}</br>`;
   }).join("");
 }
 
@@ -158,7 +162,7 @@ const viewRecipe = (recipe) => {
  
 const getNeededIngredientsList = (recipe, ingredientsList) => {
   return currentPantry.createGroceryList(recipe, ingredientsList).map(ingredient => {
-    return `${recipe.capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
+    return `${capitalize(ingredient.name)} $${ingredient.cost.toFixed(2)}</br>`;
   }).join(" ");
 }
 
@@ -257,17 +261,14 @@ const recipeCardHandler = (event) => {
 
 // SEARCH BOX//
 
-
 const displaySearchedAllRecipes = (query, ingredientList, recipeList) => {
   let allNameMatches = recipeList.filter(recipe => recipe.name.toLowerCase().includes(query));
   let ingredientIDs = currentUser.changeIngredientNameToID(query, ingredientList);
-  console.log(ingredientIDs);
-  let ingredientMatches = recipeList.filter(recipe => {
+  let allIngredientMatches = recipeList.filter(recipe => {
     let recipeIngredientIDs = currentUser.makeIngredientList(recipe);
     return ingredientIDs.some(id => recipeIngredientIDs.includes(id));
   })
-  let allMatches = allNameMatches.concat(ingredientMatches);
-  populateRecipeCards(allMatches);
+  return allNameMatches.concat(allIngredientMatches);
 }
 
 const searchHandler = () => {
@@ -288,7 +289,8 @@ const searchHandler = () => {
       populateRecipeCards(savedSearch);
     }
     if (event.target.className === "search-box-btns search-all") {
-      displaySearchedAllRecipes(query, ingredientsData, recipeData);   
+      savedSearch = displaySearchedAllRecipes(query, ingredientsData, recipeData);   
+      populateRecipeCards(savedSearch);
     }
     if (event.target.className === "search-box-btns clear-text-btn") {
       searchInput.value = "";
@@ -297,6 +299,7 @@ const searchHandler = () => {
   }
 }
 
+// Event Listeners //
 
 searchSection.addEventListener('click', searchHandler)
 

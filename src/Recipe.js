@@ -45,7 +45,7 @@ class Recipe {
   }).join(" ");
 };
 
-  getIngredients = ingredientsList => {
+  getIngredients = (ingredientsList) => {
     return this.ingredients.map(ingredient => {
        let ingredientName = this.findIngredient(ingredient, ingredientsList);
         return `${ingredient.quantity.amount} ${ingredient.quantity.unit} ${this.capitalize(ingredientName.name)}</br>`;
