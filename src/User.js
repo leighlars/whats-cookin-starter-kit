@@ -26,6 +26,7 @@ class User {
  deleteFavoriteRecipe = (recipe) => {
   let i = this.favoriteRecipes.indexOf(recipe);
   this.favoriteRecipes.splice(i, 1);
+  recipe.isFavorite = false;
  };
 
  addPlannedRecipe = (recipe) => {
@@ -59,24 +60,19 @@ class User {
  };
 
  searchSavedRecipesByIngred = (query, ingredientList) => {
-   console.log(this.favoriteRecipes);
   let allSaved = this.favoriteRecipes.concat(this.plannedRecipes);
   let ingredientIDs = this.changeIngredientNameToID(query, ingredientList);
-  console.log({allSaved});
   return allSaved.filter((recipe) => {
   let recipeIngredientIDs = this.makeIngredientList(recipe)
-  console.log({recipeIngredientIDs});
   return ingredientIDs.some(id => recipeIngredientIDs.includes(id))
   });
  };
 
  changeIngredientNameToID = (ingredientName, ingredientList) => {
-   console.log('ingredientList', ingredientList);
   let ingredients = ingredientList.filter((ingredient) => {
     return ingredient.name.includes(ingredientName);
   });
   ingredients = ingredients.map(ingredient => ingredient.id)
-  console.log('ingredientID', ingredients);
   return ingredients;
  };
 
@@ -86,9 +82,7 @@ class User {
 
  searchByIngredAndName = (query, ingredientList) => {
   let allRecipes = this.searchSavedRecipesByIngred(query, ingredientList).concat(this.searchSavedRecipesByName(query));
-  console.log('allRecipes', allRecipes);
   let filterDuplicates = [...new Set(allRecipes)];
-  console.log('filterDuplicates', filterDuplicates);
   return filterDuplicates;
  };
 }

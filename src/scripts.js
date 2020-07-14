@@ -24,8 +24,6 @@ const populateRecipeCards = (recipeList) => {
   recipeCardSection.innerHTML = "";
   recipeCardSection.insertAdjacentHTML("beforeend",`<div class="recipe-modal"></div>`);
   recipeList.forEach(recipe => {
-    // let recipe = new Recipe(eachRecipe);
-    console.log({recipe});
     let cardHtml = `
         <div class="recipe-card" id="${recipe.id}">
           <img src=${recipe.image} class="recipe-img" alt="Image of recipe">
@@ -35,7 +33,7 @@ const populateRecipeCards = (recipeList) => {
                   <img src="../assets/${recipe.isFavorite ? 'heart-active' :'heart'}.svg" class="user-icons red-heart add-to-favorite" id="${recipe.id}" alt="Image of heart">
                 </button>   
                 <button class="card-btn" class="add-planned-recipe-btn" id="${recipe.id}">
-                  <img src="../assets/calendar.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
+                  <img src="../assets/${recipe.isPlanned ? 'calendar-active' :'calendar'}.svg" class="user-icons calendar add-to-planned" id="${recipe.id}" alt="Image of calendar">
                 </button>
               <h5 class="recipe-title">${recipe.name}</h5>
               </div>
@@ -189,20 +187,16 @@ const toggleFavoriteRecipe = (event, recipe) => {
 };
 
 const makeFavorite = (event, recipe) => {
-  
   event.target.src = "../assets/heart-active.svg";
   currentUser.addFavoriteRecipe(recipe);
-  console.log({currentUser});
 };
 
 const makeUnfavorite = (event, recipe) => {
-  recipe.isFavorite = false;
   event.target.src = "../assets/heart.svg";
   currentUser.deleteFavoriteRecipe(recipe);
 };
 
 const togglePlannedRecipe = (event, recipe) => {
-  recipe = recipeData.find(recipe => recipe.id === Number(event.target.id));
   if (!recipe.isPlanned) {
     makePlanned(event, recipe);
   } else {
@@ -232,7 +226,6 @@ const recipeCardHandler = (event) => {
     if (event.target.className === "recipe-img") {
       viewRecipe(recipe);
     }
-    console.log({classList: event.target.classList});
     if (event.target.classList.contains('add-to-favorite')) {
       toggleFavoriteRecipe(event, recipe);
     }
