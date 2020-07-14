@@ -48,8 +48,7 @@ const populateAllTags = (recipeList) => {
   let tagList = document.querySelector(".tag-list");
   let uniqueTags = [];
   recipeList.forEach(eachRecipe => {
-    let recipe = new Recipe(eachRecipe);
-    recipe.tags.forEach(tag => {
+    eachRecipe.tags.forEach(tag => {
       if (!uniqueTags.includes(tag)) { 
         uniqueTags.push(tag);
         let tagHTML = `<button class="tag-buttons" id="${tag}">${recipe.capitalize(tag)}</button>`
@@ -61,6 +60,8 @@ const populateAllTags = (recipeList) => {
 
 const loadHandler = () => {
   let greeting = document.querySelector(".user-greeting");
+  recipeData.forEach(recipe => new Recipe(recipe));
+  
   populateAllTags(recipeData);
   populateRecipeCards(recipeData.map(recipe => new Recipe(recipe)));
   welcomeGreeting();
@@ -111,7 +112,6 @@ const userSectionHandler = (event) => {
     populateRecipeCards(currentUser.plannedRecipes);
   }
 };
-
 
 // SIDEBAR //
 

@@ -197,9 +197,9 @@ describe('Pantry', function () {
     let expected = [ {"id": 1009016, unit: "cups", "amount": 10.5}, {"id": 9003, unit: "whole", "amount": 10}];
     let expected2 = [ {"id": 1009016, unit: "cups", "amount": 10.5 }, {"id": 9003, unit: "whole", "amount": 20 }];
 
-    expect(pantryFull.getIngredientsForRecipe(recipe2)).to.deep.equal(expected);
-    expect(pantryEmpty.getIngredientsForRecipe(recipe2)).to.deep.equal(expected2);
-    expect(pantryFull.getIngredientsForRecipe(recipe1)).to.deep.equal([]);
+    expect(pantryFull.getNeededIngredientsForRecipe(recipe2)).to.deep.equal(expected);
+    expect(pantryEmpty.getNeededIngredientsForRecipe(recipe2)).to.deep.equal(expected2);
+    expect(pantryFull.getNeededIngredientsForRecipe(recipe1)).to.deep.equal([]);
   });
 
   it('should return a list of ingredients and cost to buy for a meal', function() {
