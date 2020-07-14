@@ -31,7 +31,7 @@ This project will demonstrate our understanding and implementation of ES6 classe
 
 ## Gif Showcase
 
-![gif of random user and user's pantry on page load](/readme-gifs/refresh-user.gif)
+![gif of random user and user's pantry on page load](/readme-gifs/refreshUser.gif)
 *Random user and user's pantry contents on page load*
 
 ![gif of viewing and saving recipes to favorites and planned](/readme-gifs/viewingsavingrecipes.gif)
