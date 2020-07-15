@@ -50,7 +50,7 @@ const populateAllTags = (recipeList) => {
         uniqueTags.push(tag);
         let tagHTML = `<button class="tag-buttons" id="${tag}">${capitalize(tag)}</button>`
         tagList.insertAdjacentHTML('beforeend', tagHTML);
-      };
+      }
     });
   });
 };
@@ -101,16 +101,16 @@ const closePantryList = () => {
 const userSectionHandler = (event) => {
   if (event.target.className === "user-list-btns pantry-btn") {
     openPantryInfo();
-  };
+  }
   if (event.target.className === "close-icon close-icon-pantry") {
     closePantryList();
-  };
+  }
   if (event.target.className === "user-list-btns show-favorite-btn") {
     populateRecipeCards(currentUser.favoriteRecipes);
-  };
+  }
   if (event.target.className === "user-list-btns show-planned-btn") {
     populateRecipeCards(currentUser.plannedRecipes);
-  };
+  }
 };
 
 // SIDEBAR //
@@ -125,7 +125,7 @@ const toggleTagButton = () => {
     tagButton.classList.remove("active");
     let i = tagsSelected.indexOf(tag);
     tagsSelected.splice(i, 1);
-  };
+  }
   displayRecipesByTag();
 };
 
@@ -142,12 +142,12 @@ const displayRecipesByTag = () => {
 const sidebarHandler = (event) => {
   if (event.target.closest(".tag-buttons")) {
     toggleTagButton();
-  };
+  }
   if (event.target.className === "filter-btns show-all-btn") {
     let tagBtns = document.querySelectorAll(".tag-buttons");
     tagBtns.forEach(button => button.classList.remove("active"))
     populateRecipeCards(recipeData);
-  };
+  }
 };
 
 // RECIPE MODAL //
@@ -199,7 +199,7 @@ const toggleFavoriteRecipe = (event, recipe) => {
     makeFavorite(event, recipe);
   } else {
     makeUnfavorite(event, recipe);
-  };
+  }
 };
 
 const makeFavorite = (event, recipe) => {
@@ -217,7 +217,7 @@ const togglePlannedRecipe = (event, recipe) => {
     makePlanned(event, recipe);
   } else {
     makeUnplanned(event, recipe);
-  };
+  }
 };
 
 const makePlanned = (event, recipe) => {
@@ -240,14 +240,14 @@ const recipeCardHandler = (event) => {
     let recipe = recipeData.find((recipe) => recipe.id === Number(recipeCard.id));
     if (event.target.className === "recipe-img") {
       viewRecipe(recipe);
-    };
+    }
     if (event.target.classList.contains('add-to-favorite')) {
       toggleFavoriteRecipe(event, recipe);
-    };
+    }
     if (event.target.classList.contains('add-to-planned')) {
       togglePlannedRecipe(event, recipe);
-    };
-  };
+    }
+  }
 };
 
 // SEARCH BOX//
@@ -270,24 +270,24 @@ const searchHandler = () => {
     if (event.target.className === 'search-box-btns search-saved') {
       savedSearch = currentUser.searchAllSavedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    };
+    }
     if (event.target.className === "search-box-btns search-favorites") {
       savedSearch = currentUser.searchFavoritesByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    };
+    }
     if (event.target.className === "search-box-btns search-planned") {
       savedSearch = currentUser.searchPlannedByAll(query, ingredientsData);
       populateRecipeCards(savedSearch);
-    };
+    }
     if (event.target.className === "search-box-btns search-all") {
       savedSearch = displaySearchedAllRecipes(query, ingredientsData, recipeData);
       populateRecipeCards(savedSearch);
-    };
+    }
     if (event.target.className === "search-box-btns clear-text-btn") {
       searchInput.value = "";
-    };
+    }
     searchInput.value = "";
-  };
+  }
 };
 
 // Event Listeners //
