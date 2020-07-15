@@ -144,6 +144,8 @@ const sidebarHandler = (event) => {
     toggleTagButton();
   };
   if (event.target.className === "filter-btns show-all-btn") {
+    let tagBtns = document.querySelectorAll(".tag-buttons");
+    tagBtns.forEach(button => button.classList.remove("active"))
     populateRecipeCards(recipeData);
   };
 };
@@ -184,8 +186,6 @@ const displayRecipeDetails = (recipe, ingredientsList) => {
       <article "card-cost-details">Based on what's available in your pantry, you need to spend <b>$${totalCostNeeded}</b> and purchase the following ingredients:</br> </br> ${neededIngredients}.</article>`;
   recipeModalContent.insertAdjacentHTML("beforeend", recipeContent);
 };
-
-//^^ need to refactor
 
 const closeRecipe = () => {
   let recipeInfo = document.querySelector(".recipe-modal");
